@@ -149,9 +149,8 @@
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
-    <ClCompile Include="Gimmick.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
     <ClCompile Include="Scenes\SceneDev2.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
@@ -162,7 +161,6 @@
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\Variables.cpp" />
-    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\AnimationClip.h" />
@@ -173,13 +171,13 @@
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="Framework\HitBox.h" />
     <ClInclude Include="Framework\InputMgr.h" />
+    <ClInclude Include="Framework\json.hpp" />
     <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Framework\Singleton.h" />
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\Scene.h" />
-    <ClInclude Include="Gimmick.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />
     <ClInclude Include="Scenes\SceneDev2.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
@@ -188,7 +186,7 @@
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\Variables.h" />
-    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="LevelLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

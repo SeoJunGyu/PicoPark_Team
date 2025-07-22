@@ -46,6 +46,7 @@ OBJECT → 각 사각형 {x,y,w,h} 또는 임의 구조 |
 | id | int | 고유 ID |
 | type | string | "Key", "Door", "MovingPlatform" … |
 | x, y | int | 타일좌표 또는 픽셀좌표 |
+| w, h | int | 너비와 높이 생략 시 타일 사이즈 |
 | properties | object | 기믹마다 다른 추가 필드 보관 |
 | rotation | float | 도어·플랫폼 각도 등 |
 | scale | 	float/vec2 | 	크기 배율 |
