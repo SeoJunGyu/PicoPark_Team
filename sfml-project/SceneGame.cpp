@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SceneGame.h"
 #include "LevelLoader.h"
+#include "Player.h"
+#include "Gimmick.h"
 
 static sf::Color makeColor(int tileId)
 {
@@ -16,6 +18,22 @@ static sf::Color makeColor(int tileId)
         sf::Color(128,128,128)
     };
     return palette[(tileId - 1) % palette.size()];
+}
+
+void SceneGame::LoadStage(const std::string& jsonPath)
+{
+    Variables::ResetStage();
+
+    std::ifstream fin(jsonPath);
+    nlohmann::json j;
+    fin >> j;
+
+    for (const auto& entobj : j["entities"])
+    {
+        Gimmick* g = Gimmick::CreateFromJson(entobj);
+        g->Init();
+        AddGameObject(g);
+    }
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
@@ -38,11 +56,21 @@ SceneGame::~SceneGame()
 
 void SceneGame::Init()
 {
+    texIds.push_back("graphics/Characters/Icon/Player0.png");
+    texIds.push_back("graphics/Item/key.png");
+    texIds.push_back("graphics/Item/door.png");
+    texIds.push_back("graphics/Item/doorOpen.png");
+    texIds.push_back("graphics/Item/Button.png");
+    texIds.push_back("graphics/Item/WeightBlock.png");
+
+    fontIds.push_back("fonts/DS-DIGIT.ttf");
+
 	Scene::Init();
     level = new Level();
 	if (loadLevel_("levels/stage00.json", *level)) {
 		std::cout << "맵 로딩 완료" << std::endl;
 		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
+        tileMap.load(*level, 1);
 	}
 }
 
@@ -86,7 +114,22 @@ void SceneGame::Draw(sf::RenderWindow& window)
     //    std::round(v.getCenter().y));
     //window.setView(v);
 
+    tileMap.Draw(window);
 
+    for (auto& e : level->entities)
+    {
+        sf::RectangleShape box({ float(e.value("w",level->tileSize)),
+                                float(e.value("h",level->tileSize)) });
+        box.setPosition(float(e["x"]), float(e["y"]));
+        box.setFillColor(sf::Color::Transparent);
+        box.setOutlineThickness(-1);
+        box.setOutlineColor((e["type"] == "Door" &&
+            e["properties"].value("locked", false))
+            ? sf::Color::Red : sf::Color::Yellow);
+        window.draw(box);
+    }
+
+    /*
     const int ts = level->tileSize;      // 16
     const int gw = level->gridWidth;
     const int gh = level->gridHeight;
@@ -128,4 +171,8 @@ void SceneGame::Draw(sf::RenderWindow& window)
         }
         window.draw(box);
     }
+    */
+
+
+    
 }
