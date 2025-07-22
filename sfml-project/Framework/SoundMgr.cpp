@@ -33,7 +33,7 @@ void SoundMgr::Update(float dt)
 		if ((*it)->getStatus() == sf::Sound::Stopped)
 		{
 			waiting.push_back(*it);
-			playing.erase(it);
+			it = playing.erase(it);
 		}
 		else
 		{
