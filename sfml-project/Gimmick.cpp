@@ -2,6 +2,7 @@
 #include "Gimmick.h"
 #include "Player.h"
 
+//Json으로 들어온 타입을 GimmickType으로 반환
 static GimmickType StrToType(const std::string& str)
 {
 	if (str == "NormalBlock")
@@ -26,16 +27,18 @@ static GimmickType StrToType(const std::string& str)
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 {
-	int id = j.value("id", 0);
-	auto type = StrToType(j.at("type").get<std::string>()); //타입 저장
+	int id = j.value("id", 0); //키 있으면 그대로, 없으면 0
+	auto type = StrToType(j.at("type").get<std::string>()); //타입 문자열을 GimmickType 열거형으로 저장
 
+	//위치 좌표 픽셀 단위
 	float x = j.at("x").get<float>();
 	float y = j.at("y").get<float>();
 
-	float rot = j.value("rotation", 0.f);
+	float rot = j.value("rotation", 0.f); //키 있으면 그대로, 없으면 0
 	sf::Vector2f scl{ 1.f, 1.f }; //기존 scale 유지
-	sf::Vector2f sizePx{ 0.f, 0.f }; //픽셀 절대값 (선택)
+	//sf::Vector2f sizePx{ 0.f, 0.f }; //픽셀 절대값 (선택)
 
+	//스케일 작성 되어있으면 변환
 	if (j.contains("scale"))
 	{
 		if (j["scale"].is_array())
@@ -50,7 +53,7 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		}
 	}
 
-	nlohmann::json props = j.value("properties", nlohmann::json::object());
+	nlohmann::json props = j.value("properties", nlohmann::json::object()); //특정 기믹 전용 속성 묶음
 
 	return new Gimmick(id, type, { x, y }, scl, rot, props);
 }
@@ -167,15 +170,15 @@ void Gimmick::Update(float dt)
 			if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
 			{
 				Variables::KeyObtained = true;
-				SetActive(false);
+				body.setPosition({ p->GetPosition().x, p->GetPosition().y - GetLocalBounds().height });
 				break;
 			}
 		}
 		break;
 	case GimmickType::Door:
 		{
-			bool locked = properties.value("locked", true);
-			bool canOpen = (!locked) || Variables::KeyObtained;
+			bool locked = properties.value("locked", true); //이렇게 properties 사용
+			bool canOpen = locked || Variables::KeyObtained;
 
 			if (canOpen)
 			{
@@ -188,6 +191,10 @@ void Gimmick::Update(float dt)
 						break;
 					}
 				}
+			}
+			else
+			{
+				body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
 			}
 		}
 		

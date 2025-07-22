@@ -66,8 +66,8 @@ void SceneGame::Init()
 
     level = new Level();
 	if (loadLevel_("levels/stage00.json", *level)) {
-		std::cout << "�� �ε� �Ϸ�" << std::endl;
-		std::cout << "��ƼƼ ���� : " << level->entities.size() << std::endl;
+		std::cout << "맵 로딩 완료" << std::endl;
+		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap.load(*level, 1);
 
         LoadStage("levels/stage00.json");
