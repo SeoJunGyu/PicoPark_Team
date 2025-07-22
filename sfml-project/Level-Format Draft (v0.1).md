@@ -53,5 +53,5 @@ OBJECT → 각 사각형 {x,y,w,h} 또는 임의 구조 |
 
 ### 3.2 Entities layer example
 ```jsonc
-"entities": [ { "id": 101, "type": "Key", "x": 64, "y": 144 },  { "id": 102, "type": "Door", "x": 368, "y": 96, "properties": { "locked": true } }, { "id": 201, "type": "MovingPlatform",  "x": 128, "y": 192,  "properties": { "path":[[128,192],[256,192]], "speed":80 } } ] 
+"entities": [ { "id": 101, "type": "Key", "x": 64, "y": 144, "scale": [0.5,0.5] },  { "id": 102, "type": "Door", "x": 368, "y": 96, "properties": { "locked": true } }, { "id": 201, "type": "MovingPlatform",  "x": 128, "y": 192,  "properties": { "path":[[128,192],[256,192]], "speed":80 } } ] 
 ```

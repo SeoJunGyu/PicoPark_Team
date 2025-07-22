@@ -1,7 +1,26 @@
 #include "stdafx.h"
 #include "SceneDev2.h"
 #include "TextGo.h"
-#include "AniPlayer.h"
+#include "Player.h"
+#include "Gimmick.h"
+#include "json.hpp"
+#include <fstream>
+
+void SceneDev2::LoadStage(const std::string& jsonPath)
+{
+	Variables::ResetStage();
+
+	std::ifstream fin(jsonPath);
+	nlohmann::json j;
+	fin >> j;
+
+	for (const auto& entobj : j["entities"])
+	{
+		Gimmick* g = Gimmick::CreateFromJson(entobj);
+		g->Init();
+		AddGameObject(g);
+	}
+}
 
 SceneDev2::SceneDev2() : Scene(SceneIds::Dev2)
 {
@@ -9,12 +28,16 @@ SceneDev2::SceneDev2() : Scene(SceneIds::Dev2)
 
 void SceneDev2::Init()
 {
-	texIds.push_back("graphics/sprite_sheet.png");
-	fontIds.push_back("fonts/DS-DIGIT.ttf");
+	texIds.push_back("graphics/Characters/Icon/Player0.png");
+	texIds.push_back("graphics/Item/key.png");
+	texIds.push_back("graphics/Item/door.png");
+	texIds.push_back("graphics/Item/doorOpen.png");
+	texIds.push_back("graphics/Item/Button.png");
+	texIds.push_back("graphics/Item/Pad.png");
+	texIds.push_back("graphics/Item/Wall.png");
+	texIds.push_back("graphics/Item/WeightBlock.png");
 
-	ANI_CLIP_MGR.Load("animations/idle.csv");
-	ANI_CLIP_MGR.Load("animations/run.csv");
-	ANI_CLIP_MGR.Load("animations/jump.csv");
+	fontIds.push_back("fonts/DS-DIGIT.ttf");
 
 	TextGo* go = new TextGo("fonts/DS-DIGIT.ttf");
 	go->SetString("Dev 2");
@@ -25,7 +48,7 @@ void SceneDev2::Init()
 
 	AddGameObject(go);
 
-	AddGameObject(new AniPlayer());
+	AddGameObject(new Player());
 
 	Scene::Init();
 }

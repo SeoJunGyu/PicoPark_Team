@@ -2,6 +2,7 @@
 #include "Scene.h"
 class SceneDev2 : public Scene
 {
+
 protected:
 
 public:
@@ -10,6 +11,8 @@ public:
 	void Init() override;
 	void Enter() override;
 	void Update(float dt) override;
+
+	void LoadStage(const std::string& jsonPath);
 
 };
 
