@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SceneGame.h"
-#include "LevelLoader.h"
 
 static sf::Color makeColor(int tileId)
 {
