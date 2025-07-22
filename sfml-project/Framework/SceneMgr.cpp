@@ -2,11 +2,13 @@
 #include "SceneMgr.h"
 #include "SceneDev1.h"
 #include "SceneDev2.h"
+#include "SceneGame.h"
 
 void SceneMgr::Init()
 {
 	scenes.insert({ SceneIds::Dev1, new SceneDev1() });
 	scenes.insert({ SceneIds::Dev2, new SceneDev2() });
+	scenes.insert({ SceneIds::Game, new SceneGame()});
 
 	for (auto pair : scenes)
 	{
