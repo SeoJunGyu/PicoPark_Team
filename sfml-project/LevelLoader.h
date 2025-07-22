@@ -9,7 +9,7 @@ struct Level {
 	nlohmann::json entities;
 };
 
-bool loadLevel_(const std::string& path, Level& out)
+inline bool loadLevel_(const std::string& path, Level& out)
 {
 	std::ifstream f(path);
 	if (!f) { std::cerr << "file open fail\n"; return false; }

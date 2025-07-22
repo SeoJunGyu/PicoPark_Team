@@ -66,18 +66,21 @@ void Gimmick::SetPosition(const sf::Vector2f& pos)
 {
 	GameObject::SetPosition(pos);
 	body.setPosition(pos);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
 
 void Gimmick::SetRotation(float rot)
 {
 	GameObject::SetRotation(rot);
 	body.setRotation(rot);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
 
 void Gimmick::SetScale(const sf::Vector2f& s)
 {
 	GameObject::SetScale(s);
 	body.setScale(s);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
 
 void Gimmick::SetOrigin(const sf::Vector2f& o)
@@ -133,6 +136,8 @@ void Gimmick::Init()
 	SetPosition(GetPosition());
 	SetScale(GetScale());
 	SetRotation(GetRotation());
+
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
 
 void Gimmick::Release()
@@ -215,4 +220,14 @@ void Gimmick::Update(float dt)
 
 void Gimmick::Draw(sf::RenderWindow& window)
 {
+	if (!GetActive())
+	{
+		return;
+	}
+	window.draw(body);
+
+	if (Variables::isDrawHitBox)
+	{
+		hitBox.Draw(window);
+	}
 }
