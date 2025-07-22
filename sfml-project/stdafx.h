@@ -26,4 +26,5 @@
 #include "SceneMgr.h"
 #include "SoundMgr.h"
 #include "Framework.h"
+#include "HitBox.h"
 

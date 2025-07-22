@@ -32,3 +32,36 @@ enum class Sides
 	Right,
 	None,
 };
+
+enum class PlayerState
+{
+	Idle,
+	Walk,
+	Jump,
+	MagnetHold,
+	Absorbed, //흡수 당한 상태
+	AbsorbCharge, //다른 캐릭터 흡수 한 상태
+	AbsorbThrow, //흡수 공 쏜 상태
+	Dead,
+	Count,
+};
+
+enum class GimmickType
+{
+	//움직임 X
+	Key,
+	Door,
+	Buton,
+	BouncePad,
+	WeightPad,
+	KillLine,
+	NormalBlock,
+	NormalWall,
+	//움직임 -> Update 필요
+	MovingPlatform,
+	FallPlatform,
+	WeightBlock,
+	ColorPushBlock,
+	Rope,
+	Count,
+};
