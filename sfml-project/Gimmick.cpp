@@ -33,14 +33,15 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 	float y = j.at("y").get<float>();
 
 	float rot = j.value("rotation", 0.f);
-	sf::Vector2f scl{ 1.f, 1.f }; //scale
+	sf::Vector2f scl{ 1.f, 1.f }; //기존 scale 유지
+	sf::Vector2f sizePx{ 0.f, 0.f }; //픽셀 절대값 (선택)
 
 	if (j.contains("scale"))
 	{
 		if (j["scale"].is_array())
 		{
 			scl.x = j["scale"][0].get<float>();
-			scl.y = j["scale"][0].get<float>();
+			scl.y = j["scale"][1].get<float>();
 		}
 		else
 		{
@@ -100,6 +101,15 @@ void Gimmick::SetOrigin(Origins preset)
 
 void Gimmick::Init()
 {
+	
+}
+
+void Gimmick::Release()
+{
+}
+
+void Gimmick::Reset()
+{
 	switch (type)
 	{
 		// 움직임 없음
@@ -138,14 +148,6 @@ void Gimmick::Init()
 	SetRotation(GetRotation());
 
 	hitBox.UpdateTransform(body, body.getLocalBounds());
-}
-
-void Gimmick::Release()
-{
-}
-
-void Gimmick::Reset()
-{
 }
 
 void Gimmick::Update(float dt)

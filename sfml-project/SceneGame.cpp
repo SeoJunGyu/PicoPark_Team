@@ -65,13 +65,18 @@ void SceneGame::Init()
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
-	Scene::Init();
     level = new Level();
 	if (loadLevel_("levels/stage00.json", *level)) {
 		std::cout << "맵 로딩 완료" << std::endl;
 		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap.load(*level, 1);
+
+        LoadStage("levels/stage00.json");
 	}
+
+    AddGameObject(new Player());
+
+    Scene::Init();
 }
 
 void SceneGame::Enter()
@@ -116,6 +121,7 @@ void SceneGame::Draw(sf::RenderWindow& window)
 
     tileMap.Draw(window);
 
+    /*
     for (auto& e : level->entities)
     {
         sf::RectangleShape box({ float(e.value("w",level->tileSize)),
@@ -128,6 +134,8 @@ void SceneGame::Draw(sf::RenderWindow& window)
             ? sf::Color::Red : sf::Color::Yellow);
         window.draw(box);
     }
+    */
+    
 
     /*
     const int ts = level->tileSize;      // 16
