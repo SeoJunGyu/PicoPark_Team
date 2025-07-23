@@ -9,8 +9,8 @@ protected:
 	int width = 0, height = 0, tileSize = 16, firstSolid = 1;
 	std::vector<int> tiles;
 	//sf::VertexArray vertices; 
-	//std::vector<HitBox> solidHB; //�浹�� ���� �簢��
-	std::vector<sf::RectangleShape> solids;     // �浹�� �ڽ�(���� ��ǥ)
+	//std::vector<HitBox> solidHB;
+	std::vector<sf::RectangleShape> solids;
 
 	sf::Texture* texture = nullptr;
 	sf::Transform transform;

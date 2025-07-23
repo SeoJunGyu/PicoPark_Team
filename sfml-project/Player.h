@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Animator.h"
 
@@ -16,7 +16,9 @@ protected:
 	sf::Vector2f gravity = { 0.f, 500.f };
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
+	bool a = false; //낙하 테스트 변수
 	float speed = 100.f;
+	float jumpPower = 150.f;
 
 	HitBox hitBox;
 	TileMap* tilemap;

@@ -41,6 +41,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
         if (tstr == "PlayerSpawn")
         {
+            int tmp = entobj["properties"].value("playerIndex", 0);
             // ── 1) Spawn 좌표 수집
             float x = entobj.at("x").get<float>();
             float y = entobj.at("y").get<float>();
@@ -51,6 +52,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         if (Gimmick* g = Gimmick::CreateFromJson(entobj))
         {
             g->Init();
+            g->Reset();
             AddGameObject(g);
         }
     }
@@ -58,12 +60,17 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     int idx = 0;
     for (auto& pos : spawnPoints)
     {
-        Player* p = new Player(std::to_string(idx));              // Player 클래스 생성자 (index)
+        sf::Color col = makeColor(idx);
+
+        Player* p = new Player(idx, col, "Player" + std::to_string(idx));              // Player 클래스 생성자 (index)
         p->SetPosition(pos);
         p->SetScale({ 0.1f, 0.1f });
-        p->Init();    
+        p->Init();   
+        p->Reset();
+        p->SetTileMap(tileMap);
+
         Variables::players.push_back(p);
-        std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+        //std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
         AddGameObject(p);
         ++idx;
     }
@@ -143,8 +150,8 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
 
-
-    if (Variables::players[0] != nullptr)
+    /*
+     if (Variables::players[0] != nullptr)
     {
         sf::Vector2f playerPos = Variables::players[0]->GetPosition();
 
@@ -152,8 +159,8 @@ void SceneGame::Update(float dt)
         sf::Vector2f viewSize = worldView.getSize();
         sf::Vector2f halfSize = viewSize * 0.5f;
         sf::Vector2f mapSize = {
-         (float)level->gridWidth * level->tileSize,  
-         (float)level->gridHeight * level->tileSize    
+         (float)level->gridWidth * level->tileSize,
+         (float)level->gridHeight * level->tileSize
         };
 
         playerPos.x = Utils::Clamp(playerPos.x, 0.f, mapSize.x);
@@ -162,15 +169,17 @@ void SceneGame::Update(float dt)
         int tileX = static_cast<int>(playerPos.x) / level->tileSize;
         int tileY = static_cast<int>(playerPos.y) / level->tileSize;
 
-        if (tileMap.isSolid(tileX, tileY)) {
+        if (tileMap->isSolid(tileX, tileY)) {
             //std::cout << "충돌" << std::endl;
             playerPos = Variables::players[0]->getPrvPos();
         }
         playerPos.x = Utils::Clamp(playerPos.x, 0.f, mapSize.x);
-        playerPos.y = Utils::Clamp(playerPos.y, 0.f, mapSize.y);
+        playerPos.y = Utils::Clamp(playerPos.y, 20.f, mapSize.y);
         Variables::players[0]->SetPosition(playerPos);
-       
+
     }
+    */
+    
 
     //Variables::players[0]->SetPosition({ 48.f, 64.f });
     //std::cout << Variables::players[0]->GetPosition().x << " / " << Variables::players[0]->GetPosition().y << std::endl;
@@ -178,7 +187,7 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
-    tileMap.Draw(window);
+    tileMap->Draw(window);
     Scene::Draw(window);
     //auto activeView = FRAMEWORK.GetWindow().getView();
     //std::cout << "Active view size: "
