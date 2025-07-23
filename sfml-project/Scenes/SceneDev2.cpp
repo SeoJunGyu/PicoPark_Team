@@ -51,3 +51,21 @@ void SceneDev2::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::Dev1);
 	}
 }
+
+void SceneDev2::DrawImGui()
+{
+	//테스트코드용
+   ImGui::Begin("Debug");  // 창을 띄우고
+
+   
+   if (ImGui::Button("Look at this pretty button"))//내용을 채우고
+   {
+	   // 버튼 클릭 시 수행할 테스트 코드 ↓
+	   buttonClicked = !buttonClicked;                // 토글
+	   std::cout << "Debug 버튼이 눌렸습니다!\n";     // 콘솔 로그
+   }
+   ImGui::Checkbox("checkbox", &buttonClicked);
+
+
+  ImGui::End(); //종료
+}

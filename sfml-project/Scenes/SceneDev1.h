@@ -6,6 +6,7 @@ class TextGo;
 class SceneDev1 : public Scene
 {
 protected:
+
 	enum class CollisionMode
 	{
 		Rectangle,
@@ -21,7 +22,8 @@ protected:
 	
 	CollisionMode currentMode = CollisionMode::Rectangle;
 	bool isColliding = false;
-
+	bool showCheckbox = false;
+	bool buttonClicked = false;
 public:
 	SceneDev1();
 	~SceneDev1() override;

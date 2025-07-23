@@ -181,6 +181,23 @@ void SceneDev1::Update(float dt)
 			collisionText->SetFillColor(sf::Color::White);
 		}
 	}
+	//테스트코드용
+	ImGui::Begin("UI");  // 창을 띄우고
+
+
+	if (ImGui::Button("Look at this pretty button"))//내용을 채우고
+	{
+		showCheckbox = true;
+	}
+	if (showCheckbox)
+	{
+		ImGui::Checkbox("checkbox", &buttonClicked);     // 콘솔 로그
+	}
+
+	ImGui::End(); //종료
+
+
+
 
 	// 씬 전환
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
@@ -192,19 +209,22 @@ void SceneDev1::Update(float dt)
 void SceneDev1::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
-	
-	if (currentMode == CollisionMode::Rectangle)
+	if (buttonClicked)
 	{
-		if (rect1)
-			window.draw(*rect1);
-		if (rect2)
-			window.draw(*rect2);
+		if (currentMode == CollisionMode::Rectangle)
+		{
+			if (rect1)
+				window.draw(*rect1);
+			if (rect2)
+				window.draw(*rect2);
+		}
+		else // CollisionMode::Circle
+		{
+			if (circle1)
+				window.draw(*circle1);
+			if (circle2)
+				window.draw(*circle2);
+		}
 	}
-	else // CollisionMode::Circle
-	{
-		if (circle1)
-			window.draw(*circle1);
-		if (circle2)
-			window.draw(*circle2);
-	}
+
 }

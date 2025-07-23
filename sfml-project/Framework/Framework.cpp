@@ -23,7 +23,7 @@ void Framework::Init(int w, int h, const std::string& t)
 
 void Framework::Do()
 {
-    static bool buttonClicked = false; //테스트코드용
+    
     while (window.isOpen())
     {
         sf::Time dt = clock.restart();
@@ -59,17 +59,8 @@ void Framework::Do()
         ImGui::SFML::Update(window, sf::seconds(realDeltaTime));
         SCENE_MGR.Update(deltaTime);
 
-        ImGui::Begin("Debug");  //테스트코드용
-
-        if (ImGui::Button("Look at this pretty button"))
-        {
-            // 버튼 클릭 시 수행할 테스트 코드 ↓
-            buttonClicked = !buttonClicked;                // 토글
-            std::cout << "Debug 버튼이 눌렸습니다!\n";     // 콘솔 로그
-        }
-
-
-        ImGui::End();
+        SCENE_MGR.GetCurrentScene()->DrawImGui(); //각 다를수있는 gui 가르키는용도
+   
 
         // Draw
         window.clear();
