@@ -11,6 +11,8 @@ protected:
 	sf::Sprite body;
 	Animator animator;
 
+
+	sf::Vector2f prvPos;
 	sf::Vector2f gravity = { 0.f, 500.f };
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
@@ -19,7 +21,7 @@ protected:
 	HitBox hitBox;
 	TileMap* tilemap;
 
-	//ÇÃ·¹ÀÌ¾î ±¸ºÐ º¯¼ö
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int index = 0;
 	sf::Color tint = sf::Color::White;
 
@@ -27,6 +29,7 @@ public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;
 
+	const sf::Vector2f& getPrvPos() const { return prvPos; }
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
 	void SetScale(const sf::Vector2f& s) override;

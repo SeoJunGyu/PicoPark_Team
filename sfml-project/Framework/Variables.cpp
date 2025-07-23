@@ -9,5 +9,6 @@ std::vector<Player*> Variables::players{};
 void Variables::ResetStage()
 {
 	KeyObtained = false;
+	for (auto* p : players) delete p;
 	players.clear();
 }

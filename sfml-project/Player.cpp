@@ -10,7 +10,6 @@ Player::Player(int idx, const sf::Color& c, const std::string& name)
 void Player::SetPosition(const sf::Vector2f& pos)
 {
 	GameObject::SetPosition(pos);
-
 	body.setPosition(pos);
 }
 
@@ -114,6 +113,8 @@ void Player::Update(float dt)
 	{
 		velocity += gravity * dt;
 	}
+	prvPos = position;
+	position += velocity * dt;
 	//position += velocity * dt;
 	if (position.y > 0.f)
 	{
@@ -123,11 +124,11 @@ void Player::Update(float dt)
 	}
 
 	//Collision
-	//°¡·Î Ãæµ¹ °Ë»ç
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½Ë»ï¿½
 	position.x += velocity.x * dt;
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	//-1 +2 -2 : Æ´»õ ¶³¸² ¹æÁö¿ë ¿©À¯ ÇÈ¼¿
+	//-1 +2 -2 : Æ´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¼ï¿½
 	int leftTx = int((hitBox.GetLeft()) / tilemap->GetTileSize());
 	int rightTx = int((hitBox.GetRight() - 1) / tilemap->GetTileSize());
 	int topTy = int((hitBox.GetTop() + 2) / tilemap->GetTileSize());
@@ -135,15 +136,15 @@ void Player::Update(float dt)
 
 	bool collideX = false;
 
-	//°æ°è°Ë»ç
+	//ï¿½ï¿½ï¿½Ë»ï¿½
 	if (velocity.x > 0.f && (tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, bottomTy)))
 	{
-		position.x = (rightTx * tilemap->GetTileSize()) - hitBox.GetWidth(); //¿À¸¥ÂÊ º®¿¡¼­ È÷Æ®¹Ú½º¸¸Å­ ¿ÞÂÊÀ¸·Î
+		position.x = (rightTx * tilemap->GetTileSize()) - hitBox.GetWidth(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ú½ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		collideX = true;
 	}
 	else if (velocity.x < 0.f && (tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(rightTx, bottomTy)))
 	{
-		position.x = (leftTx + 1) * tilemap->GetTileSize(); //¿ÞÂÊ º®¿¡¼­ ¿À¸¥ÂÊÀ¸·Î
+		position.x = (leftTx + 1) * tilemap->GetTileSize(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		collideX = true;
 	}
 
@@ -152,38 +153,40 @@ void Player::Update(float dt)
 		velocity.x = 0.f;
 	}
 
-	//¼¼·Î Ãæµ¹
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹
 	position.y += velocity.y * dt;
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	leftTx = int((hitBox.GetLeft() + 1) / tilemap->GetTileSize());
 	rightTx = int((hitBox.GetRight() - 1) / tilemap->GetTileSize());
 
-	if (velocity.y > 0.f) //³«ÇÏ
+	if (velocity.y > 0.f) //ï¿½ï¿½ï¿½ï¿½
 	{
 		bottomTy = int((hitBox.GetBottom()) / tilemap->GetTileSize());
 		if (tilemap->isSolid(leftTx, bottomTy) || tilemap->isSolid(rightTx, bottomTy))
 		{
-			position.y = bottomTy * tilemap->GetTileSize() - hitBox.GetHeight(); //¹Ù´Ú À§·Î »ó½Â
+			position.y = bottomTy * tilemap->GetTileSize() - hitBox.GetHeight(); //ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			velocity.y = 0.f;
 			isGrounded = true;
 		}
 	}
-	else if (velocity.y < 0.f) //»ó½Â
+	else if (velocity.y < 0.f) //ï¿½ï¿½ï¿½
 	{
 		topTy = int((hitBox.GetTop()) / tilemap->GetTileSize());
 		if (tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(rightTx, topTy))
 		{
-			position.y = (topTy + 1) * tilemap->GetTileSize(); //ÃµÀå ¹Ø
+			position.y = (topTy + 1) * tilemap->GetTileSize(); //Ãµï¿½ï¿½ ï¿½ï¿½
 			velocity.y = 0.f;
 		}
 	}
 
-	//À§Ä¡ ¹× Å©±â ¼³Á¤
+	//ï¿½ï¿½Ä¡ ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	SetPosition(position);
 	
 	if (h != 0.f)
 	{
+		SetScale({ 0.1f * (h > 0.f ? 1.f : -1.f), 0.1f });
+		//SetScale(h > 0.f ? sf::Vector2f(1.0f, 1.0) : sf::Vector2f(-1.f, 1.0f));
 		sf::Vector2f s = GetScale();
 		s.x = std::abs(s.x) * (h > 0.f ? 1.f : -1.f);
 		SetScale(s);

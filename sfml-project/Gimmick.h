@@ -55,4 +55,3 @@ public:
 	HitBox GetHitBox() const { return hitBox; }
 
 };
-
