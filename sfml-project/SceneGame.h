@@ -8,7 +8,7 @@ class SceneGame : public Scene
 {
 protected:
 	Level* level = nullptr;
-	TileMap tileMap;
+	TileMap* tileMap;
 
 public:
 	SceneGame();

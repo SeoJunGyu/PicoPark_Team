@@ -16,7 +16,15 @@ static sf::Color makeColor(int tileId)
         sf::Color(255, 96,122),
         sf::Color(128,128,128)
     };
-    return palette[(tileId - 1) % palette.size()];
+
+    static std::vector<sf::Color> palette2 = {
+        sf::Color::Blue,
+        sf::Color(207, 159, 253),
+        sf::Color::Green,
+        sf::Color::Yellow
+    };
+    //return palette[(tileId - 1) % palette.size()];
+    return palette2[tileId];
 }
 
 void SceneGame::LoadStage(const std::string& jsonPath)
@@ -29,8 +37,42 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
     for (const auto& entobj : j["entities"])
     {
+        std::string t = entobj["type"];
+        if (t == "PlayerSpawn")
+        {
+            int pIndex = entobj["properties"].value("playerIndex", 0);
+            sf::Color col = makeColor(pIndex);
+
+            Player* p = new Player(pIndex, col, "Player" + std::to_string(pIndex)); //오브젝트 이름 설정
+            p->Init();
+            p->Reset();
+            p->SetPosition({ entobj["x"], entobj["y"] });
+
+            if (entobj.contains("scale"))
+            {
+                if (entobj["scale"].is_array())
+                {
+                    p->SetScale({ entobj["scale"][0].get<float>(), entobj["scale"][1].get<float>() });
+                    std::cout << entobj["scale"][0].get<float>() << std::endl;
+                }
+                else
+                {
+                    float uni = entobj["scale"].get<float>();
+                    p->SetScale({ uni, uni });
+                }
+            }
+
+            p->SetTileMap(tileMap);
+            
+            Variables::players.push_back(p);
+            AddGameObject(p);
+            
+            continue; //다음 엔티티
+        }
+
         Gimmick* g = Gimmick::CreateFromJson(entobj);
         g->Init();
+        g->Reset();
         AddGameObject(g);
     }
 }
@@ -56,6 +98,9 @@ SceneGame::~SceneGame()
 void SceneGame::Init()
 {
     texIds.push_back("graphics/Characters/Icon/Player0.png");
+    texIds.push_back("graphics/Characters/Icon/Player1.png");
+    texIds.push_back("graphics/Characters/Icon/Player2.png");
+    texIds.push_back("graphics/Characters/Icon/Player3.png");
     texIds.push_back("graphics/Item/key.png");
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
@@ -65,23 +110,25 @@ void SceneGame::Init()
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
     level = new Level();
-	if (loadLevel_("levels/stage00.json", *level)) {
-		std::cout << "맵 로딩" << std::endl;
-		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
-        tileMap.load(*level, 1);
-
-        LoadStage("levels/stage00.json");
-	}
+    tileMap = new TileMap();
 
     Scene::Init();
 }
 
 void SceneGame::Enter()
 {
-Scene::Enter();
-worldView.setSize(level->gridWidth  * level->tileSize,   
-                  level->gridHeight * level->tileSize);  
-worldView.setCenter(worldView.getSize() / 2.f);
+    Scene::Enter();
+    if (loadLevel_("levels/stage00.json", *level)) {
+        std::cout << "맵 로딩" << std::endl;
+        std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
+        tileMap->load(*level, 1);
+
+        LoadStage("levels/stage00.json");
+    }
+
+    worldView.setSize(level->gridWidth  * level->tileSize,   
+                      level->gridHeight * level->tileSize);  
+    worldView.setCenter(worldView.getSize() / 2.f);
 
 //float winRatio  = FRAMEWORK.GetWindow().getSize().x / (float)FRAMEWORK.GetWindow().getSize().y;
 //float viewRatio = worldView.getSize().x / worldView.getSize().y;
@@ -102,12 +149,14 @@ worldView.setCenter(worldView.getSize() / 2.f);
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
+
+    //std::cout << Variables::players[0]->GetPosition().x << ", " << Variables::players[0]->GetPosition().y << std::endl;
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
     Scene::Draw(window);
-    //auto activeView = FRAMEWORK.GetWindow().getView();   // �� **�׸��� ���� ȣ��**
+    //auto activeView = FRAMEWORK.GetWindow().getView();
     //std::cout << "Active view size: "
     //    << activeView.getSize().x << ", "
     //    << activeView.getSize().y << '\n';
@@ -116,7 +165,7 @@ void SceneGame::Draw(sf::RenderWindow& window)
     //    std::round(v.getCenter().y));
     //window.setView(v);
 
-    tileMap.Draw(window);
+    tileMap->Draw(window);
 
     /*
     for (auto& e : level->entities)

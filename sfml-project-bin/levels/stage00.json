@@ -25,14 +25,14 @@
   ],
 
   "entities": [
-    { "id": 101, "type": "Key",  "x": 48,  "y": 64, "scale": [0.3,0.3] },
-    { "id": 102, "type": "Door", "x": 128, "y": 48, "h" : 32, "scale": [0.3,0.3],
+    { "id": 101, "type": "Key",  "x": 20,  "y": 32, "scale": [0.1,0.1] },
+    { "id": 102, "type": "Door", "x": 128, "y": 48, "h" : 32, "scale": [0.2,0.2],
       "properties": { "locked": true } },
     {
       "id": 1,
       "type": "PlayerSpawn",
-      "x": 32, "y": 192,
-      "properties": { "playerIndex": 0, "color": "Orange" }
+      "x": 32, "y": 64, "scale": [0.1,0.1],
+      "properties": { "playerIndex": 0, "color": "Blue" }
     }
   ]
 }

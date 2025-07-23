@@ -2,24 +2,29 @@
 #include "GameObject.h"
 #include "Animator.h"
 
+class TileMap;
 
 class Player :
     public GameObject
 {
 protected:
 	sf::Sprite body;
-	std::string texId = "graphics/Characters/Icon/Player0.png";
 	Animator animator;
 
 	sf::Vector2f gravity = { 0.f, 500.f };
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
-	float speed = 500.f;
+	float speed = 100.f;
 
 	HitBox hitBox;
+	TileMap* tilemap;
+
+	//플레이어 구분 변수
+	int index = 0;
+	sf::Color tint = sf::Color::White;
 
 public:
-	Player(const std::string& name = "");
+	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;
 
 	void SetPosition(const sf::Vector2f& pos) override;
@@ -45,5 +50,7 @@ public:
 	}
 
 	HitBox GetHitBox() const { return hitBox; }
+
+	void SetTileMap(TileMap* tilemap) { this->tilemap = tilemap; }
 };
 

@@ -9,6 +9,8 @@ std::unordered_map<Axis, AxisInfo> InputMgr::axisInfoMap;
 
 sf::Vector2i InputMgr::mousePosition;
 
+std::array<PlayerKeyMap, 4> InputMgr::keyMaps;
+
 void InputMgr::Init()
 {
 	AxisInfo infoH;
@@ -25,6 +27,22 @@ void InputMgr::Init()
 	infoV.negatives.push_back(sf::Keyboard::W);
 	infoV.negatives.push_back(sf::Keyboard::Up);
 	axisInfoMap.insert({ Axis::Vertical , infoV });
+
+	keyMaps[0].posH = { sf::Keyboard::D };
+	keyMaps[0].negH = { sf::Keyboard::A };
+	keyMaps[0].jump = sf::Keyboard::W;
+
+	keyMaps[1].posH = { sf::Keyboard::L };
+	keyMaps[1].negH = { sf::Keyboard::J };
+	keyMaps[1].jump = sf::Keyboard::I;
+
+	keyMaps[2].posH = { sf::Keyboard::Right };
+	keyMaps[2].negH = { sf::Keyboard::Left };
+	keyMaps[2].jump = sf::Keyboard::Up;
+
+	keyMaps[3].posH = { sf::Keyboard::H };
+	keyMaps[3].negH = { sf::Keyboard::F };
+	keyMaps[3].jump = sf::Keyboard::T;
 }
 
 void InputMgr::Clear() 
@@ -152,6 +170,28 @@ float InputMgr::GetAxis(Axis axis)
 	return findIt->second.value;
 }
 
+float InputMgr::GetAxis(int idx, Axis axis)
+{
+	auto& keymap = keyMaps[idx];
+	const std::list<int>& pos = (axis==Axis::Horizontal) ? keymap.posH : std::list<int>();
+	const std::list<int>& neg = (axis==Axis::Horizontal) ? keymap.negH : std::list<int>();
+
+	for (auto it = heldKeys.rbegin(); it != heldKeys.rend(); it++)
+	{
+		int code = *it;
+		if (Contains(pos, code))
+		{
+			return 1.f;
+		}
+		if (Contains(neg, code))
+		{
+			return -1.f;
+		}
+	}
+
+	return 0.0f;
+}
+
 bool InputMgr::GetMouseButtonDown(sf::Mouse::Button key)
 {
 	return Contains(downKeys, sf::Keyboard::KeyCount + key);;
@@ -170,5 +210,10 @@ bool InputMgr::GetMouseButton(sf::Mouse::Button key)
 sf::Vector2i InputMgr::GetMousePosition()
 {
 	return mousePosition; 
+}
+
+bool InputMgr::GetJump(int idx)
+{
+	return GetKeyDown(keyMaps[idx].jump);
 }
 

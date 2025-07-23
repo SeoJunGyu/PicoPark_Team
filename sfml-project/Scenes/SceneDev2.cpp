@@ -48,7 +48,7 @@ void SceneDev2::Init()
 
 	AddGameObject(go);
 
-	AddGameObject(new Player());
+	//AddGameObject(new Player());
 
 	Scene::Init();
 }
