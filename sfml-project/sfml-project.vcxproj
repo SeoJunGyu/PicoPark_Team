@@ -182,6 +182,8 @@
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Gimmick.h" />
+    <ClInclude Include="GimmickTypeConv.hpp" />
+    <ClInclude Include="JsonSerializer.hpp" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />

@@ -32,8 +32,8 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	bool load(const Level& lvl, int solidStart); //Json -> TileMap
-	bool isSolid(int tx, int ty) const;         // �浹
-	int  getTile(int tx, int ty) const;         // ID ��ȸ
-	void setTile(int tx, int ty, int id);       // �����Ϳ� ����
+	bool isSolid(int tx, int ty) const;        
+	int  getTile(int tx, int ty) const;        
+	void setTile(int tx, int ty, int id);      
 };
 

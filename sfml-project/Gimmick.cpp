@@ -1,30 +1,15 @@
 #include "stdafx.h"
 #include "Gimmick.h"
 #include "Player.h"
-
-//Json으로 들어온 타입을 GimmickType으로 반환
-static GimmickType StrToType(const std::string& str)
-{
-	if (str == "Key")
-	{
-		return GimmickType::Key;
-	}
-	if (str == "Door")
-	{
-		return GimmickType::Door;
-	}
-	if (str == "PlayerSpawn")
-	{
-		return GimmickType::PlayerSpawn;
-	}
-
-	return GimmickType::Key;
-}
+#include "GimmickTypeConv.hpp"
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 {
 	int id = j.value("id", 0); //키 있으면 그대로, 없으면 0
 	auto type = StrToType(j.at("type").get<std::string>()); //타입 문자열을 GimmickType 열거형으로 저장
+
+	if (type == GimmickType::PlayerSpawn)
+		return nullptr;
 
 	//위치 좌표 픽셀 단위
 	float x = j.at("x").get<float>();
@@ -61,6 +46,7 @@ Gimmick::Gimmick(int id, GimmickType t, const sf::Vector2f& pos, const sf::Vecto
 	SetScale(scl);
 	SetRotation(rot);
 }
+
 
 void Gimmick::SetPosition(const sf::Vector2f& pos)
 {
@@ -120,6 +106,8 @@ void Gimmick::Reset()
 		break;
 	case GimmickType::Buton:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
+		break;
+	case GimmickType::PlayerSpawn:
 		break;
 
 		//움직임 있음

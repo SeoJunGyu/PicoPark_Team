@@ -9,7 +9,6 @@ Player::Player(const std::string& name)
 void Player::SetPosition(const sf::Vector2f& pos)
 {
 	GameObject::SetPosition(pos);
-
 	body.setPosition(pos);
 }
 
@@ -92,18 +91,20 @@ void Player::Update(float dt)
 	{
 		velocity += gravity * dt;
 	}
+	prvPos = position;
 	position += velocity * dt;
 	if (position.y > 0.f)
 	{
 		velocity.y = 0.f;
-		position.y = 0.f;
+		//position.y = 0.f;
 		isGrounded = true;
 	}
 	SetPosition(position);
 
 	if (h != 0.f)
 	{
-		SetScale(h > 0.f ? sf::Vector2f(1.0f, 1.0) : sf::Vector2f(-1.f, 1.0f));
+		SetScale({ 0.1f * (h > 0.f ? 1.f : -1.f), 0.1f });
+		//SetScale(h > 0.f ? sf::Vector2f(1.0f, 1.0) : sf::Vector2f(-1.f, 1.0f));
 	}
 
 	// Ani

@@ -143,5 +143,5 @@ void TileMap::setTile(int tx, int ty, int id)
 	}
 
 	tiles[ty * width + tx] = id;
-	load({ width, height, tileSize, tiles }, firstSolid); //전체 타일맵 재빌드
+	//load({ width, height, tileSize, tiles }, firstSolid); //전체 타일맵 재빌드
 }
