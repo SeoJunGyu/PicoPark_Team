@@ -95,6 +95,9 @@ void Gimmick::Release()
 
 void Gimmick::Reset()
 {
+	sortingLayer = SortingLayers::Foreground;
+	sortingOrder = 0;
+
 	switch (type)
 	{
 		// 움직임 없음
@@ -156,13 +159,13 @@ void Gimmick::Update(float dt)
 	case GimmickType::Door:
 		{
 			bool locked = properties.value("locked", true); //이렇게 properties 사용
-			bool canOpen = locked || Variables::KeyObtained;
+			bool canOpen = locked == false || Variables::KeyObtained;
 
 			if (canOpen)
 			{
 				for (Player* p : Variables::players)
 				{
-					if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+					if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect) && canOpen)
 					{
 						body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
 						//SetActive(false);

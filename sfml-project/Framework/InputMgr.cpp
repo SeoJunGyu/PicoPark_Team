@@ -40,9 +40,9 @@ void InputMgr::Init()
 	keyMaps[2].negH = { sf::Keyboard::Left };
 	keyMaps[2].jump = sf::Keyboard::Up;
 
-	keyMaps[3].posH = { sf::Keyboard::H };
-	keyMaps[3].negH = { sf::Keyboard::F };
-	keyMaps[3].jump = sf::Keyboard::T;
+	keyMaps[3].posH = { sf::Keyboard::Numpad6 };
+	keyMaps[3].negH = { sf::Keyboard::Numpad4 };
+	keyMaps[3].jump = sf::Keyboard::Numpad8;
 }
 
 void InputMgr::Clear() 

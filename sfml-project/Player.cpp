@@ -68,7 +68,7 @@ void Player::Release()
 void Player::Reset()
 {
 	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 0;
+	sortingOrder = 100;
 
 	switch (index)
 	{
@@ -94,16 +94,36 @@ void Player::Update(float dt)
 {
 	animator.Update(dt);
 
-	if (isGrounded && InputMgr::GetJump(index))
+	if (InputMgr::GetJump(index))
 	{
-		isGrounded = false;
-		a = false;
-		velocity.y = -jumpPower;    // 충분히 큰 값, e.g. 300.f
+		
+		//isFallen = false;
+		
+
+		jumpBufferCounter = jumpBuffer; //점프 입력 기록
+	}
+
+	//코요테 타임 갱신
+	if (isGrounded)
+	{
+		coyoteCounter = coyoteTime; //지면에 붙어 있으면 리필
 	}
 	else
 	{
-		a = true;
+		coyoteCounter -= dt; //공중이면 감소
 	}
+
+	//점프 수행 조건
+	if (coyoteCounter > 0.f && jumpBufferCounter > 0.f)
+	{
+		isGrounded = false;
+		velocity.y = -jumpPower;
+		coyoteCounter = 0.f; //소모
+		jumpBufferCounter = 0.f;
+	}
+
+	//중력 적용
+	jumpBufferCounter -= dt; //시간이 흐르면 버퍼 소멸
 
 	float h = InputMgr::GetAxis(index, Axis::Horizontal);
 	velocity.x = h * speed;
@@ -123,9 +143,9 @@ void Player::Update(float dt)
 
 	int ts = tilemap->GetTileSize();
 	int leftTx = int(hitBox.GetLeft() / ts);
-	int rightTx = int((hitBox.GetRight() - 1) / ts);
-	int topTy = int((hitBox.GetTop() + 1) / ts);
-	int botTy = int((hitBox.GetBottom() - 1) / ts);
+	int rightTx = int((hitBox.GetRight() + 0.2f) / ts);
+	int topTy = int((hitBox.GetTop() + 0.2f) / ts);
+	int botTy = int((hitBox.GetBottom() + 0.2f) / ts);
 
 	// 가로
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
@@ -146,27 +166,40 @@ void Player::Update(float dt)
 	body.setPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	leftTx = int(hitBox.GetLeft() / ts);
-	rightTx = int((hitBox.GetRight() - 1) / ts);
-	topTy = int((hitBox.GetTop() + 1) / ts);
-	botTy = int((hitBox.GetBottom() - 1) / ts);
+	rightTx = int((hitBox.GetRight() + 0.2f) / ts);
+	topTy = int((hitBox.GetTop() + 0.2f) / ts);
+	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
 
 	bool hitBottom = tilemap->isSolid(leftTx, botTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitTop = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(rightTx, topTy);
-	if (velocity.y >= 0.f && hitBottom)
+
+	bool wasGround = isGrounded;
+
+	if (velocity.y >= 0.f)
+	{
+		if (hitBottom)
+		{
+			position.y = prvPos.y;
+			//position.y = std::floor(botTy * ts - hitBox.GetHeight());
+			velocity.y = 0.f;
+			isGrounded = true;  // 착지
+			//isFallen = false;
+		}
+		else
+		{
+			if (wasGround)
+			{
+				isGrounded = false;
+				//isFallen = true;
+			}
+		}
+	}
+	else if (velocity.y < 0.f && hitTop)
 	{
 		position.y = prvPos.y;
+		//position.y = std::floor((topTy + 1) * ts);
 		velocity.y = 0.f;
-		isGrounded = true;  // 착지
-	}
-	else if (a)
-	{
-		velocity.y = 100.f;
-		isGrounded = true;
-	}
-	if (velocity.y < 0.f && hitTop)
-	{
-		position.y = prvPos.y;
-		velocity.y = 0.f;
+		//isGrounded = true;
 	}
 
 	if (h != 0.f)
@@ -179,9 +212,8 @@ void Player::Update(float dt)
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	
-	//std::cout << hitBox.rect.getPosition().x << " / " << hitBox.rect.getPosition().y << std::endl;
+	//std::cout << hitBottom << " / " << hitTop << " / " << velocity.y << " / " << isGrounded << std::endl;
 	// Ani
-	
 }
 
 void Player::Draw(sf::RenderWindow& window)

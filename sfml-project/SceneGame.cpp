@@ -39,6 +39,13 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     {
         std::string tstr = entobj.at("type").get<std::string>();
 
+        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
+        {
+            g->Init();
+            g->Reset();
+            AddGameObject(g);
+        }
+
         if (tstr == "PlayerSpawn")
         {
             int tmp = entobj["properties"].value("playerIndex", 0);
@@ -47,13 +54,6 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             float y = entobj.at("y").get<float>();
             spawnPoints.emplace_back(x, y);
             continue;          // Gimmick 생성 생략
-        }
-
-        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
-        {
-            g->Init();
-            g->Reset();
-            AddGameObject(g);
         }
     }
 
