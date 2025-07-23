@@ -21,5 +21,6 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void LoadStage(const std::string& jsonPath);
+	void ClearStage();
 };
 

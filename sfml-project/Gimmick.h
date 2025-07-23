@@ -26,6 +26,10 @@ protected:
 
 	HitBox hitBox;
 
+	bool locked; //이렇게 properties 사용
+	bool opened = false;
+	bool waColliding = false;
+
 public:
 	Gimmick(int id, GimmickType t, const sf::Vector2f& pos, const sf::Vector2f& scl, float rot, nlohmann::json props);
 	virtual ~Gimmick() = default;
@@ -53,5 +57,7 @@ public:
 	}
 
 	HitBox GetHitBox() const { return hitBox; }
+
+	//Gimmick function
 
 };

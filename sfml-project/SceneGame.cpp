@@ -29,6 +29,7 @@ static sf::Color makeColor(int tileId)
 
 void SceneGame::LoadStage(const std::string& jsonPath)
 {
+    ClearStage();
     Variables::ResetStage();
     std::vector<sf::Vector2f> spawnPoints;
     std::ifstream fin(jsonPath);
@@ -43,6 +44,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         {
             g->Init();
             g->Reset();
+            Variables::gimmicks.push_back(g);
             AddGameObject(g);
         }
 
@@ -74,6 +76,17 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         AddGameObject(p);
         ++idx;
     }
+}
+
+void SceneGame::ClearStage()
+{
+    for (auto* obj : gameObjects) 
+    {
+        delete obj;
+    }
+    gameObjects.clear();
+    Variables::players.clear();
+    Variables::gimmicks.clear();
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
