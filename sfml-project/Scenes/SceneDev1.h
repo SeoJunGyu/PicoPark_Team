@@ -24,11 +24,19 @@ protected:
 	TextGo* collisionText;
 	TextGo* modeText;
 
+
+
 	int tileID = -1;
+	int gridwidth = 10;
+	int gridheight = 6;
 	int mapwidth;
 	int mapheight;
 	int tilesize;
+
+	sf::RectangleShape gridCellShape;
+	sf::Color gridLineColor;
 	std::vector<std::vector<int>> mapArray;
+
 
 	CollisionMode currentMode = CollisionMode::Rectangle;
 	bool isColliding = false;

@@ -92,10 +92,16 @@ void SceneDev1::Init()
 		tex.loadFromFile(f);
 		tiletextures.push_back(tex);
 	};
-	tilesize = 32;
-	mapwidth = FRAMEWORK.GetWindowSizeF().x / tilesize;
-	mapheight = FRAMEWORK.GetWindowSizeF().y / tilesize;
-
+	tilesize = 16;
+	sf::Vector2u winSz = FRAMEWORK.GetWindowSize();
+	mapwidth = gridwidth;
+	mapheight = gridheight;
+	
+	gridLineColor = sf::Color(255, 255, 255, 128);
+	gridCellShape = sf::RectangleShape(sf::Vector2f(float(tilesize), float(tilesize)));
+	gridCellShape.setFillColor(sf::Color::Green);
+	gridCellShape.setOutlineColor(gridLineColor);
+	gridCellShape.setOutlineThickness(3.f);
 
 	mapArray.assign(mapheight, std::vector<int>(mapwidth, -1));
 
@@ -227,7 +233,7 @@ void SceneDev1::Update(float dt)
 			};
 			if (tileID == i)
 			{
-				ImGui::SameLine(0, 0);
+				ImGui::SameLine(0 , 0);
 				ImGui::GetWindowDrawList()->AddRect(
 					ImGui::GetItemRectMin(),
 					ImGui::GetItemRectMax(),
@@ -239,12 +245,11 @@ void SceneDev1::Update(float dt)
 				ImGui::SameLine(); // 마지막 줄에 빈 공간 추가
 			}
 		}
+		auto pos = InputMgr::GetMousePosition();
+		int tx = pos.x / tilesize;
+		int ty = pos.y / tilesize;
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left) && tileID >= 0)
 		{
-			auto pos = InputMgr::GetMousePosition();
-			int tx = pos.x / tilesize;
-			int ty = pos.y / tilesize;
-
 			if (tx >= 0 && tx < mapwidth && ty >= 0 && ty < mapheight)
 			{
 				mapArray[ty][tx] = tileID;
@@ -252,10 +257,6 @@ void SceneDev1::Update(float dt)
 		}
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Right))
 		{
-			auto pos = InputMgr::GetMousePosition();
-			int tx = pos.x / tilesize;
-			int ty = pos.y / tilesize;
-
 			if (tx >= 0 && tx < mapwidth && ty >= 0 && ty < mapheight)
 			{
 				mapArray[ty][tx] = -1;
@@ -263,13 +264,16 @@ void SceneDev1::Update(float dt)
 		}
 		if (InputMgr::GetMouseButton(sf::Mouse::Left) && tileID >= 0)
 		{
-			auto pos = InputMgr::GetMousePosition();
-			int tx = pos.x / tilesize;
-			int ty = pos.y / tilesize;
-
 			if (tx >= 0 && tx < mapwidth && ty >= 0 && ty < mapheight)
 			{
 				mapArray[ty][tx] = tileID;
+			}
+		}
+		if (InputMgr::GetMouseButton(sf::Mouse::Right) && tileID >= 0)
+		{
+			if (tx >= 0 && tx < mapwidth && ty >= 0 && ty < mapheight)
+			{
+				mapArray[ty][tx] = -1;
 			}
 		}
 
@@ -289,6 +293,7 @@ void SceneDev1::Update(float dt)
 
 void SceneDev1::Draw(sf::RenderWindow& window)
 {
+	window.setView(worldView);
 	Scene::Draw(window);
 	if (buttonClicked)
 	{
@@ -307,16 +312,36 @@ void SceneDev1::Draw(sf::RenderWindow& window)
 				window.draw(*circle2);
 		}
 	}
+	for (int y = 0; y < mapheight; ++y)
+	{
+		for (int x = 0; x < mapwidth; ++x)
+		{
+			gridCellShape.setPosition(
+				float(x * tilesize),
+				float(y * tilesize)
+			);
+			window.draw(gridCellShape);
+		}
+	}
+
 	for (int y = 0; y < mapheight; ++y) {
 		for (int x = 0; x < mapwidth; ++x) {
 			int id = mapArray[y][x];
 			// id가 유효하다면(여기선 0 이상)
 			if (id < 0 || id >= (int)tiletextures.size()) continue;
 			sf::Sprite spr(tiletextures[id]);
+			sf::Vector2u texSz = tiletextures[id].getSize();
+			spr.setScale(
+				float(tilesize) / float(texSz.x),
+				float(tilesize) / float(texSz.y)
+			);
 			spr.setPosition(float(x * tilesize), float(y * tilesize));
 			window.draw(spr);
 		}
+		
 	}
+	window.setView(uiView);
+	ImGui::SFML::Render(window);
 }
 
 
