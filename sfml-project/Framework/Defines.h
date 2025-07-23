@@ -56,13 +56,13 @@ enum class GimmickType
 	BouncePad,
 	WeightPad,
 	KillLine,
-	NormalBlock,
-	NormalWall,
 	//움직임 -> Update 필요
 	MovingPlatform,
 	FallPlatform,
 	WeightBlock,
 	ColorPushBlock,
 	Rope,
+	//플레이어 관련
+	PlayerSpawn,
 	Count,
 };

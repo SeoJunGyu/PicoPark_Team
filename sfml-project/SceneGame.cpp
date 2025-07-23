@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "SceneGame.h"
 #include "Player.h"
 #include "Gimmick.h"
@@ -25,7 +25,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
     std::ifstream fin(jsonPath);
     nlohmann::json j;
-    fin >> j;
+    fin >> j; //파일 파싱 : 필요한 데이터를 가져와서 사용하는 행위?
 
     for (const auto& entobj : j["entities"])
     {
@@ -66,14 +66,12 @@ void SceneGame::Init()
 
     level = new Level();
 	if (loadLevel_("levels/stage00.json", *level)) {
-		std::cout << "맵 로딩 완료" << std::endl;
+		std::cout << "맵 로딩" << std::endl;
 		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap.load(*level, 1);
 
         LoadStage("levels/stage00.json");
 	}
-
-    AddGameObject(new Player());
 
     Scene::Init();
 }

@@ -5,14 +5,6 @@
 //Json으로 들어온 타입을 GimmickType으로 반환
 static GimmickType StrToType(const std::string& str)
 {
-	if (str == "NormalBlock")
-	{
-		return GimmickType::NormalBlock;
-	}
-	if (str == "NormalWall")
-	{
-		return GimmickType::NormalWall;
-	}
 	if (str == "Key")
 	{
 		return GimmickType::Key;
@@ -22,7 +14,7 @@ static GimmickType StrToType(const std::string& str)
 		return GimmickType::Door;
 	}
 
-	return GimmickType::NormalBlock; //기본값은 일반블럭
+	return GimmickType::Key;
 }
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
@@ -124,12 +116,6 @@ void Gimmick::Reset()
 		break;
 	case GimmickType::Buton:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
-		break;
-	case GimmickType::NormalBlock:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Pad.png"));
-		break;
-	case GimmickType::NormalWall:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Wall.png"));
 		break;
 
 		//움직임 있음

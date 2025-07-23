@@ -7,7 +7,7 @@ class Gimmick :
 {
 
 public:
-	GimmickType type{ GimmickType::NormalBlock }; // 초기화 : Key
+	GimmickType type{ GimmickType::Key }; // 초기화 : Key
 	sf::Vector2f velocity{ 0.f, 0.f }; //동적 기믹만 사용
 
 	int pInt[2]{ 0, 0 }; //정수 1 ~ 2개 필요 오브젝트 : WeightPad(인수), ColorPushBlock(색상값), Button - MovingPlatform (채널)
