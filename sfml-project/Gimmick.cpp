@@ -13,6 +13,10 @@ static GimmickType StrToType(const std::string& str)
 	{
 		return GimmickType::Door;
 	}
+	if (str == "PlayerSpawn")
+	{
+		return GimmickType::PlayerSpawn;
+	}
 
 	return GimmickType::Key;
 }
