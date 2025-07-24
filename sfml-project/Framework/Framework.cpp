@@ -41,9 +41,17 @@ void Framework::Do()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            ImGui::SFML::ProcessEvent(event);
+            bool isUnknownKey =
+                (event.type == sf::Event::KeyPressed ||
+                    event.type == sf::Event::KeyReleased) &&
+                event.key.code == sf::Keyboard::Unknown;
+
+            if (!isUnknownKey)
+                ImGui::SFML::ProcessEvent(event);
+
             if (event.type == sf::Event::Closed)
                 window.close();
+
             InputMgr::UpdateEvent(event);
         }
 

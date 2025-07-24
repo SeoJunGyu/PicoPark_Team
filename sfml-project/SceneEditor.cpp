@@ -331,8 +331,8 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
 
 
     w.setView(uiView);
+    ImGui::SetNextWindowPos(ImVec2(1100, 100), ImGuiCond_FirstUseEver);
     ImGui::Begin("Level Settings");
-
     ImGui::InputText("Level file name", lvlName, IM_ARRAYSIZE(lvlName));
     ImGui::InputText("Author", author, IM_ARRAYSIZE(author));
     ImGui::InputTextMultiline("Description", desc,

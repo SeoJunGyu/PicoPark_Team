@@ -28,30 +28,35 @@ void TilePalette::DrawImGui()
     constexpr int COLS = 5;          // 한 줄 5칸
     const ImVec2 BTN_SZ(48, 48);     // 썸네일 크기
 
-    ImGui::BeginChild("TilePaletteArea", ImVec2(0, 200), true,
-        ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::SetNextWindowSize(ImVec2(300, 400), ImGuiCond_FirstUseEver); 
+    ImGui::SetNextWindowPos(ImVec2(1300, 100), ImGuiCond_FirstUseEver);
+    if (ImGui::Begin("Entities")) {
+        ImGui::BeginChild("TilePaletteArea", ImVec2(0, 200), true,
+            ImGuiWindowFlags_HorizontalScrollbar);
 
-    int col = 0;
-    for (int id = 0; id < (int)tileSet.textures.size(); ++id)
-    {
-        ImTextureID img = (ImTextureID)tileSet.textures[id].getNativeHandle();
-
-        // 버튼: 클릭 시 currentId 변경
-        if (ImGui::ImageButton(img, BTN_SZ))
-            currentId = id;
-
-        // 선택 테두리
-        if (currentId == id)
+        int col = 0;
+        for (int id = 0; id < (int)tileSet.textures.size(); ++id)
         {
-            ImGui::GetWindowDrawList()->AddRect(
-                ImGui::GetItemRectMin(), ImGui::GetItemRectMax(),
-                IM_COL32(255, 255, 0, 255), 0.0F, 0, 2.0F);
+            ImTextureID img = (ImTextureID)tileSet.textures[id].getNativeHandle();
+
+            // 버튼: 클릭 시 currentId 변경
+            if (ImGui::ImageButton(img, BTN_SZ))
+                currentId = id;
+
+            // 선택 테두리
+            if (currentId == id)
+            {
+                ImGui::GetWindowDrawList()->AddRect(
+                    ImGui::GetItemRectMin(), ImGui::GetItemRectMax(),
+                    IM_COL32(255, 255, 0, 255), 0.0F, 0, 2.0F);
+            }
+
+            // 줄 바꿈 처리
+            if (++col < COLS) ImGui::SameLine();
+            else              col = 0;
         }
 
-        // 줄 바꿈 처리
-        if (++col < COLS) ImGui::SameLine();
-        else              col = 0;
+        ImGui::EndChild();
     }
-
-    ImGui::EndChild();
+    ImGui::End();
 }
