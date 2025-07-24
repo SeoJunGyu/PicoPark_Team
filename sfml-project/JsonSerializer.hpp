@@ -14,11 +14,13 @@
     l.parallax = j.value("parallax", 1.f);
     l.data = j.at("data").get<std::vector<int>>();
 }
-
+ 
 // Entity
  inline void to_json(nlohmann::json& j, const Entity& e) {
-    j = { {"id",e.id},{"type",e.type},{"x",e.x},{"y",e.y} };
+    j = { {"id",e.id},{"type",TypeToStr(e.type)},{"x",e.x},{"y",e.y} };
     if (e.w != 16 || e.h != 16) { j["w"] = e.w; j["h"] = e.h; }
+    if (e.scale.x != 1.f || e.scale.y != 1.f)
+        j["scale"] = { e.scale.x, e.scale.y };
     if (!e.properties.empty()) j["properties"] = e.properties;
 }
  inline void from_json(const nlohmann::json& j, Entity& e) {
@@ -26,6 +28,13 @@
     e.type = StrToType(j.at("type"));
     e.x = j.at("x");  e.y = j.at("y");
     e.w = j.value("w", 16); e.h = j.value("h", 16);
+    if (j.contains("scale"))
+    {
+        auto v = j["scale"];
+        e.scale = { v.at(0).get<float>(), v.at(1).get<float>() };
+    }
+    else
+        e.scale = { 1.f,1.f };
     if (j.contains("properties")) e.properties = j["properties"];
 }
 

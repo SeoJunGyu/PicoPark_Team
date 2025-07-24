@@ -21,6 +21,7 @@ struct Entity
 	GimmickType type = GimmickType::Count;
 	int x = 0, y = 0;
 	int w = 16, h = 16;
+	sf::Vector2f scale = { 1.f, 1.f };
 	nlohmann::json properties;
 };
 

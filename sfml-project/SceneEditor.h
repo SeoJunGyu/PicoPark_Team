@@ -21,6 +21,8 @@ private:
     LevelGrid grid;
     int currentTile = 1;    
     int nextId = 0;
+    int currentPlayerIndex = 0;
+    int pIndex = 0;
     float uiStartX = 0.f;
     std::string currentEntity = ""; // "Key"/"Door"/"PlayerSpawn"
 

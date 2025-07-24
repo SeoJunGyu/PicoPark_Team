@@ -15,7 +15,39 @@ void SceneEditor::Brush(LevelGrid& grid, int tileId, sf::Vector2i mouse, sf::Ren
 
     if (tx < 0 || tx >= grid.width || ty < 0 || ty >= grid.height) return;
 
-    grid.tiles[ty * grid.width + tx] = tileId;
+    int idx = ty * grid.width + tx;
+
+    if (currentEntity == "PlayerSpawn" && currentPlayerIndex > 3) {
+        return;
+    }
+    if (currentEntity == "PlayerSpawn" && grid.entitiesType[idx] != "PlayerSpawn" && currentPlayerIndex < 4) {
+        ++currentPlayerIndex;
+        std::cout << "플레이어 수 : " << currentPlayerIndex << std::endl;
+    }
+
+    if (tileId == 0) {                 
+        if (grid.entitiesType[idx] == "PlayerSpawn") {
+            currentPlayerIndex--;
+            std::cout << "남은 플레이어 수 : " << currentPlayerIndex << std::endl;
+        }
+        grid.tiles[idx] = 0;
+        grid.entities[idx] = 0;
+        grid.entitiesType[idx].clear();
+    }
+    else if (tileId <= 9) {           
+        if (grid.entitiesType[idx] == "PlayerSpawn") {
+            currentPlayerIndex--;
+            std::cout << "남은 플레이어 수 : " << currentPlayerIndex << std::endl;
+        }
+        grid.tiles[idx] = tileId;
+        grid.entities[idx] = 0;
+        grid.entitiesType[idx].clear();
+    }
+    else {                                           
+        grid.tiles[idx] = 0;
+        grid.entities[idx] = tileId;
+        grid.entitiesType[idx] = currentEntity;
+    }
 }
 
 void SceneEditor::Init()
@@ -28,10 +60,9 @@ void SceneEditor::Enter()
 {
 	Scene::Enter(); 
 
-    palette.Load({ "graphics/Floor.png",
-                   "graphics/Spikes.png",
-                   "graphics/Door_Button.png",
-                   "graphics/Button.png" }, 16);
+    palette.Load({ "graphics/Characters/Icon/Player0.png",
+                   "graphics/Item/key.png",
+                   "graphics/Item/door.png"}, 16);
 
     constexpr float UI_WIDTH = 1000.f;                // 팔레트 폭
     const auto winSize = FRAMEWORK.GetWindow().getSize();
@@ -84,6 +115,7 @@ void SceneEditor::Update(float dt)
 	Scene::Update(dt);
     if (InputMgr::GetMouseButton(sf::Mouse::Right)) {
         palette.ClearSelected();
+        currentEntity = "";
         Brush(grid, 0, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
     }
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -107,34 +139,31 @@ void SceneEditor::Update(float dt)
             }
         }
         else {
-            int imguiSel = palette.GetSelected();     
+           /* int imguiSel = palette.GetSelected();     
             if (imguiSel > 0)              
-                currentTile = 100 + imguiSel;
+                currentTile = 100 + imguiSel;*/
             // 월드 캔버스
             sf::Vector2f wp = FRAMEWORK.GetWindow().mapPixelToCoords(mp, worldView);
             int tx = int(wp.x) / grid.tileSize;
             int ty = int(wp.y) / grid.tileSize;
 
-            if (!currentEntity.empty()) {              
-                level.entities.push_back({
-                        ++nextId,                       
-                        StrToType(currentEntity),        
-                        tx * grid.tileSize,             
-                        ty * grid.tileSize,             
-                        16, 16,                          
-                        {}                               
-                });
+            if (palette.GetSelected() != -1) {
+                static const char* n[] = { "PlayerSpawn","Key","Door" };
+                currentEntity = n[palette.GetSelected()];
+                //std::cout << "선택 : " << currentEntity << std::endl;
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-                Brush(grid, currentTile, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
+                if (!currentEntity.empty() && grid.entitiesType[ty * grid.width + tx] != currentEntity) {
+                    Brush(grid, palette.GetSelected() + 100, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
+                }
+                if (palette.GetSelected() == -1) Brush(grid, currentTile, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
             }
         }
     }
 
     // Ctrl+S : 저장
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
-        sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && InputMgr::GetKeyDown(sf::Keyboard::S)){
         std::cout << "맵 저장 완료." << std::endl;
         SaveAsLevel("levels/stage_tmp.json");
     }
@@ -153,15 +182,47 @@ void SceneEditor::Update(float dt)
 
 void SceneEditor::SaveAsLevel(const std::string& path)
 {
-    Level lv;
-    lv.tileSize = grid.tileSize;
-    lv.gridWidth = grid.width;
-    lv.gridHeight = grid.height;
-    lv.layers.push_back({ "Main",
+    //Level lv;
+    level.tileSize = grid.tileSize;
+    level.gridWidth = grid.width;
+    level.gridHeight = grid.height;
+    level.layers.clear();
+    level.layers.push_back({ "Main",
                           Layer::Kind::TILE,
                           true, 1.f,
-                          grid.tiles });      
-    std::ofstream(path) << nlohmann::json(lv).dump(2);
+                          grid.tiles });   
+    level.entities.clear();
+    for (int y = 0; y < grid.height; ++y)
+        for (int x = 0; x < grid.width; ++x)
+        {
+            int eId = grid.entities[y * grid.width + x];
+            if (eId < 100) continue;         
+
+            std::string type = grid.entitiesType[y * grid.width + x];
+            if (type.empty()) continue;        
+
+            float sx = 1.f, sy = 1.f;
+            int ww = 16, hh = 16;
+            std::unordered_map<std::string, int> props;
+            if (type == "PlayerSpawn") {
+                ww = 60, hh = 128; 
+                props["playerIndex"] = pIndex;
+                pIndex++;
+            }
+            if (type == "Door") { sx = 0.1f; sy = 0.1f; }
+            if (type == "Key") { sx = 0.1f; sy = 0.1f; }
+
+            level.entities.push_back({
+                nextId++,                      // id
+                StrToType(type),               // type
+                x * grid.tileSize,             // x
+                y * grid.tileSize,             // y
+                ww, hh,                        // w, h
+                { sx, sy },                    // scale
+                props                             // properties
+                });
+        }
+    std::ofstream(path) << nlohmann::json(level).dump(2);
 }
 
 void SceneEditor::Draw(sf::RenderWindow& w) {
@@ -193,7 +254,8 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
         for (int x = 0; x < grid.width; ++x)
         {
             int id = grid.tiles[y * grid.width + x];
-            if (id == 0) continue;
+            int Entityid = grid.entities[y * grid.width + x];
+            if (id == 0 && Entityid == 0) continue;
 
             if (id <= 9)                                // 1~9 : 단색 타일
             {
@@ -201,9 +263,9 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
                 colorTile.setPosition(x * 16.f, y * 16.f);
                 w.draw(colorTile);
             }
-            else                                        // 100+ : 텍스처 타일
+            if (Entityid >= 100)                                     // 100+ : 텍스처 타일
             {
-                int texIdx = id - 100;                  // 0‑based
+                int texIdx = Entityid - 100;                  // 0‑based
                 if (texIdx >= palette.GetTileSet().textures.size()) continue;
 
                 spr.setTexture(palette.GetTileSet().textures[texIdx]);
@@ -256,14 +318,14 @@ void SceneEditor::DrawPaletteAndButtons(sf::RenderWindow& w)
         w.draw(prev);
     }
 
-    /* --- 엔티티 버튼 --- */
-    static const char* names[] = { "Key","Door","PlayerSpawn" };
-    for (int i = 0; i < 3; ++i) {
-        slot.setPosition(margin, 200 + i * 40);
-        w.draw(slot);
-        sf::Text txt(names[i],
-            FONT_MGR.Get("fonts/DS-DIGIT.ttf"), 14);
-        txt.setPosition(slot.getPosition() + sf::Vector2f(4, 6));
-        w.draw(txt);
-    }
+    ///* --- 엔티티 버튼 --- */
+    //static const char* names[] = { "Key","Door","PlayerSpawn" };
+    //for (int i = 0; i < 3; ++i) {
+    //    slot.setPosition(margin, 200 + i * 40);
+    //    w.draw(slot);
+    //    sf::Text txt(names[i],
+    //        FONT_MGR.Get("fonts/DS-DIGIT.ttf"), 14);
+    //    txt.setPosition(slot.getPosition() + sf::Vector2f(4, 6));
+    //    w.draw(txt);
+    //}
 }

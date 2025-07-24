@@ -1,13 +1,57 @@
 {
   "author": "",
   "description": "",
-  "entities": [],
+  "entities": [
+    {
+      "h": 128,
+      "id": 0,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "w": 60,
+      "x": 128,
+      "y": 16
+    },
+    {
+      "h": 128,
+      "id": 1,
+      "properties": {
+        "playerIndex": 1
+      },
+      "type": "PlayerSpawn",
+      "w": 60,
+      "x": 112,
+      "y": 32
+    },
+    {
+      "h": 128,
+      "id": 2,
+      "properties": {
+        "playerIndex": 2
+      },
+      "type": "PlayerSpawn",
+      "w": 60,
+      "x": 128,
+      "y": 32
+    },
+    {
+      "h": 128,
+      "id": 3,
+      "properties": {
+        "playerIndex": 3
+      },
+      "type": "PlayerSpawn",
+      "w": 60,
+      "x": 112,
+      "y": 48
+    }
+  ],
   "gridHeight": 6,
   "gridWidth": 10,
   "layers": [
     {
       "data": [
-        8,
         0,
         0,
         0,
@@ -16,37 +60,29 @@
         0,
         0,
         0,
-        8,
-        8,
         0,
-        0,
-        0,
-        8,
-        8,
-        8,
-        0,
-        0,
-        8,
-        8,
-        0,
-        0,
-        0,
-        0,
-        8,
         8,
         0,
         0,
         8,
         8,
         8,
-        0,
-        0,
-        0,
         8,
         8,
         0,
         0,
         8,
+        0,
+        8,
+        8,
+        8,
+        8,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0,
         8,
         8,
         0,
@@ -55,7 +91,16 @@
         0,
         0,
         0,
+        8,
         0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
         8,
         8,
         8,

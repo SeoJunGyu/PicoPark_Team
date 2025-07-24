@@ -11,10 +11,12 @@ struct LevelGrid {
     int height = 0;
     int tileSize = 16;
     std::vector<int> tiles;
+    std::vector<int> entities;
+    std::vector<std::string> entitiesType;
 
     LevelGrid() = default;                     
     LevelGrid(int w, int h, int ts)
         : width(w), height(h), tileSize(ts),
-        tiles(w* h, 0) {
+        tiles(w* h, 0), entities(w* h, 0), entitiesType(w* h, "") {
     }
 };
