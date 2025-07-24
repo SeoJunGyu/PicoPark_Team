@@ -26,19 +26,19 @@ protected:
 
 
 
-	int tileID = -1;
-	int gridwidth = 10;
-	int gridheight = 6;
-	int mapwidth;
+	int tileID = -1; //타일 기본값 None
+	int gridwidth = 10; //그리드 너비
+	int gridheight = 6; //높이
+	int mapwidth; 
 	int mapheight;
 	int tilesize;
 
-	sf::RectangleShape gridCellShape;
-	sf::Color gridLineColor;
-	std::vector<std::vector<int>> mapArray;
+	sf::RectangleShape gridCellShape; //그리드 모양
+	sf::Color gridLineColor; //그리드 선색상
+	std::vector<std::vector<int>> mapArray; // 맵 배열
 
 
-	CollisionMode currentMode = CollisionMode::Rectangle;
+	CollisionMode currentMode = CollisionMode::Rectangle; 
 	bool isColliding = false;
 	bool showCheckbox = false;
 	bool buttonClicked = false;

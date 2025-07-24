@@ -78,7 +78,7 @@ void SceneDev1::Init()
 	instructionText->SetPosition(sf::Vector2f(10.f, FRAMEWORK.GetWindowSizeF().y - 30.f));
 	AddGameObject(instructionText);
 
-	std::vector<std::string> tilepng =
+	std::vector<std::string> tilepng = //배열에 문자열 이미지 경로를 넣음
 	{
 		"graphics/Floor.png",
 		"graphics/Spikes.png",
@@ -86,24 +86,22 @@ void SceneDev1::Init()
 		"graphics/Button.png",
 	};
 
-	for (auto& f : tilepng)
+	for (auto& f : tilepng) //문자열 배열을 순회하며 tex에 로드파일 넣고 이미지데이터배열에 넣음
 	{
 		sf::Texture tex;
 		tex.loadFromFile(f);
 		tiletextures.push_back(tex);
 	};
-	tilesize = 16;
-	sf::Vector2u winSz = FRAMEWORK.GetWindowSize();
-	mapwidth = gridwidth;
-	mapheight = gridheight;
+	tilesize = 16; //타일크기 설정해주고
+	sf::Vector2u winSz = FRAMEWORK.GetWindowSize(); //윈도우 사이즈 가져와주고
+	mapwidth = gridwidth; // 맵의 너비 설정해주고
+	mapheight = gridheight;// 맵의 높이설정해주고
 	
-	gridLineColor = sf::Color(255, 255, 255, 128);
-	gridCellShape = sf::RectangleShape(sf::Vector2f(float(tilesize), float(tilesize)));
-	gridCellShape.setFillColor(sf::Color::Green);
-	gridCellShape.setOutlineColor(gridLineColor);
-	gridCellShape.setOutlineThickness(3.f);
+	gridLineColor = sf::Color(255, 255, 255, 128); // 레드 그린 블루 투명도
+	gridCellShape = sf::RectangleShape(sf::Vector2f(float(tilesize), float(tilesize)));	// 사이즈
+	gridCellShape.setOutlineThickness(3.f); //두께
 
-	mapArray.assign(mapheight, std::vector<int>(mapwidth, -1));
+	mapArray.assign(mapheight, std::vector<int>(mapwidth, -1)); // 맵행에 열만큼 -1로 초기화한다.
 
 	Scene::Init();
 }
@@ -221,11 +219,11 @@ void SceneDev1::Update(float dt)
 	}
 	if (showCheckbox)
 	{
-		for (int i = 0; i < (int)tiletextures.size(); i++)
+		for (int i = 0; i < (int)tiletextures.size(); i++) //텍스쳐 할당된만큼 돌고
 		{
 			ImTextureID img = (ImTextureID)tiletextures[i].getNativeHandle();
 
-			ImVec2 btnsize(48, 48);
+			ImVec2 btnsize(48, 48); //버튼 크기 설저애훚고
 
 			if (ImGui::ImageButton(img, btnsize))
 			{
