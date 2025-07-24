@@ -2,6 +2,7 @@
 #include "SceneMgr.h"
 #include "SceneDev1.h"
 #include "SceneDev2.h"
+#include "SceneTitle.h"
 #include "SceneGame.h"
 #include "SceneEditor.h"
 
@@ -9,6 +10,7 @@ void SceneMgr::Init()
 {
 	scenes.insert({ SceneIds::Dev1, new SceneDev1() });
 	scenes.insert({ SceneIds::Dev2, new SceneDev2() });
+	scenes.insert({ SceneIds::Title, new SceneTitle() });
 	scenes.insert({ SceneIds::Game, new SceneGame()});
 	scenes.insert({ SceneIds::Editor, new SceneEditor() });
 
