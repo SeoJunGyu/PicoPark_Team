@@ -185,6 +185,7 @@
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\Variables.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TilePalette.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\AnimationClip.h" />
@@ -225,7 +226,9 @@
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\Variables.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="TileCore.hpp" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TilePalette.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

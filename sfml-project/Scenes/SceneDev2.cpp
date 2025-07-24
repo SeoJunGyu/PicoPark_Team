@@ -6,21 +6,6 @@
 #include "json.hpp"
 #include <fstream>
 
-void SceneDev2::LoadStage(const std::string& jsonPath)
-{
-	Variables::ResetStage();
-
-	std::ifstream fin(jsonPath);
-	nlohmann::json j;
-	fin >> j;
-
-	for (const auto& entobj : j["entities"])
-	{
-		Gimmick* g = Gimmick::CreateFromJson(entobj);
-		g->Init();
-		AddGameObject(g);
-	}
-}
 
 SceneDev2::SceneDev2() : Scene(SceneIds::Dev2)
 {

@@ -130,12 +130,12 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stage00.json", *level)) {
+    if (loadLevel_("levels/stage_tmp.json", *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stage00.json");
+        LoadStage("levels/stage_tmp.json");
     }
 
     worldView.setSize(level->gridWidth  * level->tileSize,   
