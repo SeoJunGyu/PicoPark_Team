@@ -22,12 +22,12 @@ void SceneTitle::Enter()
 	titleBackground.setTexture(TEXTURE_MGR.Get("graphics/titlebackground.PNG"));
 
 	titleMessage.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
-	titleMessage.setCharacterSize(70);
+	titleMessage.setCharacterSize(50);
 	Utils::SetOrigin(titleMessage, Origins::MC);
 	titleMessage.setString("PRESS ENTER KEY");
 
 	auto size = FRAMEWORK.GetWindowSizeF();
-	titleMessage.setPosition(size.x * 0.28f, size.y * 0.5f);
+	titleMessage.setPosition(size.x * 0.35f, size.y * 0.5f);
 }
 void SceneTitle::Update(float dt)
 {
