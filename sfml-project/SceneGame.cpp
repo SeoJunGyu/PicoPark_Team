@@ -40,6 +40,38 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     {
         std::string tstr = entobj.at("type").get<std::string>();
 
+        //int channel = entobj["properties"].value("channel", -1);
+        /*
+        if (channel >= 0)
+        {
+            //채널 수의 인덱스가 배열에 없다면 늘린다.
+            if (channel >= (int)Variables::signals.size())
+            {
+                //Variables::signals.resize(channel + 1, false);
+            }
+        }
+        */
+        int channel = -1;
+        if (entobj.contains("properties")) 
+        {
+            auto& props = entobj["properties"];
+            if (props.contains("channel")) 
+            {
+                // 키가 진짜 있을 때만 꺼내기
+                channel = props["channel"].get<int>();
+            }
+        }
+
+        // channel 이 0 이상일 때만 resize
+        if (channel >= 0) 
+        {
+            if (channel >= (int)Variables::signals.size()) 
+            {
+                Variables::signals.resize(channel + 1, false);
+            }
+        }
+        
+
         if (Gimmick* g = Gimmick::CreateFromJson(entobj))
         {
             AddGameObject(g);
@@ -87,6 +119,7 @@ void SceneGame::ClearStage()
     gameObjects.clear();
     Variables::players.clear();
     Variables::gimmicks.clear();
+    //Variables::signals.clear();
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
@@ -118,6 +151,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/doorOpen.png");
     texIds.push_back("graphics/Item/Button.png");
     texIds.push_back("graphics/Item/Button_Pressed.png");
+    texIds.push_back("graphics/Item/Pad.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");

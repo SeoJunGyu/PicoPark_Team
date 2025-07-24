@@ -9,6 +9,7 @@ inline GimmickType StrToType(const std::string& s)
     if (s == "Door")        return GimmickType::Door;
     if (s == "Button")        return GimmickType::Button;
     if (s == "PlayerSpawn") return GimmickType::PlayerSpawn;
+    if (s == "MovingPlatform") return GimmickType::MovingPlatform;
     return GimmickType::Count;                     // 예외 대응
 }
 
@@ -20,6 +21,7 @@ inline const char* TypeToStr(GimmickType t)
     case GimmickType::Door:        return "Door";
     case GimmickType::Button:        return "Button";
     case GimmickType::PlayerSpawn: return "PlayerSpawn";
+    case GimmickType::MovingPlatform: return "MovingPlatform";
     default:                       return "Unknown";
     }
 }

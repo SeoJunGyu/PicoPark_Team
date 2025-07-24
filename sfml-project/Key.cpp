@@ -46,7 +46,7 @@ void Key::Update(float dt)
 	}
 	if (player != nullptr)
 	{
-		body.setPosition({ player->GetPosition().x, player->GetPosition().y - GetLocalBounds().height * 0.5f - 1.f });
+		body.setPosition({ player->GetPosition().x, player->GetPosition().y - player->GetGlobalBounds().height - 6.f});
 		hitBox.UpdateTransform(body, body.getLocalBounds());
 	}
 

@@ -4,8 +4,10 @@ class Button :
     public Gimmick
 {
 protected:
-    int chanel; //같은 채널의 플랫폼을 이동시키기 위해 사용
+    int channel = 0; //같은 채널의 플랫폼을 이동시키기 위해 사용
     bool pressed = false;
+
+    bool latch;
 
 public:
     Button(nlohmann::json j);

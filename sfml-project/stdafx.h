@@ -41,4 +41,5 @@
 #include "Key.h"
 #include "Door.h"
 #include "Button.h"
+#include "MovingPlatform.h"
 

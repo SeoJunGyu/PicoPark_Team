@@ -13,6 +13,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new Door(j);
 	case GimmickType::Button:
 		return new Button(j);
+	case GimmickType::MovingPlatform:
+		return new MovingPlatform(j);
 	}
 
 	return nullptr;
@@ -87,14 +89,13 @@ void Gimmick::Reset()
 		
 		break;
 	case GimmickType::Button:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
 		break;
 	case GimmickType::PlayerSpawn:
 		break;
 
 		//움직임 있음
 	case GimmickType::MovingPlatform:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Pad.png"));
+		
 		break;
 	case GimmickType::WeightBlock:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/WeightBlock.png"));

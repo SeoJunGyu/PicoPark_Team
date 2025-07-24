@@ -15,7 +15,7 @@
       "parallax": 1.0,
       "data": [
         1,1,1,1,1,1,1,1,1,1,
-        0,0,0,0,0,1,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
@@ -26,8 +26,14 @@
 
   "entities": [
     { "id": 101, "type": "Key",  "x": 20,  "y": 52, "scale": [0.1,0.1] },
-    { "id": 102, "type": "Button",  "x": 30,  "y": 72, "scale": [0.2,0.2], 
-      "properties":{"channel": 1} },
+    { "id": 102, "type": "Button",  "x": 30,  "y": 77, "scale": [0.2,0.2], 
+      "properties":{"channel": 1, "latch": false} },
+    { "id": 103, "type": "Button",  "x": 60,  "y": 77, "scale": [0.2,0.2], 
+      "properties":{"channel": 2, "latch": true} },
+    { "id": 104, "type": "MovingPlatform",  "x": 80,  "y": 67, "scale": [0.2,0.2], 
+      "properties":{"channel": 1, "path":[[80,77],[80,30]], "speed":30} },
+    { "id": 105, "type": "MovingPlatform",  "x": 80,  "y": 37, "scale": [0.2,0.2], 
+      "properties":{"channel": 2, "path":[[80,37],[30,37]], "speed":30} },
     {
       "id": 10,
       "type": "PlayerSpawn",

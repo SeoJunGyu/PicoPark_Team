@@ -6,6 +6,7 @@ bool Variables::isDrawHitBox = false;
 bool Variables::KeyObtained = false;
 std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
+std::vector<bool> Variables::signals{};
 
 void Variables::ResetStage()
 {
@@ -15,8 +16,6 @@ void Variables::ResetStage()
 	gimmicks.clear();
 	for (auto* p : players) delete p;
 	players.clear();
-
-	
 }
 
 sf::Vector2f Variables::CalScl(nlohmann::json j)
