@@ -30,7 +30,9 @@ protected:
 	float jumpBufferCounter = 0.f; //미리 눌러둔 점프의 남은 유효 시간
 
 	float coyoteTime = 0.12f; //120ms
-	float jumpBuffer = 0.12f; //120ms`
+	float jumpBuffer = 0.12f; //120ms
+
+	sf::Vector2f mapSize;
 
 public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");

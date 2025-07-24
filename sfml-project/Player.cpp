@@ -298,6 +298,11 @@ void Player::Update(float dt)
 		SetScale(s);
 	}
 
+	//화면 경계 검사
+	float halfW = hitBox.GetWidth() * 0.5f;
+
+	position.x = Utils::Clamp(position.x, 0.f + halfW, tilemap->GetTileMapSize().x - halfW);
+
 	//최종 위치 설정
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());

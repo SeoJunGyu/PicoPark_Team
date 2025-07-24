@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "LevelLoader.h"
 
@@ -37,5 +37,6 @@ public:
 	void setTile(int tx, int ty, int id);
 
 	int GetTileSize() const { return tileSize; }
+	sf::Vector2f GetTileMapSize() const { return { (float)width * tileSize, (float)height * tileSize }; }
 };
 

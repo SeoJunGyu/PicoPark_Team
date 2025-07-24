@@ -4,40 +4,6 @@
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 {
-	/*
-	int id = j.value("id", 0); //키 있으면 그대로, 없으면 0
-	auto type = StrToType(j.at("type").get<std::string>()); //타입 문자열을 GimmickType 열거형으로 저장
-
-	if (type == GimmickType::PlayerSpawn)
-		return nullptr;
-
-	//위치 좌표 픽셀 단위
-	float x = j.at("x").get<float>();
-	float y = j.at("y").get<float>();
-
-	float rot = j.value("rotation", 0.f); //키 있으면 그대로, 없으면 0
-	sf::Vector2f scl{ 1.f, 1.f }; //기존 scale 유지
-	//sf::Vector2f sizePx{ 0.f, 0.f }; //픽셀 절대값 (선택)
-
-	//스케일 작성 되어있으면 변환
-	if (j.contains("scale"))
-	{
-		if (j["scale"].is_array())
-		{
-			scl.x = j["scale"][0].get<float>();
-			scl.y = j["scale"][1].get<float>();
-		}
-		else
-		{
-			float uni = j["scale"].get<float>();
-			scl = { uni, uni };
-		}
-	}
-
-	nlohmann::json props = j.value("properties", nlohmann::json::object()); //특정 기믹 전용 속성 묶음
-
-	return new Gimmick(id, type, { x, y }, scl, rot, props);
-	*/
 	auto type = StrToType(j.at("type").get<std::string>());
 	switch (type)
 	{
@@ -45,6 +11,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new Key(j);
 	case GimmickType::Door:
 		return new Door(j);
+	case GimmickType::Button:
+		return new Button(j);
 	}
 
 	return nullptr;
@@ -118,7 +86,7 @@ void Gimmick::Reset()
 	case GimmickType::Door:
 		
 		break;
-	case GimmickType::Buton:
+	case GimmickType::Button:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
 		break;
 	case GimmickType::PlayerSpawn:
@@ -176,7 +144,7 @@ void Gimmick::Update(float dt)
 		}
 		
 		break;
-	case GimmickType::Buton:
+	case GimmickType::Button:
 		break;
 	case GimmickType::BouncePad:
 		break;

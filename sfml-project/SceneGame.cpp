@@ -117,6 +117,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
     texIds.push_back("graphics/Item/Button.png");
+    texIds.push_back("graphics/Item/Button_Pressed.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
@@ -130,12 +131,12 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stagePlayerTest.json", *level)) {
+    if (loadLevel_("levels/stageTest.json", *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stagePlayerTest.json");
+        LoadStage("levels/stageTest.json");
     }
 
     worldView.setSize(level->gridWidth  * level->tileSize,   
