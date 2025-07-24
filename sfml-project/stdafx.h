@@ -15,6 +15,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+//gui
+#include <imgui.h>
+#include <imgui-SFML.h>
+
+
 // FRAMEWORK
 #include "Defines.h"
 #include "json.hpp"

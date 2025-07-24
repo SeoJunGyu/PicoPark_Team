@@ -74,3 +74,21 @@ void SceneDev2::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::Dev1);
 	}
 }
+
+void SceneDev2::DrawImGui()
+{
+	//�׽�Ʈ�ڵ��
+   ImGui::Begin("Debug");  // â�� ����
+
+   
+   if (ImGui::Button("Look at this pretty button"))//������ ä���
+   {
+	   // ��ư Ŭ�� �� ������ �׽�Ʈ �ڵ� ��
+	   buttonClicked = !buttonClicked;                // ���
+	   std::cout << "Debug ��ư�� ���Ƚ��ϴ�!\n";     // �ܼ� �α�
+   }
+   ImGui::Checkbox("checkbox", &buttonClicked);
+
+
+  ImGui::End(); //����
+}

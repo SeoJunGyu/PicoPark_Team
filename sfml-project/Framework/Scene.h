@@ -32,6 +32,8 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);
 
+	virtual void DrawImGui() {};
+
 	GameObject* AddGameObject(GameObject* go);
 	void RemoveGameObject(GameObject* go);
 
