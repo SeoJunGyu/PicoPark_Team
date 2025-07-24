@@ -11,6 +11,11 @@ void Framework::Init(int w, int h, const std::string& t)
 	window.create(sf::VideoMode(w, h), t);
 
     ImGui::SFML::Init(window);
+    /*ImGuiIO& io = ImGui::GetIO();
+    ImFont* font = io.Fonts->AddFontFromFileTTF("fonts/Galmuri11-Bold.ttf", 16.f, nullptr,
+        io.Fonts->GetGlyphRangesKorean());
+    io.FontDefault = font;
+    ImGui::SFML::UpdateFontTexture();*/
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);

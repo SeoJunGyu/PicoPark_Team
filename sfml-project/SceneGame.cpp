@@ -39,6 +39,11 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     for (const auto& entobj : j["entities"])
     {
         std::string tstr = entobj.at("type").get<std::string>();
+        /*float ox = level->tileSize * 0.5f;
+        float oy = level->tileSize * 0.5f;
+
+        sf::Vector2f pos(entobj.at("x").get<float>() + ox, entobj.at("y").get<float>() + oy);*/
+
 
         if (Gimmick* g = Gimmick::CreateFromJson(entobj))
         {
@@ -70,7 +75,6 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         p->Init();   
         p->Reset();
         p->SetTileMap(tileMap);
-
         Variables::players.push_back(p);
         //std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
         AddGameObject(p);

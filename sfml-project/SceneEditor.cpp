@@ -132,11 +132,11 @@ void SceneEditor::Update(float dt)
                 currentEntity = "";             
             }
 
-            if (localY >= 200 && localY < 320 && localX < 32) {
-                int idx = (localY - 200) / 40;   // 0,1,2
-                static const char* n[] = { "Key","Door","PlayerSpawn" };
-                currentEntity = n[idx];
-            }
+            //if (localY >= 200 && localY < 320 && localX < 32) {
+            //    int idx = (localY - 200) / 40;   // 0,1,2
+            //    static const char* n[] = { "Key","Door","PlayerSpawn" };
+            //    currentEntity = n[idx];
+            //}
         }
         else {
            /* int imguiSel = palette.GetSelected();     
@@ -186,6 +186,8 @@ void SceneEditor::SaveAsLevel(const std::string& path)
     level.tileSize = grid.tileSize;
     level.gridWidth = grid.width;
     level.gridHeight = grid.height;
+    level.author = author;
+    level.description = desc;
     level.layers.clear();
     level.layers.push_back({ "Main",
                           Layer::Kind::TILE,
@@ -223,6 +225,35 @@ void SceneEditor::SaveAsLevel(const std::string& path)
                 });
         }
     std::ofstream(path) << nlohmann::json(level).dump(2);
+}
+
+void SceneEditor::ResizeGrid(int w, int h)
+{
+    std::vector<int> oldTiles = grid.tiles;
+    std::vector<int> oldEntities = grid.entities;
+    std::vector<std::string> oldEt = grid.entitiesType;
+    int oldW = grid.width, oldH = grid.height;
+
+    grid.width = w;
+    grid.height = h;
+    grid.tiles.assign(w * h, 0);
+    grid.entities.assign(w * h, 0);
+    grid.entitiesType.assign(w * h, {});
+
+    int copyW = std::min(oldW, w);
+    int copyH = std::min(oldH, h);
+    for (int y = 0; y < copyH; ++y)
+        for (int x = 0; x < copyW; ++x)
+        {
+            int oIdx = y * oldW + x;
+            int nIdx = y * w + x;
+            grid.tiles[nIdx] = oldTiles[oIdx];
+            grid.entities[nIdx] = oldEntities[oIdx];
+            grid.entitiesType[nIdx] = oldEt[oIdx];
+        }
+
+    worldView.setSize(w * grid.tileSize, h * grid.tileSize);
+    worldView.setCenter(worldView.getSize() * 0.5f);
 }
 
 void SceneEditor::Draw(sf::RenderWindow& w) {
@@ -268,12 +299,21 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
                 int texIdx = Entityid - 100;                  // 0‑based
                 if (texIdx >= palette.GetTileSet().textures.size()) continue;
 
-                spr.setTexture(palette.GetTileSet().textures[texIdx]);
-                float s = float(grid.tileSize) /
-                    palette.GetTileSet().textures[texIdx].getSize().x;
-                spr.setScale(s, s);
-                spr.setPosition(x * grid.tileSize, y * grid.tileSize);
-                w.draw(spr);
+                sf::Sprite ent;
+                ent.setTexture(palette.GetTileSet().textures[texIdx]);
+
+                sf::Vector2u texSz = palette.GetTileSet().textures[texIdx].getSize();
+                //float sx = float(grid.tileSize) / texSz.x;   
+                //float sy = float(grid.tileSize) / texSz.y;  
+                //spr.setScale(sx, sy);
+
+                float s = float(grid.tileSize) / std::max(texSz.x, texSz.y);
+                ent.setScale(s, s);
+                ent.setOrigin(texSz.x * 0.5f, texSz.y * 0.5f);
+                ent.setPosition((x + 0.5f) * grid.tileSize,
+                    (y + 0.5f) * grid.tileSize);
+                //spr.setPosition(x * grid.tileSize, y * grid.tileSize);
+                w.draw(ent);
             }
         }
 
@@ -291,6 +331,31 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
 
 
     w.setView(uiView);
+    ImGui::Begin("Level Settings");
+
+    ImGui::InputText("Level file name", lvlName, IM_ARRAYSIZE(lvlName));
+    ImGui::InputText("Author", author, IM_ARRAYSIZE(author));
+    ImGui::InputTextMultiline("Description", desc,
+        IM_ARRAYSIZE(desc),
+        ImVec2(-FLT_MIN, 60));
+
+    ImGui::InputInt("Width", &pendingW);
+    ImGui::InputInt("Height", &pendingH);
+    pendingW = Utils::Clamp(pendingW, 1, 100);   // 100 칸 정도로 제한
+    pendingH = Utils::Clamp(pendingH, 1, 100);
+
+    if (ImGui::Button("Apply grid size"))
+    {
+        if (pendingW != grid.width || pendingH != grid.height)
+            ResizeGrid(pendingW, pendingH);     
+    }
+
+    if (ImGui::Button("Save"))
+    {
+        std::string file = "levels/" + std::string(lvlName) + ".json";
+        SaveAsLevel(file);                       
+    }
+    ImGui::End();
     palette.DrawImGui();
     DrawPaletteAndButtons(w); 
 }

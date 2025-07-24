@@ -86,6 +86,14 @@ void Player::Reset()
 		break;
 	}
 
+	float ox = 16.f * 0.5f;
+	float oy = 16.f * 0.5f;
+
+	float realH = body.getTexture()->getSize().y * body.getScale().y;
+	float oy_fix = std::abs((realH - 16.f) * 0.5f);
+
+	sf::Vector2f pos(GetPosition().x + ox, GetPosition().y + oy + oy_fix);
+	SetPosition(pos);
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 }

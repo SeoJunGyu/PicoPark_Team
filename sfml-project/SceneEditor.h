@@ -15,6 +15,7 @@ public:
     void Draw(sf::RenderWindow&) override;
     void DrawPaletteAndButtons(sf::RenderWindow& w);
     void SaveAsLevel(const std::string& path);
+    void ResizeGrid(int w, int h);
 private:
     Level level;     
     TilePalette palette;
@@ -25,6 +26,12 @@ private:
     int pIndex = 0;
     float uiStartX = 0.f;
     std::string currentEntity = ""; // "Key"/"Door"/"PlayerSpawn"
+    char  lvlName[64] = "stage_tmp";   // 스테이지 이름
+    char  author[32] = "null";
+    char  desc[128] = "desc";
+
+    int   pendingW = 10;                // 그리드 사이즈
+    int   pendingH = 6;
 
     std::array<sf::Color, 10> Palette = {
         sf::Color::Transparent,   // 더미
