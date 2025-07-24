@@ -16,11 +16,20 @@ static sf::Color makeColor(int tileId)
         sf::Color(255, 96,122),
         sf::Color(128,128,128)
     };
-    return palette[(tileId - 1) % palette.size()];
+
+    static std::vector<sf::Color> palette2 = {
+        sf::Color::Blue,
+        sf::Color(207, 159, 253),
+        sf::Color::Green,
+        sf::Color::Yellow
+    };
+    //return palette[(tileId - 1) % palette.size()];
+    return palette2[tileId];
 }
 
 void SceneGame::LoadStage(const std::string& jsonPath)
 {
+    ClearStage();
     Variables::ResetStage();
     std::vector<sf::Vector2f> spawnPoints;
     std::ifstream fin(jsonPath);
@@ -31,34 +40,53 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     {
         std::string tstr = entobj.at("type").get<std::string>();
 
+        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
+        {
+            g->Init();
+            g->Reset();
+            Variables::gimmicks.push_back(g);
+            AddGameObject(g);
+        }
+
         if (tstr == "PlayerSpawn")
         {
+            int tmp = entobj["properties"].value("playerIndex", 0);
             // ── 1) Spawn 좌표 수집
             float x = entobj.at("x").get<float>();
             float y = entobj.at("y").get<float>();
             spawnPoints.emplace_back(x, y);
             continue;          // Gimmick 생성 생략
         }
-
-        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
-        {
-            g->Init();
-            AddGameObject(g);
-        }
     }
 
     int idx = 0;
     for (auto& pos : spawnPoints)
     {
-        Player* p = new Player(std::to_string(idx));              // Player 클래스 생성자 (index)
+        sf::Color col = makeColor(idx);
+
+        Player* p = new Player(idx, col, "Player" + std::to_string(idx));              // Player 클래스 생성자 (index)
         p->SetPosition(pos);
         p->SetScale({ 0.1f, 0.1f });
-        p->Init();    
+        p->Init();   
+        p->Reset();
+        p->SetTileMap(tileMap);
+
         Variables::players.push_back(p);
-        std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+        //std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
         AddGameObject(p);
         ++idx;
     }
+}
+
+void SceneGame::ClearStage()
+{
+    for (auto* obj : gameObjects) 
+    {
+        delete obj;
+    }
+    gameObjects.clear();
+    Variables::players.clear();
+    Variables::gimmicks.clear();
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
@@ -82,6 +110,9 @@ SceneGame::~SceneGame()
 void SceneGame::Init()
 {
     texIds.push_back("graphics/Characters/Icon/Player0.png");
+    texIds.push_back("graphics/Characters/Icon/Player1.png");
+    texIds.push_back("graphics/Characters/Icon/Player2.png");
+    texIds.push_back("graphics/Characters/Icon/Player3.png");
     texIds.push_back("graphics/Item/key.png");
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
@@ -91,23 +122,25 @@ void SceneGame::Init()
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
     level = new Level();
-	if (loadLevel_("levels/stage00.json", *level)) {
-		std::cout << "맵 로딩" << std::endl;
-		std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
-        tileMap.load(*level, 1);
-
-        LoadStage("levels/stage00.json");
-	}
+    tileMap = new TileMap();
 
     Scene::Init();
 }
 
 void SceneGame::Enter()
 {
-Scene::Enter();
-worldView.setSize(level->gridWidth  * level->tileSize,   
-                  level->gridHeight * level->tileSize);  
-worldView.setCenter(worldView.getSize() / 2.f);
+    Scene::Enter();
+    if (loadLevel_("levels/stage00.json", *level)) {
+        std::cout << "맵 로딩" << std::endl;
+        std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
+        tileMap->load(*level, 1);
+
+        LoadStage("levels/stage00.json");
+    }
+
+    worldView.setSize(level->gridWidth  * level->tileSize,   
+                      level->gridHeight * level->tileSize);  
+    worldView.setCenter(worldView.getSize() / 2.f);
 
 
 //float winRatio  = FRAMEWORK.GetWindow().getSize().x / (float)FRAMEWORK.GetWindow().getSize().y;
@@ -130,8 +163,8 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
 
-
-    if (Variables::players[0] != nullptr)
+    /*
+     if (Variables::players[0] != nullptr)
     {
         sf::Vector2f playerPos = Variables::players[0]->GetPosition();
 
@@ -139,8 +172,8 @@ void SceneGame::Update(float dt)
         sf::Vector2f viewSize = worldView.getSize();
         sf::Vector2f halfSize = viewSize * 0.5f;
         sf::Vector2f mapSize = {
-         (float)level->gridWidth * level->tileSize,  
-         (float)level->gridHeight * level->tileSize    
+         (float)level->gridWidth * level->tileSize,
+         (float)level->gridHeight * level->tileSize
         };
 
         playerPos.x = Utils::Clamp(playerPos.x, 0.f, mapSize.x);
@@ -149,15 +182,17 @@ void SceneGame::Update(float dt)
         int tileX = static_cast<int>(playerPos.x) / level->tileSize;
         int tileY = static_cast<int>(playerPos.y) / level->tileSize;
 
-        if (tileMap.isSolid(tileX, tileY)) {
+        if (tileMap->isSolid(tileX, tileY)) {
             //std::cout << "충돌" << std::endl;
             playerPos = Variables::players[0]->getPrvPos();
         }
         playerPos.x = Utils::Clamp(playerPos.x, 0.f, mapSize.x);
-        playerPos.y = Utils::Clamp(playerPos.y, 0.f, mapSize.y);
+        playerPos.y = Utils::Clamp(playerPos.y, 20.f, mapSize.y);
         Variables::players[0]->SetPosition(playerPos);
-       
+
     }
+    */
+    
 
     //Variables::players[0]->SetPosition({ 48.f, 64.f });
     //std::cout << Variables::players[0]->GetPosition().x << " / " << Variables::players[0]->GetPosition().y << std::endl;
@@ -165,9 +200,9 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
-    tileMap.Draw(window);
+    tileMap->Draw(window);
     Scene::Draw(window);
-    //auto activeView = FRAMEWORK.GetWindow().getView();   // �� **�׸��� ���� ȣ��**
+    //auto activeView = FRAMEWORK.GetWindow().getView();
     //std::cout << "Active view size: "
     //    << activeView.getSize().x << ", "
     //    << activeView.getSize().y << '\n';

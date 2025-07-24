@@ -95,6 +95,9 @@ void Gimmick::Release()
 
 void Gimmick::Reset()
 {
+	sortingLayer = SortingLayers::Foreground;
+	sortingOrder = 0;
+
 	switch (type)
 	{
 		// 움직임 없음
@@ -103,6 +106,8 @@ void Gimmick::Reset()
 		break;
 	case GimmickType::Door:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
+		locked = properties.value("locked", true);
+		opened = false;
 		break;
 	case GimmickType::Buton:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
@@ -155,25 +160,31 @@ void Gimmick::Update(float dt)
 		break;
 	case GimmickType::Door:
 		{
-			bool locked = properties.value("locked", true); //이렇게 properties 사용
-			bool canOpen = locked || Variables::KeyObtained;
+			bool canOpen = locked == false || Variables::KeyObtained;
+			bool collide = std::any_of(
+				Variables::players.begin(), Variables::players.end(),
+				[&](Player* p) { return Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect); }
+			);
 
-			if (canOpen)
+			if (!waColliding && collide)
 			{
-				for (Player* p : Variables::players)
+				if (canOpen && !opened)
 				{
-					if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
-					{
-						body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
-						//SetActive(false);
-						break;
-					}
+					opened = true;
+					locked = false;
+					body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
+				}
+				else if (opened)
+				{
+					SCENE_MGR.ChangeScene(SceneIds::Game);
 				}
 			}
-			else
+			else if (!canOpen)
 			{
 				body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
 			}
+
+			waColliding = collide;
 		}
 		
 		break;

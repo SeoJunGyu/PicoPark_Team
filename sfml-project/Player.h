@@ -1,15 +1,14 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Animator.h"
 
+class TileMap;
 
 class Player :
     public GameObject
 {
 protected:
 	sf::Sprite body;
-
-	std::string texId = "graphics/Characters/Icon/Player0.png";
 	Animator animator;
 
 
@@ -17,12 +16,24 @@ protected:
 	sf::Vector2f gravity = { 0.f, 500.f };
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
-	float speed = 50.f;
+	bool isFallen = false; //낙하 테스트 변수
+	float speed = 100.f;
+	float jumpPower = 150.f;
 
 	HitBox hitBox;
+	TileMap* tilemap;
+
+	int index = 0;
+	sf::Color tint = sf::Color::White;
+
+	float coyoteCounter = 0.f; //지면을 떠난 뒤 남은 허용 시간
+	float jumpBufferCounter = 0.f; //미리 눌러둔 점프의 남은 유효 시간
+
+	float coyoteTime = 0.12f; //120ms
+	float jumpBuffer = 0.12f; //120ms
 
 public:
-	Player(const std::string& name = "");
+	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;
 
 	const sf::Vector2f& getPrvPos() const { return prvPos; }
@@ -49,5 +60,7 @@ public:
 	}
 
 	HitBox GetHitBox() const { return hitBox; }
+
+	void SetTileMap(TileMap* tilemap) { this->tilemap = tilemap; }
 };
 

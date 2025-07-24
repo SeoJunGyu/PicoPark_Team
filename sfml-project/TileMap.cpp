@@ -126,7 +126,7 @@ bool TileMap::isSolid(int tx, int ty) const
 
 int TileMap::getTile(int tx, int ty) const
 {
-	if (tx < 0 || tx >= width || ty >= height)
+	if (tx < 0 || tx >= width || ty < 0 || ty >= height)
 	{
 		return 0;
 	}

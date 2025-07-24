@@ -9,8 +9,8 @@ protected:
 	int width = 0, height = 0, tileSize = 16, firstSolid = 1;
 	std::vector<int> tiles;
 	//sf::VertexArray vertices; 
-	//std::vector<HitBox> solidHB; //�浹�� ���� �簢��
-	std::vector<sf::RectangleShape> solids;     // �浹�� �ڽ�(���� ��ǥ)
+	//std::vector<HitBox> solidHB;
+	std::vector<sf::RectangleShape> solids;
 
 	sf::Texture* texture = nullptr;
 	sf::Transform transform;
@@ -32,8 +32,10 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	bool load(const Level& lvl, int solidStart); //Json -> TileMap
-	bool isSolid(int tx, int ty) const;        
-	int  getTile(int tx, int ty) const;        
-	void setTile(int tx, int ty, int id);      
+	bool isSolid(int tx, int ty) const;
+	int  getTile(int tx, int ty) const;
+	void setTile(int tx, int ty, int id);
+
+	int GetTileSize() const { return tileSize; }
 };
 
