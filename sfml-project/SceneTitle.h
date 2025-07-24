@@ -4,7 +4,9 @@ class SceneTitle : public Scene
 {
 protected:
 	sf::Sprite titleBackground;
+	sf::Sprite menubox;
 	sf::Text titleMessage;
+	
 
 	float cooltime = 0.f;
 	bool coolOn = true;

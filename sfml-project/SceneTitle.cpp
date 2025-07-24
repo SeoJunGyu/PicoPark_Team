@@ -31,7 +31,8 @@ void SceneTitle::Enter()
 }
 void SceneTitle::Update(float dt)
 {
-	Scene::Update(dt);
+	sf::Vector2i mousepos = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
+	Scene::Update(dt);	
 	cooltime += dt;
 	if (cooltime > 0.9f)
 	{
@@ -46,6 +47,11 @@ void SceneTitle::Update(float dt)
 	{
 		titleMessage.setFillColor(sf::Color(255, 134, 77, 0));
 	}
+
+
+
+
+
 
 }
 void SceneTitle::Draw(sf::RenderWindow& window)
