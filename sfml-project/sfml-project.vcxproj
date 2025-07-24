@@ -153,6 +153,7 @@
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
     <ClCompile Include="Scenes\SceneDev2.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="GimmickTypeConv.hpp" />
     <ClInclude Include="JsonSerializer.hpp" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />
     <ClInclude Include="Scenes\SceneDev2.h" />

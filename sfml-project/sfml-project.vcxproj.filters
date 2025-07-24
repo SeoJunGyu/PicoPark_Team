@@ -81,6 +81,12 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\InputMgr.h">
@@ -162,6 +168,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GimmickTypeConv.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonSerializer.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
