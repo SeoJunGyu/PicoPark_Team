@@ -133,21 +133,22 @@ void Player::Update(float dt)
 		velocity.y += gravity.y * dt;
 	}
 	
+	sf::FloatRect prevRect = hitBox.rect.getGlobalBounds();
 	prvPos = position;
+
 	position += velocity * dt;
 
 	//Collision
 
+	// 타일 가로
 	body.setPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
-
 	int ts = tilemap->GetTileSize();
 	int leftTx = int(hitBox.GetLeft() / ts);
 	int rightTx = int((hitBox.GetRight() + 0.2f) / ts);
 	int topTy = int((hitBox.GetTop() + 0.2f) / ts);
 	int botTy = int((hitBox.GetBottom() + 0.2f) / ts);
 
-	// 가로
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitLeft = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(leftTx, botTy);
 	if (velocity.x > 0.f && hitRight)
@@ -161,7 +162,7 @@ void Player::Update(float dt)
 		position.x = prvPos.x;
 		velocity.x = 0.f;
 	}
-	
+
 	// 세로
 	body.setPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -202,13 +203,102 @@ void Player::Update(float dt)
 		//isGrounded = true;
 	}
 
+	// 플레이어 세로 충돌
+	SetPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	bool playerHead = false;
+
+	for (auto* other : Variables::players)
+	{
+		if (other == this)
+		{
+			continue;
+		}
+
+		if (!Utils::CheckCollision(hitBox.rect, other->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		//겹침 검사
+		float overlapX = std::min(hitBox.GetLeft() + hitBox.GetWidth(), other->GetHitBox().GetLeft() + other->GetHitBox().GetWidth()) - std::max(hitBox.GetLeft(), other->GetHitBox().GetLeft());
+		float overlapY = std::min(hitBox.GetTop() + hitBox.GetHeight(), other->GetHitBox().GetTop() + other->GetHitBox().GetHeight()) - std::max(hitBox.GetTop(), other->GetHitBox().GetTop());
+
+		float prevBottom = prevRect.top + prevRect.height;
+		float otherTop = other->GetHitBox().GetTop();
+
+		bool fallingHead = (velocity.y > 0.f) && (prevBottom <= otherTop) && (overlapY <= overlapX);
+
+		//y 겹침이 더 크고, 머리에 떨어진것이면
+		if (fallingHead)
+		{
+			position.y -= overlapY;
+			velocity.y = jumpPower;
+			isGrounded = true;
+
+			jumpBufferCounter = 0.f;
+			coyoteCounter = 0.f;
+
+			playerHead = true;
+			break;
+		}
+	}
+	
+	// 플레이어 가로 충돌
+	body.setPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+	
+	for (auto* other : Variables::players)
+	{
+		if (playerHead && Utils::CheckCollision(hitBox.rect, other->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		if (other == this)
+		{
+			continue;
+		}
+
+		if (!Utils::CheckCollision(hitBox.rect, other->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		//겹침 검사
+		float overlapX = std::min(hitBox.GetLeft() + hitBox.GetWidth(), other->GetHitBox().GetLeft() + other->GetHitBox().GetWidth()) - std::max(hitBox.GetLeft(), other->GetHitBox().GetLeft());
+		float overlapY = std::min(hitBox.GetTop() + hitBox.GetHeight(), other->GetHitBox().GetTop() + other->GetHitBox().GetHeight()) - std::max(hitBox.GetTop(), other->GetHitBox().GetTop());
+
+		//더 작은 축으로 분리
+		if (overlapX < overlapY)
+		{
+			float dir = position.x < other->position.x ? -1.f : 1.f;
+			position.x += dir * overlapX;
+			velocity.x = 0.f;
+		}
+		/*
+		else
+		{
+			float dir = position.y < other->position.y ? -1.f : 1.f;
+			position.x += dir * overlapY;
+			velocity.y = 0.f;
+			if (dir > 0)
+			{
+				isGrounded = true;
+			}
+		}
+		*/
+	}
+
 	if (h != 0.f)
 	{
 		sf::Vector2f s = GetScale();
 		s.x = std::abs(s.x) * (h > 0.f ? 1.f : -1.f);
 		SetScale(s);
 	}
-	
+
+	//최종 위치 설정
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	

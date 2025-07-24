@@ -42,10 +42,10 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
         if (Gimmick* g = Gimmick::CreateFromJson(entobj))
         {
-            g->Init();
+            AddGameObject(g);
+            //g->Init();
             g->Reset();
             Variables::gimmicks.push_back(g);
-            AddGameObject(g);
         }
 
         if (tstr == "PlayerSpawn")
@@ -130,12 +130,12 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stage00.json", *level)) {
+    if (loadLevel_("levels/stagePlayerTest.json", *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stage00.json");
+        LoadStage("levels/stagePlayerTest.json");
     }
 
     worldView.setSize(level->gridWidth  * level->tileSize,   

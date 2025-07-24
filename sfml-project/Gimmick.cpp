@@ -1,25 +1,25 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Gimmick.h"
 #include "Player.h"
-#include "GimmickTypeConv.hpp"
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 {
-	int id = j.value("id", 0); //Å° ÀÖÀ¸¸é ±×´ë·Î, ¾øÀ¸¸é 0
-	auto type = StrToType(j.at("type").get<std::string>()); //Å¸ÀÔ ¹®ÀÚ¿­À» GimmickType ¿­°ÅÇüÀ¸·Î ÀúÀå
+	/*
+	int id = j.value("id", 0); //í‚¤ ìˆìœ¼ë©´ ê·¸ëŒ€ë¡œ, ì—†ìœ¼ë©´ 0
+	auto type = StrToType(j.at("type").get<std::string>()); //íƒ€ì… ë¬¸ìì—´ì„ GimmickType ì—´ê±°í˜•ìœ¼ë¡œ ì €ì¥
 
 	if (type == GimmickType::PlayerSpawn)
 		return nullptr;
 
-	//À§Ä¡ ÁÂÇ¥ ÇÈ¼¿ ´ÜÀ§
+	//ìœ„ì¹˜ ì¢Œí‘œ í”½ì…€ ë‹¨ìœ„
 	float x = j.at("x").get<float>();
 	float y = j.at("y").get<float>();
 
-	float rot = j.value("rotation", 0.f); //Å° ÀÖÀ¸¸é ±×´ë·Î, ¾øÀ¸¸é 0
-	sf::Vector2f scl{ 1.f, 1.f }; //±âÁ¸ scale À¯Áö
-	//sf::Vector2f sizePx{ 0.f, 0.f }; //ÇÈ¼¿ Àı´ë°ª (¼±ÅÃ)
+	float rot = j.value("rotation", 0.f); //í‚¤ ìˆìœ¼ë©´ ê·¸ëŒ€ë¡œ, ì—†ìœ¼ë©´ 0
+	sf::Vector2f scl{ 1.f, 1.f }; //ê¸°ì¡´ scale ìœ ì§€
+	//sf::Vector2f sizePx{ 0.f, 0.f }; //í”½ì…€ ì ˆëŒ€ê°’ (ì„ íƒ)
 
-	//½ºÄÉÀÏ ÀÛ¼º µÇ¾îÀÖÀ¸¸é º¯È¯
+	//ìŠ¤ì¼€ì¼ ì‘ì„± ë˜ì–´ìˆìœ¼ë©´ ë³€í™˜
 	if (j.contains("scale"))
 	{
 		if (j["scale"].is_array())
@@ -34,9 +34,20 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		}
 	}
 
-	nlohmann::json props = j.value("properties", nlohmann::json::object()); //Æ¯Á¤ ±â¹Í Àü¿ë ¼Ó¼º ¹­À½
+	nlohmann::json props = j.value("properties", nlohmann::json::object()); //íŠ¹ì • ê¸°ë¯¹ ì „ìš© ì†ì„± ë¬¶ìŒ
 
 	return new Gimmick(id, type, { x, y }, scl, rot, props);
+	*/
+	auto type = StrToType(j.at("type").get<std::string>());
+	switch (type)
+	{
+	case GimmickType::Key:
+		return new Key(j);
+	case GimmickType::Door:
+		return new Door(j);
+	}
+
+	return nullptr;
 }
 
 Gimmick::Gimmick(int id, GimmickType t, const sf::Vector2f& pos, const sf::Vector2f& scl, float rot, nlohmann::json props)
@@ -100,14 +111,12 @@ void Gimmick::Reset()
 
 	switch (type)
 	{
-		// ¿òÁ÷ÀÓ ¾øÀ½
+		// ì›€ì§ì„ ì—†ìŒ
 	case GimmickType::Key:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/key.png"));
+		//body.setTexture(TEXTURE_MGR.Get("graphics/Item/key.png"));
 		break;
 	case GimmickType::Door:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
-		locked = properties.value("locked", true);
-		opened = false;
+		
 		break;
 	case GimmickType::Buton:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
@@ -115,7 +124,7 @@ void Gimmick::Reset()
 	case GimmickType::PlayerSpawn:
 		break;
 
-		//¿òÁ÷ÀÓ ÀÖÀ½
+		//ì›€ì§ì„ ìˆìŒ
 	case GimmickType::MovingPlatform:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Pad.png"));
 		break;
@@ -138,7 +147,7 @@ void Gimmick::Reset()
 
 void Gimmick::Update(float dt)
 {
-	//È°¼ºÈ­ ¾ÈÇÏ¸é ¾Æ¹«°Íµµ ¾ÈÇÔ
+	//í™œì„±í™” ì•ˆí•˜ë©´ ì•„ë¬´ê²ƒë„ ì•ˆí•¨
 	if (!GetActive())
 	{
 		return;
@@ -146,8 +155,9 @@ void Gimmick::Update(float dt)
 
 	switch (type)
 	{
-		//¿òÁ÷ÀÓ ¾øÀ½
+		//ì›€ì§ì„ ì—†ìŒ
 	case GimmickType::Key:
+		/*
 		for (Player* p : Variables::players)
 		{
 			if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
@@ -157,34 +167,12 @@ void Gimmick::Update(float dt)
 				break;
 			}
 		}
+		*/
+		
 		break;
 	case GimmickType::Door:
 		{
-			bool canOpen = locked == false || Variables::KeyObtained;
-			bool collide = std::any_of(
-				Variables::players.begin(), Variables::players.end(),
-				[&](Player* p) { return Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect); }
-			);
-
-			if (!waColliding && collide)
-			{
-				if (canOpen && !opened)
-				{
-					opened = true;
-					locked = false;
-					body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
-				}
-				else if (opened)
-				{
-					SCENE_MGR.ChangeScene(SceneIds::Game);
-				}
-			}
-			else if (!canOpen)
-			{
-				body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
-			}
-
-			waColliding = collide;
+			
 		}
 		
 		break;
@@ -197,7 +185,7 @@ void Gimmick::Update(float dt)
 	case GimmickType::KillLine:
 		break;
 
-		//¿òÁ÷ÀÓ ÀÖÀ½
+		//ì›€ì§ì„ ìˆìŒ
 	case GimmickType::MovingPlatform:
 		break;
 	case GimmickType::FallPlatform:
