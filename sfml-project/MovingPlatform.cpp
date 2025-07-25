@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "MovingPlatform.h"
+#include "Player.h"
 
 MovingPlatform::MovingPlatform(nlohmann::json j)
 	: Gimmick(
@@ -85,28 +86,47 @@ void MovingPlatform::Update(float dt)
 
 void MovingPlatform::moveOneStep(float dt)
 {
-	// ① 다음 위치 계산
-	//    dir=+1 이면 unitDir, dir=-1 이면 -unitDir
-	sf::Vector2f stepVec = unitDir * (speed * dt * dir);
-	sf::Vector2f pos = GetPosition();
-	sf::Vector2f next = pos + stepVec;
+	sf::FloatRect prevBox = hitBox.rect.getGlobalBounds(); //이전 히트박스 저장
 
-	// ② 투영(projection)으로 오버슈트 체크
-	//    l = (next - startPos)·unitDir
-	float l = (next.x - startPos.x) * unitDir.x
-		+ (next.y - startPos.y) * unitDir.y;
-
-	if (l >= pathLength) {
-		// end를 넘어섰으면 clamping
-		next = endPos;
-	}
-	else if (l <= 0.f) {
-		// start보다 앞섰으면 clamping
-		next = startPos;
-	}
-
-	// ③ 실제 위치 적용 및 hitBox 갱신
-	SetPosition(next);
+	sf::Vector2f movement = unitDir * (speed * dt * dir);
+	SetPosition(GetPosition() + movement);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	//충돌 처리
+	for (auto* p : Variables::players)
+	{
+		if (!Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		//경계 검사
+		float overlapX = std::min(hitBox.GetRight(), p->GetHitBox().GetLeft() + p->GetHitBox().GetWidth()) - std::max(hitBox.GetLeft(), p->GetHitBox().GetLeft());
+		float overlapY = std::min(hitBox.GetBottom(), p->GetHitBox().GetTop() + p->GetHitBox().GetHeight()) - std::max(hitBox.GetTop(), p->GetHitBox().GetTop());
+
+		if (overlapX < overlapY)
+		{
+			//가로 충돌
+			float push = (movement.x > 0) ? -overlapX : overlapX;
+			p->SetPosition(p->GetPosition() + sf::Vector2f{ push, 0.f });
+			p->velocity.x = 0.f;
+		}
+		else
+		{
+			//세로 충돌
+			if (movement.y > 0) //하강
+			{
+				p->SetPosition(p->GetPosition() + sf::Vector2f{ 0.f, -overlapY });
+				p->velocity.y = std::min(p->velocity.y, 0.f);
+			}
+			else //상승
+			{
+				p->SetPosition(p->GetPosition() + sf::Vector2f{ 0.f, overlapY });
+				p->velocity.y = 0.f;
+				p->isGrounded = true;
+			}
+		}
+	}
+	
 }
 

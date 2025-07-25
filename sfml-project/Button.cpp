@@ -2,6 +2,9 @@
 #include "Button.h"
 #include "Player.h"
 
+std::vector<int> Button::momentaryCount;
+std::vector<bool> Button::latchState;
+
 Button::Button(nlohmann::json j)
 	: Gimmick(
 		j.value("id", 0),
@@ -24,6 +27,8 @@ void Button::Reset()
 	channel = properties.value("channel", 0);
 	latch = properties.value("latch", false);
 	Variables::signals[channel] = false;
+
+	EnsureSize(channel);
 
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
@@ -66,11 +71,25 @@ void Button::Update(float dt)
 
 	if (latch)
 	{
+		if (detect && !wasPressed) //새로 눌렀을때만 토글
+		{
+			latchState[channel] = !latchState[channel];
+		}
+
 		pressed = wasPressed || detect;
 	}
 	else
 	{
 		pressed = detect;
+
+		if (pressed && wasPressed)
+		{
+			momentaryCount[channel]++;
+		}
+		if (!pressed && wasPressed)
+		{
+			momentaryCount[channel]--;
+		}
 	}
 
 	//상태가 바뀌었을때만 텍스처 및 신호 업데이트
@@ -92,4 +111,18 @@ void Button::Update(float dt)
 	//std::cout << channel << " : " << Variables::signals[channel] << std::endl;
 
 	Gimmick::Update(dt);
+}
+
+void Button::EnsureSize(int channel)
+{
+	if (momentaryCount.size() <= channel)
+	{
+		momentaryCount.resize(channel + 1, 0);
+		latchState.resize(channel + 1, false);
+	}
+}
+
+bool Button::IsActive(int channel)
+{
+	return (channel < 0) ? true : (latchState[channel] || momentaryCount[channel] > 0);
 }

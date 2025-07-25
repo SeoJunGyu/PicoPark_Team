@@ -9,6 +9,9 @@ protected:
 
     bool latch;
 
+    static std::vector<int> momentaryCount; //채널별 누르고 있는 순간 수
+    static std::vector<bool> latchState; //채널별 래치 on/off
+
 public:
     Button(nlohmann::json j);
 
@@ -16,5 +19,8 @@ public:
     void Update(float dt) override;
 
     bool GetPressed() const { return pressed; }
+
+    static void EnsureSize(int channel);
+    static bool IsActive(int channel);
 };
 
