@@ -2,6 +2,28 @@
 #include "GameObject.h"
 #include "Animator.h"
 
+struct StandMethod
+{
+	StandType type = StandType::None;
+	void* ptr = nullptr;
+
+	void clear()
+	{
+		type = StandType::None;
+		ptr = nullptr;
+	}
+
+	MovingPlatform* asPlatform()
+	{
+		return type == StandType::Platform ? static_cast<MovingPlatform*>(ptr) : nullptr;
+	}
+
+	Player* asPlayer()
+	{
+		return type == StandType::Player ? static_cast<Player*>(ptr) : nullptr;
+	}
+};
+
 class TileMap;
 
 class Player :
@@ -10,6 +32,7 @@ class Player :
 public:
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
+	bool isPlayerRider = false;
 
 protected:
 	sf::Sprite body;
@@ -26,6 +49,7 @@ protected:
 	HitBox hitBox;
 	TileMap* tilemap;
 	MovingPlatform* standingPlatform = nullptr;
+	StandMethod standing;
 
 	int index = 0;
 	sf::Color tint = sf::Color::White;

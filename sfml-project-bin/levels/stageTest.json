@@ -25,20 +25,21 @@
   ],
 
   "entities": [
-    { "id": 101, "type": "Key",  "x": 20,  "y": 32, "scale": [0.1,0.1] },
-    { "id": 102, "type": "Button",  "x": 30,  "y": 65, "scale": [0.2,0.2], 
-      "properties":{"channel": 1, "latch": false} },
     { "id": 103, "type": "Button",  "x": 60,  "y": 65, "scale": [0.2,0.2], 
       "properties":{"channel": 2, "latch": true} },
     { "id": 104, "type": "MovingPlatform",  "x": 90,  "y": 47, "scale": [0.2,0.2], 
       "properties":{"channel": 2, "path":[[90,77],[90,30]], "speed":30} },
-    { "id": 105, "type": "MovingPlatform",  "x": 80,  "y": 17, "scale": [0.2,0.2], 
-      "properties":{"channel": 1, "path":[[80,17],[30,17]], "speed":30} },
     {
       "id": 10,
       "type": "PlayerSpawn",
       "x": 48, "y": 54, "w": 60, "h": 128,
       "properties": {"color": "Orange" }
+    },
+    {
+      "id": 11,
+      "type": "PlayerSpawn",
+      "x": 68, "y": 54, "w": 60, "h": 128,
+      "properties": {"color": "Blue" }
     }
   ]
 }

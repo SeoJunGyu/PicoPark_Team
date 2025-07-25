@@ -68,3 +68,11 @@ enum class GimmickType
 	PlayerSpawn,
 	Count,
 };
+
+enum class StandType
+{
+	None,
+	Platform,
+	Player,
+	Count,
+};

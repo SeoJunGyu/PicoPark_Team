@@ -94,6 +94,7 @@ void Player::Reset()
 
 	sf::Vector2f pos(GetPosition().x + ox, GetPosition().y + oy + oy_fix);
 	SetPosition(pos);
+	
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
@@ -102,19 +103,23 @@ void Player::Update(float dt)
 {
 	animator.Update(dt);
 
-	//플랫폼 위라면 같이 이동
-	sf::Vector2f platDelta{ 0.f, 0.f };
-	if (standingPlatform)
+	isPlayerRider = false; //플레이어가 내 머리 위에 있는지 확인
+
+	if (standing.type != StandType::None)
 	{
-		position += standingPlatform->GetDeltaPos();
+		if (standing.type == StandType::Platform)
+		{
+			position += standing.asPlatform()->GetDeltaPos();
+		}
+		else
+		{
+			Player* base = standing.asPlayer();
+			position += (base->position - base->prvPos); //현재 프레임 이동량
+		}
 	}
 
-
-	if (InputMgr::GetJump(index))
+	if (InputMgr::GetJump(index) && !isPlayerRider)
 	{
-		
-		//isFallen = false;
-		
 
 		jumpBufferCounter = jumpBuffer; //점프 입력 기록
 	}
@@ -130,7 +135,7 @@ void Player::Update(float dt)
 	}
 
 	//점프 수행 조건
-	if (coyoteCounter > 0.f && jumpBufferCounter > 0.f)
+	if (coyoteCounter > 0.f && jumpBufferCounter > 0.f && !isPlayerRider)
 	{
 		isGrounded = false;
 		velocity.y = -jumpPower;
@@ -147,7 +152,8 @@ void Player::Update(float dt)
 	if (!isGrounded)
 	{
 		velocity.y += gravity.y * dt;
-		standingPlatform = nullptr; //딛고 선 플랫폼 초기화
+		//standingPlatform = nullptr; //딛고 선 플랫폼 초기화
+		standing.clear();
 	}
 	
 	sf::FloatRect prevRect = hitBox.rect.getGlobalBounds();
@@ -281,25 +287,6 @@ void Player::Update(float dt)
 			continue;
 		}
 
-		/*
-		
-		if (info.normal.y < 0.f) //플랫폼 착지
-		{
-			float prevBottom = prevRect.top + prevRect.height;
-			if (prevBottom <= platRect.top + 0.1f && velocity.y >= 0.f)
-			{
-				position.y += info.normal.y * info.depth;
-				velocity.y = 0.f;
-				isGrounded = true;
-				standingPlatform = plat;
-			}
-		}
-		else
-		{
-			position.y += info.normal.y * info.depth;
-			velocity.y = std::min(velocity.y, 0.f);
-		}
-		*/
 		if (info.depth > 0.f && std::abs(info.normal.y) > 0.5f)
 		{
 			position.y += info.normal.y * info.depth;
@@ -309,12 +296,15 @@ void Player::Update(float dt)
 			if (info.normal.y < 0.f) //플랫폼 착지
 			{
 				isGrounded = true;
-				standingPlatform = plat;
+				//standingPlatform = plat;
+				standing.type = StandType::Platform;
+				standing.ptr = plat;
 				velocity.y = 0.f;
 			}
 			else if(info.normal.y > 0.f) //플랫폼 하단 충돌
 			{
-				velocity.y = std::min(velocity.y, 0.f);
+				//velocity.y = std::min(velocity.y, 0.f);
+				velocity.y = 0.f;
 			}
 			break;
 		}
@@ -322,45 +312,6 @@ void Player::Update(float dt)
 	}
 	body.setPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
-
-	/*
-	for (auto* plat : Variables::platforms)
-	{
-		if (!Utils::CheckCollision(hitBox.rect, plat->GetHitBox().rect))
-		{
-			continue;
-		}
-
-		sf::FloatRect playerRect = hitBox.rect.getGlobalBounds();
-		sf::FloatRect platRect = plat->GetHitBox().rect.getGlobalBounds();
-		CollisionInfo info = Utils::GetAABBCollision(playerRect, platRect);
-
-		if (info.depth > 0.f)
-		{
-			position += info.normal * info.depth;
-			SetPosition(position);
-			hitBox.UpdateTransform(body, body.getLocalBounds());
-
-			if (info.normal.y < -0.5f)
-			{
-				//플랫폼 위에 착지
-				isGrounded = true;
-				standingPlatform = plat;
-				velocity.y = 0.f;
-			}
-			else if (info.normal.y > 0.5f)
-			{
-				//플랫폼 하단에 머리 박음
-				velocity.y = std::min(velocity.y, 0.f);
-			}
-			else
-			{
-				velocity.x = 0.f; //옆면 충돌
-			}
-		}
-	}
-	*/
-	
 
 	// 플레이어 세로 충돌
 	SetPosition(position);
@@ -381,27 +332,25 @@ void Player::Update(float dt)
 		}
 
 		//겹침 검사
-		float overlapX = std::min(hitBox.GetLeft() + hitBox.GetWidth(), other->GetHitBox().GetLeft() + other->GetHitBox().GetWidth()) - std::max(hitBox.GetLeft(), other->GetHitBox().GetLeft());
-		float overlapY = std::min(hitBox.GetTop() + hitBox.GetHeight(), other->GetHitBox().GetTop() + other->GetHitBox().GetHeight()) - std::max(hitBox.GetTop(), other->GetHitBox().GetTop());
+		CollisionInfo info = Utils::GetAABBCollision(hitBox.rect.getGlobalBounds(), other->GetHitBox().rect.getGlobalBounds());
 
-		float prevBottom = prevRect.top + prevRect.height;
-		float otherTop = other->GetHitBox().GetTop();
-
-		bool fallingHead = (velocity.y > 0.f) && (prevBottom <= otherTop) && (overlapY <= overlapX);
-
-		//y 겹침이 더 크고, 머리에 떨어진것이면
-		if (fallingHead)
+		if (info.depth <= 0.f)
 		{
-			position.y -= overlapY;
-			velocity.y = jumpPower;
-			isGrounded = true;
-
-			jumpBufferCounter = 0.f;
-			coyoteCounter = 0.f;
-
-			playerHead = true;
-			break;
+			continue;
 		}
+
+		if (info.normal.y < -0.5f) //내가 위 -> 착지
+		{
+			position.y += info.normal.y * info.depth;
+			velocity.y = 0.f;
+			isGrounded = true;
+			standing.type = StandType::Player;
+			standing.ptr = other;
+
+			other->isPlayerRider = true; //너 머리에 플레이어 있다고 알림
+			//standingPlatform = other;
+		}
+		
 	}
 	
 	// 플레이어 가로 충돌
@@ -431,18 +380,6 @@ void Player::Update(float dt)
 			position.x += dir * overlapX;
 			velocity.x = 0.f;
 		}
-		/*
-		else
-		{
-			float dir = position.y < other->position.y ? -1.f : 1.f;
-			position.x += dir * overlapY;
-			velocity.y = 0.f;
-			if (dir > 0)
-			{
-				isGrounded = true;
-			}
-		}
-		*/
 	}
 
 	if (h != 0.f)
