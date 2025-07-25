@@ -1,22 +1,22 @@
 #pragma once
 #include "Scene.h"
-#include "UiButton.h"
+
+class UiButton;
+class BackGround;
 
 class SceneTitle : public Scene
 {
 protected:
-	sf::Sprite titleBackground;
-	sf::Sprite menubox;
-	sf::Text titleMessage;
-	
-	UiButton startButton;
+		
+	UiButton* startButton;
+	BackGround* titlebackground;
 
 	float cooltime = 0.f;
 	bool coolOn = true;
 
 public:
 	SceneTitle();
-	~SceneTitle() = default;
+	virtual ~SceneTitle() =default;
 
 	void Init() override;
 	void Enter() override;

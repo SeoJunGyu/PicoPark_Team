@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Framework\AnimationClip.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="UiButton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Framework\AnimationClip.h" />
