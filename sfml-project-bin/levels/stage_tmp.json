@@ -4,25 +4,30 @@
   "entities": [
     {
       "id": 0,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            80,
+            48
+          ],
+          [
+            30,
+            48
+          ]
+        ],
+        "speed": 30
+      },
       "scale": [
-        0.10000000149011612,
-        0.10000000149011612
+        0.20000000298023224,
+        0.20000000298023224
       ],
-      "type": "Key",
+      "type": "MovingPlatform",
       "x": 80,
-      "y": 16
+      "y": 48
     },
     {
       "id": 1,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 0,
-      "y": 64
-    },
-    {
-      "id": 2,
       "properties": {
         "playerIndex": 0
       },
@@ -31,25 +36,17 @@
       "y": 64
     },
     {
-      "id": 3,
+      "id": 2,
       "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 32,
-      "y": 64
-    },
-    {
-      "id": 4,
-      "properties": {
-        "locked": true
+        "channel": 1,
+        "latch": false
       },
       "scale": [
-        0.10000000149011612,
-        0.10000000149011612
+        0.20000000298023224,
+        0.20000000298023224
       ],
-      "type": "Door",
-      "x": 128,
+      "type": "Button",
+      "x": 64,
       "y": 64
     }
   ],

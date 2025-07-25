@@ -16,12 +16,13 @@ public:
     void DrawPaletteAndButtons(sf::RenderWindow& w);
     void SaveAsLevel(const std::string& path);
     void ResizeGrid(int w, int h);
+    std::unordered_map<std::string, nlohmann::json> prefabOverrides;
+    std::vector<std::string> prefabNames;
 private:
     Level level;     
     TilePalette palette;
     LevelGrid grid;
     std::unordered_map<std::string, sf::Texture> texArr;
-    std::vector<std::string> prefabNames;
     int currentTile = 1;    
     int nextId = 0;
     int currentPlayerIndex = 0;

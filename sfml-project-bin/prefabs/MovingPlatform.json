@@ -1,0 +1,7 @@
+{
+  "name":        "MovingPlatform",
+  "type":        "MovingPlatform",
+  "sprite":      "graphics/Item/Pad.png",
+  "scale":       0.2,
+  "properties": { "channel": 1, "path":[[80,60],[30,60]], "speed":30 }
+}
