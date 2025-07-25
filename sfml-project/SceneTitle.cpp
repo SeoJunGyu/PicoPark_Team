@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneTitle.h"
+#include "UiButton.h"
 
 SceneTitle::SceneTitle()
 	: Scene(SceneIds::Title)

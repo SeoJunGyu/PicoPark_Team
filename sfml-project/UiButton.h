@@ -13,8 +13,8 @@ public:
 	bool isOn = true;
 	sf::Text text;
 
-	Button(const std::string& name = "");
-	virtual ~Button() = default;
+	UiButton(const std::string& name = "");
+	virtual ~UiButton() = default;
 
 	void SetCallBack(std::function<void()> callback) { event = callback; }
 
