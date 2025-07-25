@@ -1,0 +1,7 @@
+{
+  "name":        "Key",
+  "type":        "Key",
+  "sprite":      "graphics/Item/key.png",
+  "scale":       0.1,
+  "properties": {}
+}

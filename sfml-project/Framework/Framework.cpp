@@ -2,6 +2,7 @@
 #include "Framework.h"
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "PrefabMgr.h"
 
 
 
@@ -20,6 +21,7 @@ void Framework::Init(int w, int h, const std::string& t)
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);
 
+    PrefabMgr::I().LoadAll("prefabs");
     Utils::Init();
 	InputMgr::Init();
     SOUND_MGR.Init();

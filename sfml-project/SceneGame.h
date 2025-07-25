@@ -9,6 +9,8 @@ class SceneGame : public Scene
 protected:
 	Level* level = nullptr;
 	TileMap* tileMap;
+	sf::Texture bgTex;
+	sf::Sprite bgSpr;
 
 public:
 	SceneGame();

@@ -1,0 +1,7 @@
+{
+  "name":        "Door",
+  "type":        "Door",
+  "sprite":      "graphics/Item/door.png",
+  "scale":       0.1,
+  "properties": { "locked": true }
+}

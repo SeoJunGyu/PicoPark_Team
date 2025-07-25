@@ -1,0 +1,7 @@
+{
+  "name":        "PlayerSpawn",
+  "type":        "PlayerSpawn",
+  "sprite":      "graphics/Characters/Icon/Player0.png",
+  "scale":       1,
+  "properties": { "playerIndex" : 0 }
+}
