@@ -40,13 +40,19 @@ void SceneTitle::Enter()
 	startButton->SetOrigin(Origins::MC);
 	startButton->UiButton::SetPosition({ uiView.getSize().x * 0.5f, uiView.getSize().y * 0.5f });
 	startButton->SetColor(sf::Color(255, 134, 77, 255));
+	startButton->SetCallBack([]() {std::cout << "¹öÆ°" << std::endl; });
+	startButton->GetGlobalBounds();
 	startButton->Init();
 	//AddGameObject(startButton);
+
+	
+
+
 }
 void SceneTitle::Update(float dt)
-{
-	sf::Vector2i mousepos = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
+{	
 	Scene::Update(dt);
+	startButton->Update(dt);
 	startButton->Update(dt);
 	cooltime += dt;
 	if (cooltime > 0.9f)

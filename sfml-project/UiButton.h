@@ -28,6 +28,22 @@ public:
 	void SetSprit(const std::string& texID);
 	void Effect(bool on);
 
+	sf::FloatRect GetLocalBounds() const override
+	{
+		if (sprite.getTexture())
+			return sprite.getLocalBounds();
+		else
+			return text.getLocalBounds();
+	}
+
+	sf::FloatRect GetGlobalBounds() const override
+	{
+		if (sprite.getTexture())
+			return sprite.getGlobalBounds();
+		else
+			return text.getGlobalBounds();
+	}
+
 
 
 	void Init() override;

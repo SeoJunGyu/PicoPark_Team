@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "UiButton.h"
+#include "Scene.h"
 
 UiButton::UiButton(const std::string& name)
 	: GameObject(name)
@@ -73,8 +74,6 @@ void UiButton::Effect(bool on)
 	sprite.setColor(spritecolor);
 }
 
-
-
 void UiButton::Init()
 {
 	sortingLayer = SortingLayers::UI;
@@ -92,9 +91,11 @@ void UiButton::Reset()
 }
 
 void UiButton::Update(float dt)
-{
-	if ((InputMgr::GetMouseButtonDown(sf::Mouse::Left)||InputMgr::GetKeyDown(sf::Keyboard::Space)) &&
-		sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()))
+{	
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left)&&
+		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())|| 
+		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())))
 	{
 		if (event)
 			event();
