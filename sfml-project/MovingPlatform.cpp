@@ -103,15 +103,38 @@ void MovingPlatform::moveOneStep(float dt)
 	prevPos = GetPosition();
 	sf::Vector2f next = prevPos + stepVec;
 
-	float l = (next.x - startPos.x) * unitDir.x + (next.y - startPos.y) * unitDir.y;
+	float distance = (next.x - startPos.x) * unitDir.x + (next.y - startPos.y) * unitDir.y;
 
-	if (l >= pathLength) 
+	if (distance >= pathLength)
 	{
 		next = endPos;
 	}
-	else if (l <= 0.f) 
+	else if (distance <= 0.f)
 	{
 		next = startPos;
+	}
+
+	sf::FloatRect oldBox = hitBox.rect.getGlobalBounds();
+	sf::FloatRect testBox = oldBox;
+	testBox.left += (next.x - prevPos.x);
+	testBox.top += (next.y - prevPos.y);
+
+	for (auto* p : Variables::players)
+	{
+		sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
+		if (!testBox.intersects(pBox))
+			continue;
+
+		// 분리 축과 깊이 계산
+		CollisionInfo info = Utils::GetAABBCollision(pBox, testBox);
+		// info.normal.y > 0 이면 “플레이어 머리가 아래에서 플랫폼을 밀어올린” 상황
+		if (info.depth > 0.f && info.normal.y > 0.f)
+		{
+			// 머리 박힘 → 멈춤
+			blocked = true;
+			deltaPos = { 0.f, 0.f };
+			return;    // 실제 이동( SetPosition ) 없이 탈출
+		}
 	}
 
 	SetPosition(next);

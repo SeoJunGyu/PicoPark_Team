@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "SceneGame.h"
 #include "Player.h"
 #include "Gimmick.h"
