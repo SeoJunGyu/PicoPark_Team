@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+#include "UiButton.h"
+
 class SceneTitle : public Scene
 {
 protected:
@@ -7,6 +9,7 @@ protected:
 	sf::Sprite menubox;
 	sf::Text titleMessage;
 	
+	UiButton startButton;
 
 	float cooltime = 0.f;
 	bool coolOn = true;
