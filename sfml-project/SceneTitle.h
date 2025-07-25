@@ -16,7 +16,7 @@ protected:
 
 public:
 	SceneTitle();
-	virtual ~SceneTitle() =default;
+~SceneTitle()override;
 
 	void Init() override;
 	void Enter() override;

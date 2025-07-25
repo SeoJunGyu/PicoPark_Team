@@ -177,6 +177,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PopupWindowUI.cpp" />
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PopupWindowUI.h" />
     <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />

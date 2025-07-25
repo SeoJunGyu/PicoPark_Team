@@ -39,6 +39,7 @@
     <ClCompile Include="TilePalette.cpp" />
     <ClCompile Include="UiButton.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="PopupWindowUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="TilePalette.h" />
     <ClInclude Include="UiButton.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="PopupWindowUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

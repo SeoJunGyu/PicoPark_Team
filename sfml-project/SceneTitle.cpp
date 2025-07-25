@@ -8,6 +8,12 @@ SceneTitle::SceneTitle()
 {
 }
 
+SceneTitle::~SceneTitle()
+{
+	delete titlebackground;
+	delete startButton;
+}
+
 void SceneTitle::Init()
 {
 	texIds.push_back("graphics/titlebackground.PNG");
