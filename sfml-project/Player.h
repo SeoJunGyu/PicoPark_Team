@@ -25,6 +25,7 @@ protected:
 
 	HitBox hitBox;
 	TileMap* tilemap;
+	MovingPlatform* standingPlatform = nullptr;
 
 	int index = 0;
 	sf::Color tint = sf::Color::White;

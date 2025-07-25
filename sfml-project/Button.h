@@ -22,5 +22,7 @@ public:
 
     static void EnsureSize(int channel);
     static bool IsActive(int channel);
+
+    static void ClearStates();
 };
 

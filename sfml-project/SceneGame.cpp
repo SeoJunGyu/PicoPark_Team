@@ -30,6 +30,7 @@ static sf::Color makeColor(int tileId)
 void SceneGame::LoadStage(const std::string& jsonPath)
 {
     ClearStage();
+    Button::ClearStates(); //버튼 래치 및 누름상태 초기화
     Variables::ResetStage();
     std::vector<sf::Vector2f> spawnPoints;
     std::ifstream fin(jsonPath);
@@ -51,6 +52,11 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             g->Reset();
             Variables::gimmicks.push_back(g);
             AddGameObject(g);
+
+            if (tstr == "MovingPlatform")
+            {
+                Variables::platforms.push_back(dynamic_cast<MovingPlatform*>(g));
+            }
         }
 
         if (tstr == "PlayerSpawn")
@@ -91,6 +97,7 @@ void SceneGame::ClearStage()
     gameObjects.clear();
     Variables::players.clear();
     Variables::gimmicks.clear();
+    Variables::platforms.clear();
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
@@ -121,6 +128,8 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
     texIds.push_back("graphics/Item/Button.png");
+    texIds.push_back("graphics/Item/Button_Pressed.png");
+    texIds.push_back("graphics/Item/Pad.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
@@ -134,12 +143,12 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stage_tmp.json", *level)) {
+    if (loadLevel_("levels/stageTest.json", *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stage_tmp.json");
+        LoadStage("levels/stageTest.json");
     }
 
     worldView.setSize(level->gridWidth  * level->tileSize,   

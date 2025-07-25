@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Utils.h"
 
 std::random_device Utils::rd;
@@ -345,4 +345,32 @@ bool Utils::PolygonsIntersect(const std::vector<sf::Vector2f>& polygonA, const s
         }
     }
     return true;
+}
+
+CollisionInfo Utils::GetAABBCollision(const sf::FloatRect& a, const sf::FloatRect& b)
+{
+    sf::FloatRect inter; //겹친 부분을 저장
+    if (!a.intersects(b, inter))
+    {
+        return { {0,0}, 0.f }; //충돌 없음
+    }
+
+    //겹침 너비 ' 높이
+    float w = inter.width;
+    float h = inter.height;
+
+    if (w < h)
+    {
+        //x축 분리
+        //a가 b 왼쪽에 있으면 왼쪽(-1) 아니면 오른쪽(1)
+        float dir = (a.left + a.width * 0.5f < b.left + b.width * 0.5f) ? -1.f : 1.f;
+        return { {dir, 0.f}, w };
+    }
+    else
+    {
+        //Y축 분리
+        //위 (-1) 아래 (1)
+        float dir = (a.top + a.height * 0.5f < b.top + b.height * 0.5f) ? -1.f : 1.f;
+        return { {0.f, dir}, h };
+    }
 }
