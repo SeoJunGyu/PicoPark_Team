@@ -1,5 +1,11 @@
-#pragma once
+﻿#pragma once
 #include <random>
+
+struct CollisionInfo
+{
+	sf::Vector2f normal; //분리 방향 단위 벡터
+	float depth; //분리해야 할 거리
+};
 
 class Utils
 {
@@ -63,6 +69,8 @@ public:
 	static std::vector<sf::Vector2f> GetRectanglePointsFromBounds(const sf::FloatRect& localBounds);
 	static bool PolygonsIntersect(const std::vector<sf::Vector2f>& polygonA, const sf::Transform& transformA,
 		const std::vector<sf::Vector2f>& polygonB, const sf::Transform& transformB);
+
+	static CollisionInfo GetAABBCollision(const sf::FloatRect& a, const sf::FloatRect& b);
 
 };
 

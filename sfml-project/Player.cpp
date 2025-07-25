@@ -102,6 +102,14 @@ void Player::Update(float dt)
 {
 	animator.Update(dt);
 
+	//플랫폼 위라면 같이 이동
+	sf::Vector2f platDelta{ 0.f, 0.f };
+	if (standingPlatform)
+	{
+		position += standingPlatform->GetDeltaPos();
+	}
+
+
 	if (InputMgr::GetJump(index))
 	{
 		
@@ -139,15 +147,16 @@ void Player::Update(float dt)
 	if (!isGrounded)
 	{
 		velocity.y += gravity.y * dt;
+		standingPlatform = nullptr; //딛고 선 플랫폼 초기화
 	}
 	
 	sf::FloatRect prevRect = hitBox.rect.getGlobalBounds();
 	prvPos = position;
 
-	position += velocity * dt;
+	//position += velocity * dt;
+	position.x += velocity.x * dt;
 
 	//Collision
-
 	// 타일 가로
 	body.setPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -170,6 +179,48 @@ void Player::Update(float dt)
 		position.x = prvPos.x;
 		velocity.x = 0.f;
 	}
+
+	// 플랫폼 가로
+	body.setPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+	for (auto* plat : Variables::platforms)
+	{
+		if (!Utils::CheckCollision(hitBox.rect, plat->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		float prevBottom = prevRect.top + prevRect.height;
+
+		sf::FloatRect playerRect = hitBox.rect.getGlobalBounds();
+		sf::FloatRect platRect = plat->GetHitBox().rect.getGlobalBounds();
+
+		if (velocity.y > 0.f && prevBottom <= platRect.top + 0.1f)
+		{
+			//낙하중이고, 이전 발바닥이 플래폼 윗면보다 위였으면 -> ㅊ옆면 처리 스킵 (착지 후보니까)
+			continue;
+		}
+
+		if (velocity.y < 0.f && prevRect.top + platRect.height - 0.1f)
+		{
+			continue;
+		}
+
+		//진짜 옆면만 처리
+		CollisionInfo info = Utils::GetAABBCollision(playerRect, platRect);
+
+		if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
+		{
+			position.x += info.normal.x * info.depth;
+			velocity.x = 0.f;
+			SetPosition(position);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+			break;
+		}
+	}
+
+	//수직 이동 갱신
+	position.y += velocity.y * dt;
 
 	// 세로
 	body.setPosition(position);
@@ -210,6 +261,106 @@ void Player::Update(float dt)
 		velocity.y = 0.f;
 		//isGrounded = true;
 	}
+
+	//플랫폼 세로 충돌
+	body.setPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+	for (auto* plat : Variables::platforms)
+	{
+		if (!Utils::CheckCollision(hitBox.rect, plat->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		sf::FloatRect playerRect = hitBox.rect.getGlobalBounds();
+		sf::FloatRect platRect = plat->GetHitBox().rect.getGlobalBounds();
+		CollisionInfo info = Utils::GetAABBCollision(playerRect, platRect);
+
+		if (info.depth <= 0.f || std::abs(info.normal.y) < 0.5f)
+		{
+			continue;
+		}
+
+		/*
+		
+		if (info.normal.y < 0.f) //플랫폼 착지
+		{
+			float prevBottom = prevRect.top + prevRect.height;
+			if (prevBottom <= platRect.top + 0.1f && velocity.y >= 0.f)
+			{
+				position.y += info.normal.y * info.depth;
+				velocity.y = 0.f;
+				isGrounded = true;
+				standingPlatform = plat;
+			}
+		}
+		else
+		{
+			position.y += info.normal.y * info.depth;
+			velocity.y = std::min(velocity.y, 0.f);
+		}
+		*/
+		if (info.depth > 0.f && std::abs(info.normal.y) > 0.5f)
+		{
+			position.y += info.normal.y * info.depth;
+			SetPosition(position);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+
+			if (info.normal.y < 0.f) //플랫폼 착지
+			{
+				isGrounded = true;
+				standingPlatform = plat;
+				velocity.y = 0.f;
+			}
+			else if(info.normal.y > 0.f) //플랫폼 하단 충돌
+			{
+				velocity.y = std::min(velocity.y, 0.f);
+			}
+			break;
+		}
+		
+	}
+	body.setPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	/*
+	for (auto* plat : Variables::platforms)
+	{
+		if (!Utils::CheckCollision(hitBox.rect, plat->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		sf::FloatRect playerRect = hitBox.rect.getGlobalBounds();
+		sf::FloatRect platRect = plat->GetHitBox().rect.getGlobalBounds();
+		CollisionInfo info = Utils::GetAABBCollision(playerRect, platRect);
+
+		if (info.depth > 0.f)
+		{
+			position += info.normal * info.depth;
+			SetPosition(position);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+
+			if (info.normal.y < -0.5f)
+			{
+				//플랫폼 위에 착지
+				isGrounded = true;
+				standingPlatform = plat;
+				velocity.y = 0.f;
+			}
+			else if (info.normal.y > 0.5f)
+			{
+				//플랫폼 하단에 머리 박음
+				velocity.y = std::min(velocity.y, 0.f);
+			}
+			else
+			{
+				velocity.x = 0.f; //옆면 충돌
+			}
+		}
+	}
+	*/
+	
 
 	// 플레이어 세로 충돌
 	SetPosition(position);

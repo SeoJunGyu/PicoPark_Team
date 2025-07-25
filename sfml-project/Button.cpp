@@ -26,7 +26,7 @@ void Button::Reset()
 	pressed = false;
 	channel = properties.value("channel", 0);
 	latch = properties.value("latch", false);
-	Variables::signals[channel] = false;
+	//Variables::signals[channel] = false;
 
 	EnsureSize(channel);
 
@@ -82,7 +82,7 @@ void Button::Update(float dt)
 	{
 		pressed = detect;
 
-		if (pressed && wasPressed)
+		if (pressed && !wasPressed)
 		{
 			momentaryCount[channel]++;
 		}
@@ -91,6 +91,7 @@ void Button::Update(float dt)
 			momentaryCount[channel]--;
 		}
 	}
+	momentaryCount[channel] = std::max(0, momentaryCount[channel]);
 
 	//상태가 바뀌었을때만 텍스처 및 신호 업데이트
 	if (pressed != wasPressed)
@@ -104,7 +105,7 @@ void Button::Update(float dt)
 			body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
 		}
 
-		Variables::signals[channel] = pressed;
+		//Variables::signals[channel] = pressed;
 	}
 
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -115,6 +116,11 @@ void Button::Update(float dt)
 
 void Button::EnsureSize(int channel)
 {
+	if (channel < 0)
+	{
+		return;
+	}
+
 	if (momentaryCount.size() <= channel)
 	{
 		momentaryCount.resize(channel + 1, 0);
@@ -125,4 +131,10 @@ void Button::EnsureSize(int channel)
 bool Button::IsActive(int channel)
 {
 	return (channel < 0) ? true : (latchState[channel] || momentaryCount[channel] > 0);
+}
+
+void Button::ClearStates()
+{
+	momentaryCount.assign(momentaryCount.size(), 0);
+	latchState.assign(latchState.size(), false);
 }

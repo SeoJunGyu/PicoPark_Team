@@ -6,7 +6,7 @@ bool Variables::isDrawHitBox = false;
 bool Variables::KeyObtained = false;
 std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
-std::vector<bool> Variables::signals{};
+std::vector<MovingPlatform*> Variables::platforms{};
 
 void Variables::ResetStage()
 {

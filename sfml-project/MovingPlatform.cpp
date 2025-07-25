@@ -25,6 +25,7 @@ void MovingPlatform::Reset()
 	startPos = { properties["path"][0][0].get<float>(), properties["path"][0][1].get<float>() };
 	endPos = { properties["path"][1][0].get<float>(), properties["path"][1][1].get<float>() };
 	speed = properties.value("speed", 0.f);
+	prvSpeed = speed;
 
 	sf::Vector2f delta = endPos - startPos;
 	pathLength = std::sqrt(delta.x * delta.x + delta.y * delta.y);
@@ -38,6 +39,8 @@ void MovingPlatform::Reset()
 	}
 
 	dir = 0;
+	prevPos = startPos;
+	deltaPos = { 0.f, 0.f };
 
 	SetOrigin(Origins::MC);
 	SetPosition(startPos);
@@ -49,7 +52,16 @@ void MovingPlatform::Reset()
 
 void MovingPlatform::Update(float dt)
 {
-	bool signal = (channel < 0 ? true : Variables::signals[channel]);
+	if (blocked)
+	{
+		if (IsBlocked())
+		{
+			return;
+		}
+		blocked = false;
+	}
+
+	bool signal = Button::IsActive(channel);
 
 	auto pos = GetPosition();
 	bool atStart = std::abs((pos - startPos).x) + std::abs((pos - startPos).y) < 0.01f;
@@ -70,6 +82,7 @@ void MovingPlatform::Update(float dt)
 	{
 		if (atStart)
 		{
+			deltaPos = { 0.f, 0.f };
 			dir = 0;
 		}
 		else
@@ -86,13 +99,30 @@ void MovingPlatform::Update(float dt)
 
 void MovingPlatform::moveOneStep(float dt)
 {
-	sf::FloatRect prevBox = hitBox.rect.getGlobalBounds(); //이전 히트박스 저장
+	sf::Vector2f stepVec = unitDir * (speed * dt * dir);
+	prevPos = GetPosition();
+	sf::Vector2f next = prevPos + stepVec;
 
-	sf::Vector2f movement = unitDir * (speed * dt * dir);
-	SetPosition(GetPosition() + movement);
+	float l = (next.x - startPos.x) * unitDir.x + (next.y - startPos.y) * unitDir.y;
+
+	if (l >= pathLength) 
+	{
+		next = endPos;
+	}
+	else if (l <= 0.f) 
+	{
+		next = startPos;
+	}
+
+	SetPosition(next);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	//충돌 처리
+	deltaPos = next - prevPos;
+	blocked = IsBlocked();
+}
+
+bool MovingPlatform::IsBlocked()
+{
 	for (auto* p : Variables::players)
 	{
 		if (!Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
@@ -100,33 +130,19 @@ void MovingPlatform::moveOneStep(float dt)
 			continue;
 		}
 
-		//경계 검사
-		float overlapX = std::min(hitBox.GetRight(), p->GetHitBox().GetLeft() + p->GetHitBox().GetWidth()) - std::max(hitBox.GetLeft(), p->GetHitBox().GetLeft());
-		float overlapY = std::min(hitBox.GetBottom(), p->GetHitBox().GetTop() + p->GetHitBox().GetHeight()) - std::max(hitBox.GetTop(), p->GetHitBox().GetTop());
+		sf::FloatRect pRect = hitBox.rect.getGlobalBounds();
+		sf::FloatRect playerRect = p->GetHitBox().rect.getGlobalBounds();
 
-		if (overlapX < overlapY)
+		CollisionInfo info = Utils::GetAABBCollision(playerRect, pRect);
+
+		bool headHit = (info.depth > 0.f && info.normal.y > 0.5f) || (p->velocity.y < 0.f) || (dir > 0 && unitDir.y > 0 && p->velocity.y <= 0.f);
+
+		if (headHit)
 		{
-			//가로 충돌
-			float push = (movement.x > 0) ? -overlapX : overlapX;
-			p->SetPosition(p->GetPosition() + sf::Vector2f{ push, 0.f });
-			p->velocity.x = 0.f;
-		}
-		else
-		{
-			//세로 충돌
-			if (movement.y > 0) //하강
-			{
-				p->SetPosition(p->GetPosition() + sf::Vector2f{ 0.f, -overlapY });
-				p->velocity.y = std::min(p->velocity.y, 0.f);
-			}
-			else //상승
-			{
-				p->SetPosition(p->GetPosition() + sf::Vector2f{ 0.f, overlapY });
-				p->velocity.y = 0.f;
-				p->isGrounded = true;
-			}
+			return true;
 		}
 	}
-	
+
+	return false;
 }
 
