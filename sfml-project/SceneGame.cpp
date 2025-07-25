@@ -2,6 +2,7 @@
 #include "SceneGame.h"
 #include "Player.h"
 #include "Gimmick.h"
+#include "PrefabMgr.h"
 
 static sf::Color makeColor(int tileId)
 {
@@ -39,29 +40,40 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     for (const auto& entobj : j["entities"])
     {
         std::string tstr = entobj.at("type").get<std::string>();
+
+        if (tstr == "PlayerSpawn")
+        {
+            int tmp = entobj["properties"].value("playerIndex", 0);
+            float x = entobj.at("x").get<float>();
+            float y = entobj.at("y").get<float>();
+            spawnPoints.emplace_back(x, y);
+            continue;          // Gimmick 생성 생략
+        }
+
+        GameObject* g = PrefabMgr::I().Instantiate(
+            entobj["type"],
+            { entobj["x"], entobj["y"] },
+            entobj.value("properties", nlohmann::json::object()));
+        if (g) {
+            g->Init();
+            g->Reset();
+            Variables::gimmicks.push_back((Gimmick*)g);
+            AddGameObject(g);
+        }
         /*float ox = level->tileSize * 0.5f;
         float oy = level->tileSize * 0.5f;
 
         sf::Vector2f pos(entobj.at("x").get<float>() + ox, entobj.at("y").get<float>() + oy);*/
 
 
-        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
-        {
-            g->Init();
-            g->Reset();
-            Variables::gimmicks.push_back(g);
-            AddGameObject(g);
-        }
+        //if (Gimmick* g = Gimmick::CreateFromJson(entobj))
+        //{
+        //    g->Init();
+        //    g->Reset();
+        //    Variables::gimmicks.push_back(g);
+        //    AddGameObject(g);
+        //}
 
-        if (tstr == "PlayerSpawn")
-        {
-            int tmp = entobj["properties"].value("playerIndex", 0);
-            // ── 1) Spawn 좌표 수집
-            float x = entobj.at("x").get<float>();
-            float y = entobj.at("y").get<float>();
-            spawnPoints.emplace_back(x, y);
-            continue;          // Gimmick 생성 생략
-        }
     }
 
     int idx = 0;
@@ -122,6 +134,9 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/doorOpen.png");
     texIds.push_back("graphics/Item/Button.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
+    bgTex.loadFromFile("graphics/Background.png");
+    bgSpr.setTexture(bgTex);
+    bgSpr.setScale({ 1.3f, 1.3f });
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
@@ -204,6 +219,7 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
+    window.draw(bgSpr);
     tileMap->Draw(window);
     Scene::Draw(window);
     //auto activeView = FRAMEWORK.GetWindow().getView();

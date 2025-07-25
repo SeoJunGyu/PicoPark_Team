@@ -20,6 +20,8 @@ private:
     Level level;     
     TilePalette palette;
     LevelGrid grid;
+    std::unordered_map<std::string, sf::Texture> texArr;
+    std::vector<std::string> prefabNames;
     int currentTile = 1;    
     int nextId = 0;
     int currentPlayerIndex = 0;
