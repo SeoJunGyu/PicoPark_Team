@@ -12,44 +12,35 @@ void SceneTitle::Init()
 	fontIds.push_back("fonts/BACKTO1982.TTF");
 
 
-	
+
 	Scene::Init();
 }
 void SceneTitle::Enter()
 {
 	Scene::Enter();
-	
+
 	titleBackground.setTexture(TEXTURE_MGR.Get("graphics/titlebackground.PNG"));
 
-	titleMessage.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
-	titleMessage.setCharacterSize(50);
-	Utils::SetOrigin(titleMessage, Origins::MC);
-	titleMessage.setString("PRESS ENTER KEY");
+	startButton.text.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
+	startButton.text.setCharacterSize(50);
+	Utils::SetOrigin(startButton.text, Origins::MC);
+	startButton.text.setString("PRESS ENTER KEY");
 
 	auto size = FRAMEWORK.GetWindowSizeF();
-	titleMessage.setPosition(size.x * 0.35f, size.y * 0.5f);
+	startButton.text.setPosition(size.x * 0.35f, size.y * 0.5f);
 }
 void SceneTitle::Update(float dt)
 {
 	sf::Vector2i mousepos = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
-	Scene::Update(dt);	
+	Scene::Update(dt);
 	cooltime += dt;
 	if (cooltime > 0.9f)
 	{
 		coolOn = !coolOn;
 		cooltime = 0;
 	}
-	if (coolOn)
-	{
-		titleMessage.setFillColor(sf::Color(255, 134, 77, 255));
-	}
-	else
-	{
-		titleMessage.setFillColor(sf::Color(255, 134, 77, 0));
-	}
-
-
-
+	startButton.text.setFillColor
+	(coolOn ? sf::Color(255, 134, 77, 255) : sf::Color(255, 134, 77, 0));
 
 
 
@@ -58,7 +49,7 @@ void SceneTitle::Draw(sf::RenderWindow& window)
 {
 	window.setView(window.getDefaultView());
 	window.draw(titleBackground);
+	window.draw(startButton.text);
 
-	window.draw(titleMessage);
 	Scene::Draw(window);
 }
