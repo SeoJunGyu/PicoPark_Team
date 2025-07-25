@@ -259,11 +259,6 @@ void Player::Update(float dt)
 	
 	for (auto* other : Variables::players)
 	{
-		if (playerHead && Utils::CheckCollision(hitBox.rect, other->GetHitBox().rect))
-		{
-			continue;
-		}
-
 		if (other == this)
 		{
 			continue;
