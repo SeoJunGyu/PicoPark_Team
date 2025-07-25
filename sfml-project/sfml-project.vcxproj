@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Framework\AnimationClip.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="AniPlayer.cpp" />
@@ -169,8 +171,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Gimmick.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -188,6 +192,8 @@
     <ClCompile Include="TilePalette.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Framework\AnimationClip.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="AniPlayer.h" />
@@ -214,6 +220,8 @@
     <ClInclude Include="Gimmick.h" />
     <ClInclude Include="GimmickTypeConv.hpp" />
     <ClInclude Include="JsonSerializer.hpp" />
+    <ClInclude Include="Key.h" />
+    <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="SceneGame.h" />

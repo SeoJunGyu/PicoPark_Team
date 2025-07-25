@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define DEF_DEV
 
@@ -41,29 +41,29 @@ enum class PlayerState
 	Walk,
 	Jump,
 	MagnetHold,
-	Absorbed, //Èí¼ö ´çÇÑ »óÅÂ
-	AbsorbCharge, //´Ù¸¥ Ä³¸¯ÅÍ Èí¼ö ÇÑ »óÅÂ
-	AbsorbThrow, //Èí¼ö °ø ½ğ »óÅÂ
+	Absorbed, //í¡ìˆ˜ ë‹¹í•œ ìƒíƒœ
+	AbsorbCharge, //ë‹¤ë¥¸ ìºë¦­í„° í¡ìˆ˜ í•œ ìƒíƒœ
+	AbsorbThrow, //í¡ìˆ˜ ê³µ ìœ ìƒíƒœ
 	Dead,
 	Count,
 };
 
 enum class GimmickType
 {
-	//¿òÁ÷ÀÓ X
+	//ì›€ì§ì„ X
 	Key,
 	Door,
-	Buton,
+	Button,
 	BouncePad,
 	WeightPad,
 	KillLine,
-	//¿òÁ÷ÀÓ -> Update ÇÊ¿ä
+	//ì›€ì§ì„ -> Update í•„ìš”
 	MovingPlatform,
 	FallPlatform,
 	WeightBlock,
 	ColorPushBlock,
 	Rope,
-	//ÇÃ·¹ÀÌ¾î °ü·Ã
+	//í”Œë ˆì´ì–´ ê´€ë ¨
 	PlayerSpawn,
 	Count,
 };

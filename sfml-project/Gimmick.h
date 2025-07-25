@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameObject.h"
 #include "json.hpp"
 
@@ -7,26 +7,26 @@ class Gimmick :
 {
 
 public:
-	GimmickType type{ GimmickType::Key }; // ÃÊ±âÈ­ : Key
-	sf::Vector2f velocity{ 0.f, 0.f }; //µ¿Àû ±â¹Í¸¸ »ç¿ë
+	GimmickType type{ GimmickType::Key }; // ì´ˆê¸°í™” : Key
+	sf::Vector2f velocity{ 0.f, 0.f }; //ë™ì  ê¸°ë¯¹ë§Œ ì‚¬ìš©
 
-	int pInt[2]{ 0, 0 }; //Á¤¼ö 1 ~ 2°³ ÇÊ¿ä ¿ÀºêÁ§Æ® : WeightPad(ÀÎ¼ö), ColorPushBlock(»ö»ó°ª), Button - MovingPlatform (Ã¤³Î)
-	float pFloat[2]{ 0.f, 0.f }; //½Ç¼ö 1 ~ 2°³ ÇÊ¿ä ¿ÀºêÁ§Æ® : BouncePad(¹İ¹ß ¼Óµµ x y), FallPlatform(³«ÇÏ µô·¹ÀÌ), MovingPlatform(ÀÌµ¿, ·çÇÁ½Ã°£)
+	int pInt[2]{ 0, 0 }; //ì •ìˆ˜ 1 ~ 2ê°œ í•„ìš” ì˜¤ë¸Œì íŠ¸ : WeightPad(ì¸ìˆ˜), ColorPushBlock(ìƒ‰ìƒê°’), Button - MovingPlatform (ì±„ë„)
+	float pFloat[2]{ 0.f, 0.f }; //ì‹¤ìˆ˜ 1 ~ 2ê°œ í•„ìš” ì˜¤ë¸Œì íŠ¸ : BouncePad(ë°˜ë°œ ì†ë„ x y), FallPlatform(ë‚™í•˜ ë”œë ˆì´), MovingPlatform(ì´ë™, ë£¨í”„ì‹œê°„)
 
 	static Gimmick* CreateFromJson(const nlohmann::json& j);
 
 protected:
 	bool pressed = false; //button, pad
-	float timer = 0.f; //fall delay , rope tention(Àå·Â)
+	float timer = 0.f; //fall delay , rope tention(ì¥ë ¥)
 
 	int id{};
 
 	sf::Sprite body;
-	nlohmann::json properties; //Door.locked, Platform.path µî
+	nlohmann::json properties; //Door.locked, Platform.path ë“±
 
 	HitBox hitBox;
 
-	bool locked; //ÀÌ·¸°Ô properties »ç¿ë
+	bool locked; //ì´ë ‡ê²Œ properties ì‚¬ìš©
 	bool opened = false;
 	bool waColliding = false;
 
@@ -42,9 +42,9 @@ public:
 
 	void Init() override;
 	void Release() override;
-	void Reset() override;
-	void Update(float dt) override;
-	void Draw(sf::RenderWindow& window) override;
+	virtual void Reset() override;
+	virtual void Update(float dt) override;
+	virtual void Draw(sf::RenderWindow& window) override;
 
 	sf::FloatRect GetLocalBounds() const override
 	{

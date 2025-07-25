@@ -1,23 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include "stdafx.h"
 #include "Gimmick.h"
 
-// ¹®ÀÚ¿­ ¡æ enum
+// ë¬¸ìì—´ â†’ enum
 inline GimmickType StrToType(const std::string& s)
 {
     if (s == "Key")         return GimmickType::Key;
     if (s == "Door")        return GimmickType::Door;
+    if (s == "Button")        return GimmickType::Button;
     if (s == "PlayerSpawn") return GimmickType::PlayerSpawn;
-    return GimmickType::Count;                     // ¿¹¿Ü ´ëÀÀ
+    if (s == "MovingPlatform") return GimmickType::MovingPlatform;
+    return GimmickType::Count;                     // ì˜ˆì™¸ ëŒ€ì‘
 }
 
-// enum ¡æ ¹®ÀÚ¿­
+// enum â†’ ë¬¸ìì—´
 inline const char* TypeToStr(GimmickType t)
 {
     switch (t) {
     case GimmickType::Key:         return "Key";
     case GimmickType::Door:        return "Door";
+    case GimmickType::Button:        return "Button";
     case GimmickType::PlayerSpawn: return "PlayerSpawn";
+    case GimmickType::MovingPlatform: return "MovingPlatform";
     default:                       return "Unknown";
     }
 }

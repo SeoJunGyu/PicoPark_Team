@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // STL
 #include <iostream>
@@ -35,4 +35,11 @@
 #include "Framework.h"
 #include "HitBox.h"
 #include "LevelLoader.h"
+#include "GimmickTypeConv.hpp"
+
+// GIMMICK SUB
+#include "Key.h"
+#include "Door.h"
+#include "Button.h"
+#include "MovingPlatform.h"
 

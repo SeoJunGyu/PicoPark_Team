@@ -1,42 +1,23 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Gimmick.h"
 #include "Player.h"
-#include "GimmickTypeConv.hpp"
 
 Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 {
-	int id = j.value("id", 0); //Å° ÀÖÀ¸¸é ±×´ë·Î, ¾øÀ¸¸é 0
-	auto type = StrToType(j.at("type").get<std::string>()); //Å¸ÀÔ ¹®ÀÚ¿­À» GimmickType ¿­°ÅÇüÀ¸·Î ÀúÀå
-
-	if (type == GimmickType::PlayerSpawn)
-		return nullptr;
-
-	//À§Ä¡ ÁÂÇ¥ ÇÈ¼¿ ´ÜÀ§
-	float x = j.at("x").get<float>();
-	float y = j.at("y").get<float>();
-
-	float rot = j.value("rotation", 0.f); //Å° ÀÖÀ¸¸é ±×´ë·Î, ¾øÀ¸¸é 0
-	sf::Vector2f scl{ 1.f, 1.f }; //±âÁ¸ scale À¯Áö
-	//sf::Vector2f sizePx{ 0.f, 0.f }; //ÇÈ¼¿ Àı´ë°ª (¼±ÅÃ)
-
-	//½ºÄÉÀÏ ÀÛ¼º µÇ¾îÀÖÀ¸¸é º¯È¯
-	if (j.contains("scale"))
+	auto type = StrToType(j.at("type").get<std::string>());
+	switch (type)
 	{
-		if (j["scale"].is_array())
-		{
-			scl.x = j["scale"][0].get<float>();
-			scl.y = j["scale"][1].get<float>();
-		}
-		else
-		{
-			float uni = j["scale"].get<float>();
-			scl = { uni, uni };
-		}
+	case GimmickType::Key:
+		return new Key(j);
+	case GimmickType::Door:
+		return new Door(j);
+	case GimmickType::Button:
+		return new Button(j);
+	case GimmickType::MovingPlatform:
+		return new MovingPlatform(j);
 	}
 
-	nlohmann::json props = j.value("properties", nlohmann::json::object()); //Æ¯Á¤ ±â¹Í Àü¿ë ¼Ó¼º ¹­À½
-
-	return new Gimmick(id, type, { x, y }, scl, rot, props);
+	return nullptr;
 }
 
 Gimmick::Gimmick(int id, GimmickType t, const sf::Vector2f& pos, const sf::Vector2f& scl, float rot, nlohmann::json props)
@@ -100,24 +81,21 @@ void Gimmick::Reset()
 
 	switch (type)
 	{
-		// ¿òÁ÷ÀÓ ¾øÀ½
+		// ì›€ì§ì„ ì—†ìŒ
 	case GimmickType::Key:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/key.png"));
+		//body.setTexture(TEXTURE_MGR.Get("graphics/Item/key.png"));
 		break;
 	case GimmickType::Door:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
-		locked = properties.value("locked", true);
-		opened = false;
+		
 		break;
-	case GimmickType::Buton:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button.png"));
+	case GimmickType::Button:
 		break;
 	case GimmickType::PlayerSpawn:
 		break;
 
-		//¿òÁ÷ÀÓ ÀÖÀ½
+		//ì›€ì§ì„ ìˆìŒ
 	case GimmickType::MovingPlatform:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Item/Pad.png"));
+		
 		break;
 	case GimmickType::WeightBlock:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Item/WeightBlock.png"));
@@ -145,7 +123,7 @@ void Gimmick::Reset()
 
 void Gimmick::Update(float dt)
 {
-	//È°¼ºÈ­ ¾ÈÇÏ¸é ¾Æ¹«°Íµµ ¾ÈÇÔ
+	//í™œì„±í™” ì•ˆí•˜ë©´ ì•„ë¬´ê²ƒë„ ì•ˆí•¨
 	if (!GetActive())
 	{
 		return;
@@ -153,8 +131,9 @@ void Gimmick::Update(float dt)
 
 	switch (type)
 	{
-		//¿òÁ÷ÀÓ ¾øÀ½
+		//ì›€ì§ì„ ì—†ìŒ
 	case GimmickType::Key:
+		/*
 		for (Player* p : Variables::players)
 		{
 			if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
@@ -164,38 +143,16 @@ void Gimmick::Update(float dt)
 				break;
 			}
 		}
+		*/
+		
 		break;
 	case GimmickType::Door:
 		{
-			bool canOpen = locked == false || Variables::KeyObtained;
-			bool collide = std::any_of(
-				Variables::players.begin(), Variables::players.end(),
-				[&](Player* p) { return Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect); }
-			);
-
-			if (!waColliding && collide)
-			{
-				if (canOpen && !opened)
-				{
-					opened = true;
-					locked = false;
-					body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
-				}
-				else if (opened)
-				{
-					SCENE_MGR.ChangeScene(SceneIds::Game);
-				}
-			}
-			else if (!canOpen)
-			{
-				body.setTexture(TEXTURE_MGR.Get("graphics/Item/door.png"));
-			}
-
-			waColliding = collide;
+			
 		}
 		
 		break;
-	case GimmickType::Buton:
+	case GimmickType::Button:
 		break;
 	case GimmickType::BouncePad:
 		break;
@@ -204,7 +161,7 @@ void Gimmick::Update(float dt)
 	case GimmickType::KillLine:
 		break;
 
-		//¿òÁ÷ÀÓ ÀÖÀ½
+		//ì›€ì§ì„ ìˆìŒ
 	case GimmickType::MovingPlatform:
 		break;
 	case GimmickType::FallPlatform:

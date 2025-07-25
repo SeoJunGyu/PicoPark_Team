@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Variables.h"
 
 bool Variables::isDrawHitBox = false;
@@ -6,6 +6,7 @@ bool Variables::isDrawHitBox = false;
 bool Variables::KeyObtained = false;
 std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
+std::vector<bool> Variables::signals{};
 
 void Variables::ResetStage()
 {
@@ -15,6 +16,29 @@ void Variables::ResetStage()
 	gimmicks.clear();
 	for (auto* p : players) delete p;
 	players.clear();
+}
 
-	
+sf::Vector2f Variables::CalScl(nlohmann::json j)
+{
+	sf::Vector2f scl{ 1.f, 1.f }; //기존 scale 유지
+
+	if (j.contains("scale"))
+	{
+		if (j["scale"].is_array())
+		{
+			scl.x = j["scale"][0].get<float>();
+			scl.y = j["scale"][1].get<float>();
+
+			return scl;
+		}
+		else
+		{
+			float uni = j["scale"].get<float>();
+			scl = { uni, uni };
+
+			return scl;
+		}
+	}
+
+	return scl;
 }
