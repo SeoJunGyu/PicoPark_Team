@@ -40,6 +40,18 @@
       "type": "PlayerSpawn",
       "x": 68, "y": 54, "w": 60, "h": 128,
       "properties": {"color": "Blue" }
+    },
+    {
+      "id": 12,
+      "type": "PlayerSpawn",
+      "x": 88, "y": 54, "w": 60, "h": 128,
+      "properties": {"color": "Green" }
+    },
+    {
+      "id": 13,
+      "type": "PlayerSpawn",
+      "x": 98, "y": 54, "w": 60, "h": 128,
+      "properties": {"color": "Yellow" }
     }
   ]
 }

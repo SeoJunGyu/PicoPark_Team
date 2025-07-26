@@ -32,7 +32,8 @@ class Player :
 public:
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
-	bool isPlayerRider = false;
+	bool hasRider = false; //내 머리 위에 누가 올라탔음
+	bool isOnPlayer = false; //내가 다른사람 밟고 있음
 
 protected:
 	sf::Sprite body;
@@ -43,7 +44,7 @@ protected:
 	sf::Vector2f gravity = { 0.f, 500.f };
 	
 	bool isFallen = false; //낙하 테스트 변수
-	float speed = 100.f;
+	float speed = 50.f;
 	float jumpPower = 150.f;
 
 	HitBox hitBox;
@@ -92,5 +93,10 @@ public:
 	HitBox GetHitBox() const { return hitBox; }
 
 	void SetTileMap(TileMap* tilemap) { this->tilemap = tilemap; }
+
+	//같이 이동하기 위한 헬퍼
+	sf::Vector2f GetSupportDelta();
+	void ApplySupport();
+	void ScanHeadStack();
 };
 
