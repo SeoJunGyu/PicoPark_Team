@@ -15,6 +15,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new Button(j);
 	case GimmickType::MovingPlatform:
 		return new MovingPlatform(j);
+	case GimmickType::BouncePad:
+		return new BouncePad(j);
 	}
 
 	return nullptr;
@@ -79,6 +81,7 @@ void Gimmick::Reset()
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
 
+	/*
 	switch (type)
 	{
 		// 움직임 없음
@@ -105,6 +108,8 @@ void Gimmick::Reset()
 		body.setColor(sf::Color::Red);
 		break;
 	}
+	*/
+	
 
 	SetOrigin(Origins::MC);
 	float ox = 16.f * 0.5f;
@@ -129,22 +134,11 @@ void Gimmick::Update(float dt)
 		return;
 	}
 
+	/*
 	switch (type)
 	{
 		//움직임 없음
 	case GimmickType::Key:
-		/*
-		for (Player* p : Variables::players)
-		{
-			if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
-			{
-				Variables::KeyObtained = true;
-				body.setPosition({ p->GetPosition().x, p->GetPosition().y - GetLocalBounds().height });
-				break;
-			}
-		}
-		*/
-		
 		break;
 	case GimmickType::Door:
 		{
@@ -178,6 +172,8 @@ void Gimmick::Update(float dt)
 	default:
 		break;
 	}
+	*/
+	
 }
 
 void Gimmick::Draw(sf::RenderWindow& window)

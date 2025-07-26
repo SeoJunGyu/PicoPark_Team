@@ -154,6 +154,8 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/Button.png");
     texIds.push_back("graphics/Item/Button_Pressed.png");
     texIds.push_back("graphics/Item/Pad.png");
+    texIds.push_back("graphics/Item/jump1.png");
+    texIds.push_back("graphics/Item/FallingPlatform.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
     bgTex.loadFromFile("graphics/Background.png");
     bgSpr.setTexture(bgTex);
