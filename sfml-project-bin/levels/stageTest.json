@@ -25,12 +25,10 @@
   ],
 
   "entities": [
-    { "id": 102, "type": "Button",  "x": 30,  "y": 65, "scale": [0.2,0.2], 
-      "properties":{"channel": 1, "latch": false} },
     { "id": 103, "type": "BouncePad",  "x": 60,  "y": 65, "scale": [0.05,0.05], 
       "properties":{"Bounce": 200.0} },
-    { "id": 104, "type": "MovingPlatform",  "x": 100,  "y": 37, "scale": [0.2,0.2], 
-      "properties":{"channel": 1, "path":[[100,37],[30,37]], "speed":30} },
+    { "id": 104, "type": "FallingPlatform",  "x": 100,  "y": 37, "scale": [0.2,0.2], 
+      "properties":{"fallDelay": 2.0, "respawnDelay":2.0} },
     {
       "id": 10,
       "type": "PlayerSpawn",
@@ -46,13 +44,13 @@
     {
       "id": 12,
       "type": "PlayerSpawn",
-      "x": 98, "y": 54, "w": 60, "h": 128,
+      "x": 88, "y": 54, "w": 60, "h": 128,
       "properties": {"color": "Green" }
     },
     {
       "id": 13,
       "type": "PlayerSpawn",
-      "x": 108, "y": 54, "w": 60, "h": 128,
+      "x": 118, "y": 54, "w": 60, "h": 128,
       "properties": {"color": "Yellow" }
     }
   ]

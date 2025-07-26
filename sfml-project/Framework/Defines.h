@@ -60,7 +60,7 @@ enum class GimmickType
 	KillLine,
 	//움직임 -> Update 필요
 	MovingPlatform,
-	FallPlatform,
+	FallingPlatform,
 	WeightBlock,
 	ColorPushBlock,
 	Rope,
