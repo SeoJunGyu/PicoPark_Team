@@ -198,6 +198,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/Button_Pressed.png");
     texIds.push_back("graphics/Item/Pad.png");
     texIds.push_back("graphics/Item/jump1.png");
+    texIds.push_back("graphics/Item/jump3.png");
     texIds.push_back("graphics/Item/FallingPlatform.png");
     texIds.push_back("graphics/Item/elevator.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
@@ -218,12 +219,12 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stageTest2.json", *level)) {
+    if (loadLevel_("levels/stageTest.json", *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stageTest2.json");
+        LoadStage("levels/stageTest.json");
     }
 
     worldView.setSize(VIEW_W, VIEW_H);

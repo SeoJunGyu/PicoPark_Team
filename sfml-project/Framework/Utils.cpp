@@ -355,10 +355,11 @@ CollisionInfo Utils::GetAABBCollision(const sf::FloatRect& a, const sf::FloatRec
         return { {0,0}, 0.f }; //충돌 없음
     }
 
-    //겹침 너비 ' 높이
+    //겹침 너비 ' 높이 -> 어느 축, 어느 방향으로 분리해야할지 결정
     float w = inter.width;
     float h = inter.height;
 
+    //겹친 너비가 높이보다 작으면 수평방향 분리, 아니면 수직 방향 분리
     if (w < h)
     {
         //x축 분리

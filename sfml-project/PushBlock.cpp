@@ -24,7 +24,7 @@ void PushBlock::Reset()
 
 	player = nullptr;
 
-	requireCount = properties.value("requirCount", 1);
+	requireCount = properties.value("requireCount", 1);
 	blockColor = sf::Color(properties["color"][0].get<std::uint8_t>(), properties["color"][1].get<std::uint8_t>(), properties["color"][2].get<std::uint8_t>(), properties["color"][3].get<std::uint8_t>());
 
 	velocity = { 0.f, 0.f };
@@ -43,7 +43,53 @@ void PushBlock::Reset()
 }
 
 void PushBlock::Update(float dt)
-{	
+{
+    sf::FloatRect bBox = hitBox.rect.getGlobalBounds();
+    hitBox.UpdateTransform(body, body.getLocalBounds());
+
+    //미는 인원 확인
+    int leftPushers = 0, rightPushers = 0;
+    for (Player* p : Variables::players) 
+    {
+        sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
+        CollisionInfo info = Utils::GetAABBCollision(pBox, bBox);
+
+        // 겹치지는 않았거나, 옆면 충돌이 아니면 무시
+        if (info.depth <= 0.f || std::abs(info.normal.x) <= 0.5f)
+        {
+            continue;
+        }
+
+        // 왼쪽에서 밀면 info.normal.x < 0
+        if (info.normal.x < 0.f)
+        {
+            ++leftPushers;
+        }
+        else
+        {
+            ++rightPushers;
+        }
+
+        // 플레이어가 블럭 안으로 파고들지 않게 분리
+        float sepX = info.normal.x * info.depth;
+        p->SetPosition({ p->GetPosition().x + sepX, p->GetPosition().y });
+        p->velocity.x = 0.f;
+    }
+
+    const float pushSpeed = 80.f;
+    if (leftPushers >= requireCount && rightPushers < requireCount) 
+    {
+        velocity.x = +pushSpeed; // 오른쪽으로 이동
+    }
+    else if (rightPushers >= requireCount && leftPushers < requireCount) 
+    {
+        velocity.x = -pushSpeed; // 왼쪽으로 이동
+    }
+    else 
+    {
+        velocity.x = 0.f; // 그 외에는 정지
+    }
+
     //중력
     velocity.y += gravity.y * dt;
 
@@ -96,7 +142,9 @@ void PushBlock::Update(float dt)
             for (int tx = x0; tx <= x1; ++tx)
             {
                 if (!tilemap->isSolid(tx, ty))
+                {
                     continue;
+                }
 
                 sf::FloatRect tileRect{ tx * tileW, ty * tileH, tileW, tileH };
                 CollisionInfo info = Utils::GetAABBCollision(blockRect, tileRect);
@@ -198,6 +246,8 @@ void PushBlock::Update(float dt)
     sf::FloatRect blockBox = hitBox.rect.getGlobalBounds();
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
+    int count = 0;
+
     for (Player* p : Variables::players)
     {
         sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
@@ -209,7 +259,6 @@ void PushBlock::Update(float dt)
         }
 
         // 옆면 충돌
-        
         if (std::abs(info.normal.x) > 0.5f)
         {
             float separationX = info.normal.x * info.depth;

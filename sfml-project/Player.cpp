@@ -367,10 +367,13 @@ void Player::Update(float dt)
 			continue;
 		}
 
+		/*
 		if (standing.type == StandType::Player && standing.ptr != other)
 		{
 			continue;
 		}
+		*/
+		
 
 		//내가 다른 플레이어 위에 올라탄 경우
 		if (standing.type == StandType::Player && standing.ptr == other)
@@ -395,6 +398,9 @@ void Player::Update(float dt)
 		{
 			position.x += info.normal.x * info.depth;
 			velocity.x = 0.f;
+			SetPosition(position);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+			break;
 		}
 	}
 

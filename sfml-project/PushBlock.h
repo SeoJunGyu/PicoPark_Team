@@ -9,7 +9,7 @@ class PushBlock :
 protected:
     Player* player = nullptr;
 
-    int requireCount = 1; //몇명이 밀어야하는지 확인
+    int requireCount; //몇명이 밀어야하는지 확인
 
     sf::Color blockColor; //블럭의 색과 같은 플레이어가 미는지 확인
 

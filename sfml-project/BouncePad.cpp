@@ -25,20 +25,31 @@ void BouncePad::Reset()
 
 	bounce = -(properties.value("Bounce", 0.f));
 
-	SetOrigin(Origins::MC);
+	SetOrigin(Origins::BC);
 	SetPosition(GetPosition());
 	SetScale(GetScale());
 	SetRotation(GetRotation());
 
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
+	preScale = GetScale();
+
 	Gimmick::Reset();
 }
 
 void BouncePad::Update(float dt)
 {
+	if (isPressed)
+	{
+		pressTimer += dt;
+		if (pressTimer >= pressDuration)
+		{
+			SetScale(preScale);
+			isPressed = false;
+		}
+	}
+
 	sf::FloatRect padBox = hitBox.rect.getGlobalBounds();
-	
 
 	for (Player* p : Variables::players)
 	{
@@ -64,8 +75,13 @@ void BouncePad::Update(float dt)
 		{
 			p->velocity.y = bounce;
 			p->isGrounded = false;
+			SetScale({ GetScale().x, GetScale().y * 0.5f});
+			isPressed = true;
+			pressTimer = 0.f;
 		}
 	}
+
+	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	Gimmick::Update(dt);
 }
