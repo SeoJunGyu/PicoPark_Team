@@ -40,6 +40,7 @@
     <ClCompile Include="UiButton.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="PopupWindowUI.cpp" />
+    <ClCompile Include="YesNoPopupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="UiButton.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="PopupWindowUI.h" />
+    <ClInclude Include="YesNoPopupUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />
