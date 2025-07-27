@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SceneTitle.h"
 #include "UiButton.h"
+#include "BackGround.h"
+#include "PopupWindowUI.h"
+
 
 SceneTitle::SceneTitle()
 	: Scene(SceneIds::Title)
@@ -10,47 +13,58 @@ SceneTitle::SceneTitle()
 void SceneTitle::Init()
 {
 	texIds.push_back("graphics/titlebackground.PNG");
+	texIds.push_back("graphics/MainMenuButton.png");
+	texIds.push_back("graphics/rightbut.png");
+	texIds.push_back("graphics/rightburpull.png");
+	texIds.push_back("graphics/MainMenuButton.png");
 	fontIds.push_back("fonts/BACKTO1982.TTF");
+	
+	titlebackground = new BackGround("Startbackground");
+	startButton = new UiButton("Startbutton");
+	popup = new PopupWindowUI("popup");
 
-
+	AddGameObject(titlebackground);
+	AddGameObject(startButton);
+	AddGameObject(popup);
 
 	Scene::Init();
 }
 void SceneTitle::Enter()
 {
 	Scene::Enter();
-
-	titleBackground.setTexture(TEXTURE_MGR.Get("graphics/titlebackground.PNG"));
-
-	startButton.text.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
-	startButton.text.setCharacterSize(50);
-	Utils::SetOrigin(startButton.text, Origins::MC);
-	startButton.text.setString("PRESS ENTER KEY");
-
 	auto size = FRAMEWORK.GetWindowSizeF();
-	startButton.text.setPosition(size.x * 0.35f, size.y * 0.5f);
+
+	worldView.setSize(size);
+	worldView.setCenter(size * 0.5f);
+	uiView.setSize(size);
+	uiView.setCenter(size * 0.5f);   
+	
+	titlebackground->Settext("graphics/titlebackground.PNG");
+	titlebackground->SetActive(true);
+			
+	startButton->SetText("PRESS ENTER KEY", "fonts/BACKTO1982.TTF", 50);
+	startButton->UiButton::SetPosition({ size.x * 0.35f, size.y * 0.5f });
+	startButton->SetColor(sf::Color(255, 134, 77, 255));	
+	startButton->GetGlobalBounds();	
+	startButton->SetActive(true);
+	startButton->SetCallBack([this]() {popup->SetActive(true); });
+
+	popup->SetActive(false);
 }
 void SceneTitle::Update(float dt)
-{
-	sf::Vector2i mousepos = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
-	Scene::Update(dt);
+{	
+	Scene::Update(dt);	
 	cooltime += dt;
 	if (cooltime > 0.9f)
 	{
 		coolOn = !coolOn;
+		startButton->Effect(coolOn);
 		cooltime = 0;
 	}
-	startButton.text.setFillColor
-	(coolOn ? sf::Color(255, 134, 77, 255) : sf::Color(255, 134, 77, 0));
-
-
 
 }
 void SceneTitle::Draw(sf::RenderWindow& window)
 {
-	window.setView(window.getDefaultView());
-	window.draw(titleBackground);
-	window.draw(startButton.text);
-
 	Scene::Draw(window);
+	
 }

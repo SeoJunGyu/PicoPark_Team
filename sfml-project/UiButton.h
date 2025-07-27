@@ -1,17 +1,24 @@
 #pragma once
 #include "GameObject.h"
 
+struct ButtonStyle
+{
+	std::string text;
+	std::string fontid;
+	int fontSize;
+};
+
 class UiButton : public GameObject
 {
 protected:
 	std::function<void()> event;
 
 public:
-	sf::Sprite sprite;
-	std::string buttonOnTexId;
-	std::string buttonOffTexId;
-	bool isOn = true;
 	sf::Text text;
+	sf::Sprite sprite;
+	sf::Color colorpull;	
+	bool isOn = false;
+	
 
 	UiButton(const std::string& name = "");
 	virtual ~UiButton() = default;
@@ -23,6 +30,29 @@ public:
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+	void SetColor(const sf::Color& color);	
+	void SetText(const std::string& t, const std::string& fontid, int size);
+	void SetTextstyle(const ButtonStyle& style);
+	void SetSprit(const std::string& texID);
+	void Effect(bool on);
+
+	sf::FloatRect GetLocalBounds() const override
+	{
+		if (sprite.getTexture())
+			return sprite.getLocalBounds();
+		else
+			return text.getLocalBounds();
+	}
+
+	sf::FloatRect GetGlobalBounds() const override
+	{
+		if (sprite.getTexture())
+			return sprite.getGlobalBounds();
+		else
+			return text.getGlobalBounds();
+	}
+
+
 
 	void Init() override;
 	void Release() override;

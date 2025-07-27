@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BouncePad.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -180,6 +181,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PrefabMgr.cpp" />
     <ClCompile Include="PushBlock.cpp" />
+    <ClCompile Include="PopupWindowUI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
@@ -196,8 +200,10 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TilePalette.cpp" />
     <ClCompile Include="UiButton.cpp" />
+    <ClCompile Include="YesNoPopupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="BouncePad.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Door.h" />
@@ -231,6 +237,9 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PopupWindowUI.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="PrefabMgr.h" />
     <ClInclude Include="PushBlock.h" />
     <ClInclude Include="SceneEditor.h" />
@@ -249,6 +258,7 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TilePalette.h" />
     <ClInclude Include="UiButton.h" />
+    <ClInclude Include="YesNoPopupUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

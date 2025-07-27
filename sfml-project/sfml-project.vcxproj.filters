@@ -39,6 +39,9 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TilePalette.cpp" />
     <ClCompile Include="UiButton.cpp" />
+    <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="PopupWindowUI.cpp" />
+    <ClCompile Include="YesNoPopupUI.cpp" />
     <ClCompile Include="BouncePad.cpp" />
     <ClCompile Include="FallingPlatform.cpp" />
     <ClCompile Include="PushBlock.cpp" />
@@ -92,6 +95,9 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TilePalette.h" />
     <ClInclude Include="UiButton.h" />
+    <ClInclude Include="BackGround.h" />
+    <ClInclude Include="PopupWindowUI.h" />
+    <ClInclude Include="YesNoPopupUI.h" />
     <ClInclude Include="BouncePad.h" />
     <ClInclude Include="FallingPlatform.h" />
     <ClInclude Include="PushBlock.h" />
