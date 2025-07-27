@@ -26,6 +26,8 @@ protected:
 	UiButton* Leftbut;
 	UiButton* closebut;
 
+	bool enterLock = true;
+
 	
 
 

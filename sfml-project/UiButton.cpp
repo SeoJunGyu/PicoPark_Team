@@ -99,7 +99,6 @@ void UiButton::Reset()
 
 void UiButton::Update(float dt)
 {	
-
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left)&&
 		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())|| 
 		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())))
@@ -110,7 +109,11 @@ void UiButton::Update(float dt)
 	isOn = (InputMgr::GetMouseButton(sf::Mouse::Left)&&
 		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
 		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())));
-	
+
+	if (flashTime > 0.f) {
+		flashTime -= dt;
+		isOn = true;
+	}
 }
 
 void UiButton::Draw(sf::RenderWindow& window)

@@ -2,6 +2,7 @@
 #include "PopupWindowUI.h"
 #include "UiButton.h"
 #include "Scene.h"
+#include "SceneGame.h"
 
 
 PopupWindowUI::PopupWindowUI(const std::string name)
@@ -79,7 +80,10 @@ void PopupWindowUI::Init()
 			}
 			startbut[currentPage]->SetActive(true);
 		});
-	closebut->SetCallBack([this]() {this->SetActive(false); });
+	closebut->SetCallBack([this]() {
+		this->SetActive(false); 
+		enterLock = true;
+		});
 
 
 }
@@ -100,6 +104,7 @@ void PopupWindowUI::Release()
 
 void PopupWindowUI::Reset()
 {
+	enterLock = true;
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
 	
@@ -114,7 +119,7 @@ void PopupWindowUI::Reset()
 
 	std::vector<ButtonStyle> button = {
 	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",40},
-	   {"       OPTION    ","fonts/BACKTO1982.TTF",40},
+	   {"       EDITOR    ","fonts/BACKTO1982.TTF",40},
 	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",40}
 	};
 
@@ -125,6 +130,30 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetColor(sf::Color::Black);
 		startbut[i]->SetPosition({ sprpos.x + 140.f, sprpos.y + spry+20.f  });
 		startbut[i]->SetActive(false);
+		switch (i)
+		{
+		case 0:
+			startbut[i]->SetCallBack([this]()
+				{
+					SceneGame::SetPendingStage("levels/stageTest.json");
+					SCENE_MGR.ChangeScene(SceneIds::Game);
+				});
+			break;
+		case 1:
+			startbut[i]->SetCallBack([this]()
+				{
+					SCENE_MGR.ChangeScene(SceneIds::Editor);
+				});
+			break;
+		case 2:
+			startbut[i]->SetCallBack([this]()
+				{
+					FRAMEWORK.GetWindow().close();
+				});
+			break;
+		default:
+			break;
+		}
 
 	}
 
@@ -155,6 +184,28 @@ void PopupWindowUI::Reset()
 void PopupWindowUI::Update(float dt)
 {
 
+	if (enterLock) {
+		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter))  
+			enterLock = false;
+		return;
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right)) {
+		Rightbut->Trigger();          
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left)) {
+		Leftbut->Trigger();
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
+		closebut->Trigger();
+	}
+
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter)) {
+		startbut[currentPage]->Trigger();
+		enterLock = true;            
+	}
+
 	if (startbut[currentPage]->GetActive())
 		startbut[currentPage]->Update(dt);
 
@@ -180,7 +231,6 @@ void PopupWindowUI::Update(float dt)
 	{
 		Leftbut->SetSprit("graphics/rightbut.png");
 	}
-
 
 
 }

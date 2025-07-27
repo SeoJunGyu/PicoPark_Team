@@ -15,6 +15,8 @@ protected:
 	const float VIEW_W = 160.f;     // 임시값
 	const float VIEW_H = 96.f;     // 임시값
 
+	static std::string pendingStage;
+
 public:
 	SceneGame();
 	~SceneGame() override;
@@ -28,5 +30,6 @@ public:
 	void LoadStage(const std::string& jsonPath);
 	void ClearStage();
 	void updateCamera(float dt);
+	static void SetPendingStage(const std::string& p) { pendingStage = p; }
 };
 

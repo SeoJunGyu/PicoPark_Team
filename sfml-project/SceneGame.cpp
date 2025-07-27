@@ -4,6 +4,8 @@
 #include "Gimmick.h"
 #include "PrefabMgr.h"
 
+std::string SceneGame::pendingStage;
+
 static sf::Color makeColor(int tileId)
 {
     if (tileId == 0)         
@@ -47,7 +49,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         sf::Vector2f pos(entobj.at("x").get<float>() + ox, entobj.at("y").get<float>() + oy);*/
 
 
-        if (Gimmick* g = Gimmick::CreateFromJson(entobj))
+       /* if (Gimmick* g = Gimmick::CreateFromJson(entobj))
         {
             g->Init();
             g->Reset();
@@ -57,7 +59,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             {
                 Variables::platforms.push_back(dynamic_cast<MovingPlatform*>(g));
             }
-        }
+        }*/
 
         if (tstr == "PlayerSpawn")
         {
@@ -77,6 +79,10 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             g->Reset();
             Variables::gimmicks.push_back((Gimmick*)g);
             AddGameObject(g);
+            if (tstr == "MovingPlatform")
+            {
+                Variables::platforms.push_back(dynamic_cast<MovingPlatform*>(g));
+            }
         }
         /*float ox = level->tileSize * 0.5f;
         float oy = level->tileSize * 0.5f;
@@ -218,16 +224,22 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
     Scene::Enter();
-    if (loadLevel_("levels/stageTest2.json", *level)) {
+
+    std::string path = pendingStage.empty()
+        ? "levels/stage_tmp.json"
+        : std::move(pendingStage);
+    pendingStage.clear();
+
+    if (loadLevel_(path, *level)) {
         std::cout << "맵 로딩" << std::endl;
         std::cout << "엔티티 개수 : " << level->entities.size() << std::endl;
         tileMap->load(*level, 1);
 
-        LoadStage("levels/stageTest2.json");
+        LoadStage(path);
     }
 
-    worldView.setSize(VIEW_W, VIEW_H);
-
+    //worldView.setSize(VIEW_W, VIEW_H);
+    worldView.setSize(VIEW_W, level->gridHeight * level->tileSize);
     //worldView.setSize(level->gridWidth  * level->tileSize, level->gridHeight * level->tileSize);  
     //worldView.setCenter(worldView.getSize() / 2.f);
 

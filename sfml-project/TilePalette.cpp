@@ -129,6 +129,7 @@ void TilePalette::DrawImGui(SceneEditor& editor)
                     ImGui::TextDisabled("%s : <unsupported>", key);
                 }
             }
+            editor.pendingProps = props;
         }
     }
     ImGui::End();
