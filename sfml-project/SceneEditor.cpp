@@ -235,10 +235,25 @@ void SceneEditor::SaveAsLevel(const std::string& path)
                 }
             }
 
+            int dx = 0;
+            int dy = 0;
+
+            if (props.contains("path") &&
+                props["path"].is_array() && props["path"].size() == 2 &&
+                props["path"][0].is_array() && props["path"][1].is_array() &&
+                props["path"][0].size() == 2 && props["path"][1].size() == 2)
+            {
+                const auto& p0 = props["path"][0];
+                const auto& p1 = props["path"][1];
+
+                dx = p1[0].get<int>() - p0[0].get<int>();
+                dy = p1[1].get<int>() - p0[1].get<int>();
+            }
+
             std::vector<sf::Vector2i> editPath;
             if (type == "MovingPlatform") {
                 editPath.push_back({ x * grid.tileSize, y * grid.tileSize });
-                editPath.push_back({ x * grid.tileSize - 50, y * grid.tileSize });
+                editPath.push_back({ x * grid.tileSize + dx, y * grid.tileSize + dy});
                 nlohmann::json jPath = nlohmann::json::array();
                 for (const auto& p : editPath)
                     jPath.push_back({ p.x, p.y });        // 두 원소짜리 작은 배열

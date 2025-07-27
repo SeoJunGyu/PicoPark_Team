@@ -100,7 +100,29 @@ void TilePalette::DrawImGui(SceneEditor& editor)
                 }
                 else if (it->is_array())
                 {
-                    ImGui::Text("%s : (array size %d)", key, (int)it->size());
+                    //ImGui::Text("%s : (array size %d)", key, (int)it->size());
+                    if (it.key() == "path") {
+                        if (it->size() == 2 &&
+                            (*it)[0].is_array() && (*it)[0].size() == 2 &&
+                            (*it)[1].is_array() && (*it)[1].size() == 2)
+                        {
+                            auto& arr = *it;          // alias
+
+                            int p[4] = {
+                                arr[0][0].get<int>(), arr[0][1].get<int>(),
+                                arr[1][0].get<int>(), arr[1][1].get<int>()
+                            };
+
+                            if (ImGui::InputInt4("path (x1,y1,x2,y2)", p))
+                            {
+                                arr[0][0] = p[0];
+                                arr[0][1] = p[1];
+                                arr[1][0] = p[2];
+                                arr[1][1] = p[3];
+                            }
+                        }
+                    }
+ 
                 }
                 else
                 {

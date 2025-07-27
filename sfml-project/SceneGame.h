@@ -12,6 +12,9 @@ protected:
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
 
+	const float VIEW_W = 160.f;     // 임시값
+	const float VIEW_H = 96.f;     // 임시값
+
 public:
 	SceneGame();
 	~SceneGame() override;
@@ -24,5 +27,6 @@ public:
 
 	void LoadStage(const std::string& jsonPath);
 	void ClearStage();
+	void updateCamera(float dt);
 };
 

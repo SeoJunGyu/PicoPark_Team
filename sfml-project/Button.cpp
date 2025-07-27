@@ -130,7 +130,13 @@ void Button::EnsureSize(int channel)
 
 bool Button::IsActive(int channel)
 {
-	return (channel < 0) ? true : (latchState[channel] || momentaryCount[channel] > 0);
+	if (channel < 0)                   
+		return true;
+
+	if (channel >= (int)latchState.size())
+		return false;                  
+
+	return latchState[channel] || (momentaryCount[channel] > 0);
 }
 
 void Button::ClearStates()
