@@ -6,6 +6,10 @@
 
 std::string SceneGame::pendingStage;
 
+constexpr float BASE_W = 240.f;   // 15 tile
+constexpr float BASE_H = 144.f;   //  9 tile
+constexpr float TILE = 16.f;
+
 static sf::Color makeColor(int tileId)
 {
     if (tileId == 0)         
@@ -132,45 +136,118 @@ void SceneGame::ClearStage()
 
 void SceneGame::updateCamera(float dt)
 {
-    sf::FloatRect playersBB;            // 모든 플레이어의 AABB
+    sf::FloatRect bb;
     bool first = true;
     for (auto* p : Variables::players) {
         sf::Vector2f pos = p->GetPosition();
-        if (first) {
-            playersBB = { pos.x, pos.y, 0, 0 };
-            first = false;
-        }
+        if (first) { bb = { pos.x, pos.y, 0, 0 }; first = false; }
         else {
-            playersBB.left = std::min(playersBB.left, pos.x);
-            playersBB.top = std::min(playersBB.top, pos.y);
-            playersBB.width = std::max(playersBB.width, pos.x - playersBB.left);
-            playersBB.height = std::max(playersBB.height, pos.y - playersBB.top);
+            bb.left = std::min(bb.left, pos.x);
+            bb.top = std::min(bb.top, pos.y);
+            bb.width = std::max(bb.width, pos.x - bb.left);
+            bb.height = std::max(bb.height, pos.y - bb.top);
         }
     }
+    float margin = TILE;                
+    bb.left -= margin; bb.top -= margin;
+    bb.width += margin * 2.f; bb.height += margin * 2.f;
 
-    bool fits =
-        playersBB.width <= VIEW_W * 0.9f &&   // 10% 여유
-        playersBB.height <= VIEW_H * 0.9f;
+    float zX = bb.width / BASE_W;
+    float zY = bb.height / BASE_H;
+    float zoom = std::ceil(std::max({ 1.f, zX, zY }));   
 
-    if (fits) {
-        sf::Vector2f targetCenter(
-            playersBB.left + playersBB.width * 0.5f,
-            playersBB.top + playersBB.height * 0.5f);
+    float mapW = level->gridWidth * TILE;
+    float mapH = level->gridHeight * TILE;
 
-        // 부드러운 이동(옵션) : LERP
-        sf::Vector2f cur = worldView.getCenter();
-        float   smooth = 5.f;                 // 값이 클수록 빠르게 따라감
-        targetCenter = cur + (targetCenter - cur) * dt * smooth;
+    float viewW = std::min(BASE_W * zoom, mapW);
+    float viewH = std::min(BASE_H * zoom, mapH);
 
-        // 맵 경계 밖으로 나가지 않도록 클램프
-        sf::Vector2f half = worldView.getSize() * 0.5f;
-        float mapW = level->gridWidth * level->tileSize;
-        float mapH = level->gridHeight * level->tileSize;
-        targetCenter.x = Utils::Clamp(targetCenter.x, half.x, mapW - half.x);
-        targetCenter.y = Utils::Clamp(targetCenter.y, half.y, mapH - half.y);
 
-        worldView.setCenter(targetCenter);
+    sf::Vector2f centre(bb.left + bb.width * 0.5f,
+        bb.top + bb.height * 0.5f);
+
+    sf::Vector2f half(viewW * 0.5f, viewH * 0.5f);
+
+
+    float centreX = (mapW > viewW)
+        ? Utils::Clamp(centre.x, half.x, mapW - half.x)
+        : mapW * 0.5f;
+    float centreY = (mapH > viewH)
+        ? Utils::Clamp(centre.y, half.y, mapH - half.y)
+        : mapH * 0.5f;
+
+    centre = { std::round(centreX), std::round(centreY) };
+
+  /*  centre.x = Utils::Clamp(centre.x, half.x, mapW - half.x);
+    centre.y = Utils::Clamp(centre.y, half.y, mapH - half.y);
+
+    centre.x = std::round(centre.x);
+    centre.y = std::round(centre.y);*/
+
+
+    sf::Vector2f cur = worldView.getCenter();
+    float smooth = 8.f;
+    centre = cur + (centre - cur) * dt * smooth;
+
+    worldView.setCenter(centre);
+    worldView.setSize(viewW, viewH);
+    applyLetterBox(worldView, FRAMEWORK.GetWindow().getSize());
+
+    //sf::FloatRect playersBB;            // 모든 플레이어의 AABB
+    //bool first = true;
+    //for (auto* p : Variables::players) {
+    //    sf::Vector2f pos = p->GetPosition();
+    //    if (first) {
+    //        playersBB = { pos.x, pos.y, 0, 0 };
+    //        first = false;
+    //    }
+    //    else {
+    //        playersBB.left = std::min(playersBB.left, pos.x);
+    //        playersBB.top = std::min(playersBB.top, pos.y);
+    //        playersBB.width = std::max(playersBB.width, pos.x - playersBB.left);
+    //        playersBB.height = std::max(playersBB.height, pos.y - playersBB.top);
+    //    }
+    //}
+
+    //bool fits =
+    //    playersBB.width <= VIEW_W * 0.9f &&   // 10% 여유
+    //    playersBB.height <= VIEW_H * 0.9f;
+
+    //if (fits) {
+    //    sf::Vector2f targetCenter(
+    //        playersBB.left + playersBB.width * 0.5f,
+    //        playersBB.top + playersBB.height * 0.5f);
+
+    //    // 부드러운 이동(옵션) : LERP
+    //    sf::Vector2f cur = worldView.getCenter();
+    //    float   smooth = 5.f;                 // 값이 클수록 빠르게 따라감
+    //    targetCenter = cur + (targetCenter - cur) * dt * smooth;
+
+    //    // 맵 경계 밖으로 나가지 않도록 클램프
+    //    sf::Vector2f half = worldView.getSize() * 0.5f;
+    //    float mapW = level->gridWidth * level->tileSize;
+    //    float mapH = level->gridHeight * level->tileSize;
+    //    targetCenter.x = Utils::Clamp(targetCenter.x, half.x, mapW - half.x);
+    //    targetCenter.y = Utils::Clamp(targetCenter.y, half.y, mapH - half.y);
+
+    //    worldView.setCenter(targetCenter);
+    //}
+}
+
+void SceneGame::applyLetterBox(sf::View& v, sf::Vector2u win)
+{
+    float winR = (float)win.x / win.y;
+    float viewR = v.getSize().x / v.getSize().y;
+    sf::FloatRect vp;
+    if (viewR < winR) {                  
+        float pad = (1.f - viewR / winR) * 0.5f;
+        vp = { pad, 0.f, 1.f - pad * 2.f, 1.f };
     }
+    else {                             
+        float pad = (1.f - winR / viewR) * 0.5f;
+        vp = { 0.f, pad, 1.f, 1.f - pad * 2.f };
+    }
+    v.setViewport(vp);
 }
 
 //void SceneGame::buildWorld(const Level& lvl)
@@ -240,7 +317,9 @@ void SceneGame::Enter()
     }
 
     //worldView.setSize(VIEW_W, VIEW_H);
-    worldView.setSize(VIEW_W, level->gridHeight * level->tileSize);
+    worldView.setSize(BASE_W, BASE_H);
+    worldView.setCenter(BASE_W * 0.5f, BASE_H * 0.5f);
+    //worldView.setSize(VIEW_W, level->gridHeight * level->tileSize);
     //worldView.setSize(level->gridWidth  * level->tileSize, level->gridHeight * level->tileSize);  
     //worldView.setCenter(worldView.getSize() / 2.f);
 

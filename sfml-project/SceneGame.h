@@ -12,9 +12,6 @@ protected:
 	sf::Texture bgTex;
 	sf::Sprite bgSpr;
 
-	const float VIEW_W = 160.f;     // 임시값
-	const float VIEW_H = 96.f;     // 임시값
-
 	static std::string pendingStage;
 
 public:
@@ -31,5 +28,6 @@ public:
 	void ClearStage();
 	void updateCamera(float dt);
 	static void SetPendingStage(const std::string& p) { pendingStage = p; }
+	static void applyLetterBox(sf::View& v, sf::Vector2u win);
 };
 

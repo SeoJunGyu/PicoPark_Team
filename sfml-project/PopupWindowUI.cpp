@@ -108,7 +108,7 @@ void PopupWindowUI::Reset()
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
 	
-	spr = sprite.getGlobalBounds();
+	spr = sprite.getLocalBounds();
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
@@ -135,7 +135,7 @@ void PopupWindowUI::Reset()
 		case 0:
 			startbut[i]->SetCallBack([this]()
 				{
-					SceneGame::SetPendingStage("levels/stageTest.json");
+					SceneGame::SetPendingStage("levels/stage_01.json");
 					SCENE_MGR.ChangeScene(SceneIds::Game);
 				});
 			break;

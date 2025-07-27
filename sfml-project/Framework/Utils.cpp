@@ -95,6 +95,20 @@ sf::Vector2f Utils::SetOrigin(sf::Sprite& obj, Origins preset)
     return SetOrigin(obj, preset, obj.getLocalBounds());
 }
 
+void Utils::alignSpriteBottomToTile(sf::Sprite& spr, const sf::Vector2f& tilePos, float tileSize)
+{
+    sf::FloatRect g = spr.getGlobalBounds();
+    float footY = g.top + g.height;
+    float desiredX = tilePos.x + tileSize * 0.5f;
+    float desiredY = tilePos.y + tileSize;
+
+    sf::Vector2f curCenter(g.left + g.width * 0.5f,
+        g.top + g.height);
+    spr.move(desiredX - curCenter.x,
+        desiredY - curCenter.y);
+    //spr.move(0.f, desiredY - footY);
+}
+
 float Utils::Clamp(float value, float min, float max)
 {
     if (value < min)

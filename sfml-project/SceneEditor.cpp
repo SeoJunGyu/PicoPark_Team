@@ -184,11 +184,15 @@ void SceneEditor::Update(float dt)
     // Ctrl+S : 저장
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && InputMgr::GetKeyDown(sf::Keyboard::S)){
         std::cout << "맵 저장 완료." << std::endl;
-        SaveAsLevel("levels/stage_tmp.json");
+        SaveAsLevel("levels/" + std::string(lvlName) + ".json");
+    }
+
+    if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
+        SCENE_MGR.ChangeScene(SceneIds::Title);
     }
 
     // F5 : 바로 플레이
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
+    if (InputMgr::GetKeyDown(sf::Keyboard::F5)) {
         std::string file = "levels/" + std::string(lvlName) + ".json";
         SceneGame::SetPendingStage(file);
         SCENE_MGR.ChangeScene(SceneIds::Game); 

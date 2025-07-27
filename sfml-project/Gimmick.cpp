@@ -115,15 +115,17 @@ void Gimmick::Reset()
 	*/
 	
 
-	SetOrigin(Origins::MC);
-	float ox = 16.f * 0.5f;
-	float oy = 16.f * 0.5f;
+	//SetOrigin(Origins::MC);
+	//float ox = 16.f * 0.5f;
+	//float oy = 16.f * 0.5f;
 
-	float realH = body.getTexture()->getSize().y * body.getScale().y;
-	float oy_fix = std::abs((realH - 16.f) * 0.5f);
+	//float realH = body.getTexture()->getSize().y * body.getScale().y;
+	//float oy_fix = std::abs((realH - 16.f) * 0.5f);
 
-	sf::Vector2f pos(GetPosition().x + ox, GetPosition().y + oy + oy_fix); 
+	//sf::Vector2f pos(GetPosition().x + ox, GetPosition().y); 
+	sf::Vector2f pos = { GetPosition().x, GetPosition().y};
 	SetPosition(pos);
+	Utils::alignSpriteBottomToTile(body, pos);
 	SetScale(GetScale());
 	SetRotation(GetRotation());
 

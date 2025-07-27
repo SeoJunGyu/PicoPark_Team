@@ -32,6 +32,7 @@ public:
 	static sf::Vector2f SetOrigin(sf::Shape& obj, Origins preset);
 	static sf::Vector2f SetOrigin(sf::Text& obj, Origins preset);
 	static sf::Vector2f SetOrigin(sf::Sprite& obj, Origins preset);
+	static void alignSpriteBottomToTile(sf::Sprite& spr, const sf::Vector2f& tilePos, float tileSize = 16.f);
 
 	// Math
 	static float Clamp(float value, float min, float max);
