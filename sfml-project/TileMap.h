@@ -5,8 +5,10 @@
 class TileMap :
     public GameObject
 {
-protected:
+public:
 	int width = 0, height = 0, tileSize = 16, firstSolid = 1;
+
+protected:
 	std::vector<int> tiles;
 	//sf::VertexArray vertices; 
 	//std::vector<HitBox> solidHB;

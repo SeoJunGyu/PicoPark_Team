@@ -61,7 +61,7 @@ enum class GimmickType
 	//움직임 -> Update 필요
 	MovingPlatform,
 	FallingPlatform,
-	WeightBlock,
+	PushBlock,
 	ColorPushBlock,
 	Rope,
 	//플레이어 관련

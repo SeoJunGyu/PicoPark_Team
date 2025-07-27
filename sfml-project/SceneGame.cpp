@@ -167,6 +167,8 @@ void SceneGame::Init()
     level = new Level();
     tileMap = new TileMap();
 
+    Variables::tilemap = tileMap;
+
     Scene::Init();
 }
 

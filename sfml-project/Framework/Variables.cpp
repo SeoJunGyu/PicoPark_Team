@@ -8,6 +8,8 @@ std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
 std::vector<MovingPlatform*> Variables::platforms{};
 
+TileMap* Variables::tilemap = nullptr;
+
 void Variables::ResetStage()
 {
 	KeyObtained = false;

@@ -19,16 +19,14 @@
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
-        1,1,0,1,1,1,1,1,1,1
+        1,1,1,1,1,1,1,1,1,1
       ]
     }
   ],
 
   "entities": [
-    { "id": 103, "type": "BouncePad",  "x": 60,  "y": 64, "scale": [0.02,0.02], 
-      "properties":{"Bounce": 200.0} },
-    { "id": 104, "type": "MovingPlatform",  "x": 85,  "y": 40, "scale": [0.2,0.2], 
-      "properties":{"channel": 1, "path":[[85,40],[25,40]], "speed":30, "requireCount": 2} },
+    { "id": 104, "type": "PushBlock",  "x": 85,  "y": 40, "scale": [0.2,0.2], 
+      "properties":{"requireCount": 1, "color": [255, 255, 255, 255]} },
     {
       "id": 10,
       "type": "PlayerSpawn",

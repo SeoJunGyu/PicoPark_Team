@@ -93,6 +93,8 @@ public:
 
 	HitBox GetHitBox() const { return hitBox; }
 
+	int GetIndex() const { return index; }
+
 	void SetTileMap(TileMap* tilemap) { this->tilemap = tilemap; }
 
 	//같이 이동하기 위한 헬퍼

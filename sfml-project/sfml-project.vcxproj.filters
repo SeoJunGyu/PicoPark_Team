@@ -41,6 +41,7 @@
     <ClCompile Include="UiButton.cpp" />
     <ClCompile Include="BouncePad.cpp" />
     <ClCompile Include="FallingPlatform.cpp" />
+    <ClCompile Include="PushBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="UiButton.h" />
     <ClInclude Include="BouncePad.h" />
     <ClInclude Include="FallingPlatform.h" />
+    <ClInclude Include="PushBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />
