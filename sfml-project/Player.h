@@ -35,6 +35,8 @@ public:
 	bool hasRider = false; //내 머리 위에 누가 올라탔음
 	bool isOnPlayer = false; //내가 다른사람 밟고 있음
 
+	StandMethod standing;
+
 protected:
 	sf::Sprite body;
 	Animator animator;
@@ -50,7 +52,6 @@ protected:
 	HitBox hitBox;
 	TileMap* tilemap;
 	MovingPlatform* standingPlatform = nullptr;
-	StandMethod standing;
 
 	int index = 0;
 	sf::Color tint = sf::Color::White;

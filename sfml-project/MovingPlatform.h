@@ -6,6 +6,9 @@ class MovingPlatform :
 protected:
     int channel = 0; //같은 채널의 플랫폼을 이동시키기 위해 사용
 
+    int requireCount = 0; //몇명을 태워야 이동하는지 확인
+    sf::Text countText;
+
     sf::Vector2f startPos;
     sf::Vector2f endPos;
     sf::Vector2f prevPos; //이동 전 위치 저장
@@ -25,6 +28,7 @@ public:
 
     void Reset() override;
     void Update(float dt) override;
+    void Draw(sf::RenderWindow& window) override;
 
     void moveOneStep(float dt);
 

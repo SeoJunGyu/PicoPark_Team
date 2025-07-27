@@ -19,9 +19,13 @@ void MovingPlatform::Reset()
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
 
+	channel = properties.value("channel", -1);
+	requireCount = properties.value("requireCount", 0);
+
 	body.setTexture(TEXTURE_MGR.Get("graphics/Item/Pad.png"));
 
-	channel = properties.value("channel", -1);
+	countText.setFont(FONT_MGR.Get("fonts/DS-DIGIT.ttf"));
+
 	startPos = { properties["path"][0][0].get<float>(), properties["path"][0][1].get<float>() };
 	endPos = { properties["path"][1][0].get<float>(), properties["path"][1][1].get<float>() };
 	speed = properties.value("speed", 0.f);
@@ -47,6 +51,15 @@ void MovingPlatform::Reset()
 	SetScale(GetScale());
 	SetRotation(GetRotation());
 
+	/*
+	countText.setString(std::to_string(requireCount));
+	countText.setCharacterSize(8);
+	countText.setFillColor(sf::Color::Black);
+	countText.setPosition({ position.x, position.y - 50.f });
+	Utils::SetOrigin(countText, Origins::MC);
+	*/
+	
+
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
 
@@ -61,13 +74,47 @@ void MovingPlatform::Update(float dt)
 		blocked = false;
 	}
 
-	bool signal = Button::IsActive(channel);
+	//bool signal = Button::IsActive(channel);
+	bool active;
+	if (requireCount > 0)
+	{
+		hitBox.UpdateTransform(body, body.getLocalBounds());  // (Optional) hitBox 최신화
+		int count = 0;
+		for (auto* p : Variables::players)
+		{
+			// 최종 지지 객체가 바로 이 플랫폼인지 확인
+			Player* support = p;
+			// 플레이어 위에 플레이어가 올라탄 체인 climb
+			while (support->standing.type == StandType::Player)
+				support = support->standing.asPlayer();
+
+			// 지지 타입이 Platform 이고, ptr 이 this 인 경우만 카운트
+			if (support->standing.type == StandType::Platform &&
+				support->standing.ptr == this)
+			{
+				++count;
+			}
+		}
+		active = (count >= requireCount);
+
+		/*
+		countText.setString(std::to_string(onPad.size()) + "/" + std::to_string(requireCount));
+		sf::FloatRect bb = body.getGlobalBounds();
+		countText.setPosition(bb.left + bb.width * 0.5f - countText.getLocalBounds().width * 0.5f, bb.top - countText.getCharacterSize() * 1.2f);
+		*/
+
+	}
+	else
+	{
+		//기존 채널 모드
+		active = Button::IsActive(channel);
+	}
 
 	auto pos = GetPosition();
 	bool atStart = std::abs((pos - startPos).x) + std::abs((pos - startPos).y) < 0.01f;
 	bool atEnd = std::abs((pos - endPos).x) + std::abs((pos - endPos).y) < 0.01f;
 
-	if (signal)
+	if (active)
 	{
 		if (atStart)
 		{
@@ -95,6 +142,14 @@ void MovingPlatform::Update(float dt)
 	{
 		moveOneStep(dt);
 	}
+}
+
+void MovingPlatform::Draw(sf::RenderWindow& window)
+{
+	Gimmick::Draw(window);
+
+	
+	//window.draw(countText);
 }
 
 void MovingPlatform::moveOneStep(float dt)
