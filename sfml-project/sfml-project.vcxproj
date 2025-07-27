@@ -178,7 +178,7 @@
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PopupWindowUI.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -231,7 +231,7 @@
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PopupWindowUI.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="SceneGame.h" />

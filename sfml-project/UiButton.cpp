@@ -51,11 +51,18 @@ void UiButton::SetColor(const sf::Color& color)
 	sprite.setColor(color);
 }
 
-void UiButton::SetText(const std::string& str, const std::string& fontids, unsigned int size)
+void UiButton::SetText(const std::string& t, const std::string& fontid, int size)
 {
-	text.setString(str);
-	text.setFont(FONT_MGR.Get(fontids));
+	text.setString(t);
+	text.setFont(FONT_MGR.Get(fontid));
 	text.setCharacterSize(size);
+}
+
+void UiButton::SetTextstyle(const ButtonStyle& style)
+{
+	text.setString(style.text);
+	text.setFont(FONT_MGR.Get(style.fontid));
+	text.setCharacterSize(style.fontSize);
 }
 
 void UiButton::SetSprit(const std::string& texID)
@@ -96,10 +103,14 @@ void UiButton::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left)&&
 		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())|| 
 		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())))
-	{
+	{		
 		if (event)
 			event();
 	}
+	isOn = (InputMgr::GetMouseButton(sf::Mouse::Left)&&
+		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
+		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())));
+	
 }
 
 void UiButton::Draw(sf::RenderWindow& window)

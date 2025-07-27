@@ -1,6 +1,13 @@
 #pragma once
 #include "GameObject.h"
 
+struct ButtonStyle
+{
+	std::string text;
+	std::string fontid;
+	int fontSize;
+};
+
 class UiButton : public GameObject
 {
 protected:
@@ -9,8 +16,8 @@ protected:
 public:
 	sf::Text text;
 	sf::Sprite sprite;
-	sf::Color colorpull;
-	bool isOn = true;
+	sf::Color colorpull;	
+	bool isOn = false;
 	
 
 	UiButton(const std::string& name = "");
@@ -24,7 +31,8 @@ public:
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
 	void SetColor(const sf::Color& color);	
-	void SetText(const std::string& str, const std::string& fontids, unsigned int size);
+	void SetText(const std::string& t, const std::string& fontid, int size);
+	void SetTextstyle(const ButtonStyle& style);
 	void SetSprit(const std::string& texID);
 	void Effect(bool on);
 

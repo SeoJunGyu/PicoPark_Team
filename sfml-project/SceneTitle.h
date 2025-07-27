@@ -3,20 +3,21 @@
 
 class UiButton;
 class BackGround;
+class PopupWindowUI;
 
 class SceneTitle : public Scene
 {
 protected:
 		
 	UiButton* startButton;
-	BackGround* titlebackground;
-
+	BackGround* titlebackground;	
+	PopupWindowUI* popup;
 	float cooltime = 0.f;
 	bool coolOn = true;
 
 public:
 	SceneTitle();
-~SceneTitle()override;
+	~SceneTitle()override = default;
 
 	void Init() override;
 	void Enter() override;
