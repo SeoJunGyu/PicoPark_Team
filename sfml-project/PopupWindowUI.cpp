@@ -130,22 +130,18 @@ void PopupWindowUI::Reset()
 
 	Rightbut->SetSprit("graphics/rightbut.png");
 	Rightbut->GetGlobalBounds();
-	Rightbut->SetScale({ 2.f,2.f });
-	Rightbut->SetActive(true);
+	Rightbut->SetScale({ 2.f,2.f });	
 	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height*0.6f });
 
 	Leftbut->SetSprit("graphics/rightbut.png");
 	Leftbut->SetScale({ -2.f, 2.f });
-	Leftbut->GetGlobalBounds();
-	Leftbut->SetActive(true);
+	Leftbut->GetGlobalBounds();	
 	Leftbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });
 
-	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);
-	closebut->SetPosition({ spr.width,spr.top });
+	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);	
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x +spr.width-35.f,sprpos.y+20.f });
-	closebut->SetActive(true);
+	closebut->SetPosition({ sprpos.x +spr.width-35.f,sprpos.y+20.f });	
 
 	startbut[currentPage]->SetActive(true);
 
