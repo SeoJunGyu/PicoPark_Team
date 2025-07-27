@@ -2,6 +2,7 @@
 #include "SceneEditor.h"
 #include "JsonSerializer.hpp"
 #include "PrefabMgr.h"
+#include "SceneGame.h"
 
 SceneEditor::SceneEditor()
 	: Scene(SceneIds::Editor) 
@@ -34,6 +35,7 @@ void SceneEditor::Brush(LevelGrid& grid, int tileId, sf::Vector2i mouse, sf::Ren
         grid.tiles[idx] = 0;
         grid.entities[idx] = 0;
         grid.entitiesType[idx].clear();
+        grid.entitiesProps[idx].clear();
     }
     else if (tileId <= 9) {           
         if (grid.entitiesType[idx] == "PlayerSpawn") {
@@ -43,11 +45,13 @@ void SceneEditor::Brush(LevelGrid& grid, int tileId, sf::Vector2i mouse, sf::Ren
         grid.tiles[idx] = tileId;
         grid.entities[idx] = 0;
         grid.entitiesType[idx].clear();
+        grid.entitiesProps[idx].clear();
     }
     else {                                           
         grid.tiles[idx] = 0;
         grid.entities[idx] = tileId;
         grid.entitiesType[idx] = currentEntity;
+        grid.entitiesProps[idx] = pendingProps;
     }
 }
 
@@ -61,6 +65,7 @@ void SceneEditor::Enter()
 {
 	Scene::Enter(); 
 
+    pendingProps = nlohmann::json::object();
     std::vector<std::string> texFiles;
     prefabNames.clear();                     // 같은 인덱스로 이름 저장
     texArr.clear();
@@ -163,6 +168,7 @@ void SceneEditor::Update(float dt)
                 //currentEntity = n[palette.GetSelected()];
                 int imguiSel = palette.GetSelected();     
                 currentEntity = (imguiSel >= 0) ? prefabNames[imguiSel] : "";
+
                 //std::cout << "선택 : " << currentEntity << std::endl;
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -183,8 +189,9 @@ void SceneEditor::Update(float dt)
 
     // F5 : 바로 플레이
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
-        SCENE_MGR.ChangeScene(SceneIds::Game);
-        //SaveTempAndSwitchToGame();  
+        std::string file = "levels/" + std::string(lvlName) + ".json";
+        SceneGame::SetPendingStage(file);
+        SCENE_MGR.ChangeScene(SceneIds::Game); 
     }
 
     // ←↑↓→ : worldView 이동
@@ -222,9 +229,10 @@ void SceneEditor::SaveAsLevel(const std::string& path)
             if (!PreA) continue;
 
             nlohmann::json ent;
-            nlohmann::json props = PreA->defaultProps;
+            nlohmann::json props = grid.entitiesProps[y * grid.width + x];
+            //nlohmann::json props = PreA->defaultProps;
 
-            auto ovIt = prefabOverrides.find(type);
+        /*  auto ovIt = prefabOverrides.find(type);
             if (ovIt != prefabOverrides.end())
             {
                 for (auto& kv : ovIt->second.items())   
@@ -233,7 +241,7 @@ void SceneEditor::SaveAsLevel(const std::string& path)
                     const nlohmann::json& val = kv.value(); 
                     props[key] = val;                    
                 }
-            }
+            }*/
 
             int dx = 0;
             int dy = 0;
@@ -304,6 +312,7 @@ void SceneEditor::ResizeGrid(int w, int h)
     grid.tiles.assign(w * h, 0);
     grid.entities.assign(w * h, 0);
     grid.entitiesType.assign(w * h, {});
+    grid.entitiesProps.assign(w * h, nlohmann::json::object());
 
     int copyW = std::min(oldW, w);
     int copyH = std::min(oldH, h);

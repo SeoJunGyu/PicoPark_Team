@@ -1,0 +1,7 @@
+{
+  "name":        "BouncePad",
+  "type":        "BouncePad",
+  "sprite":      "graphics/Item/jump1.png",
+  "scale":       0.05,
+  "properties":{"Bounce": 200.0}
+}

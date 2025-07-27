@@ -18,6 +18,7 @@ public:
     void ResizeGrid(int w, int h);
     std::unordered_map<std::string, nlohmann::json> prefabOverrides;
     std::vector<std::string> prefabNames;
+    nlohmann::json pendingProps;
 private:
     Level level;     
     TilePalette palette;

@@ -1,0 +1,10 @@
+{
+  "name":        "FallingPlatform",
+  "type":        "FallingPlatform",
+  "sprite":      "graphics/Item/FallingPlatform.png",
+  "scale":       0.2,
+  "properties": {
+    "fallDelay": 2.0,
+    "respawnDelay": 2.0
+  }
+}

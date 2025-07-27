@@ -61,6 +61,10 @@ void SceneTitle::Update(float dt)
 		startButton->Effect(coolOn);
 		cooltime = 0;
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter)) {
+		//std::cout << "엔터 호출" << std::endl;
+		startButton->Trigger();
+	}
 
 }
 void SceneTitle::Draw(sf::RenderWindow& window)

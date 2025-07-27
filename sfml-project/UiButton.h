@@ -12,6 +12,7 @@ class UiButton : public GameObject
 {
 protected:
 	std::function<void()> event;
+	float flashTime = 0.f;
 
 public:
 	sf::Text text;
@@ -24,6 +25,10 @@ public:
 	virtual ~UiButton() = default;
 
 	void SetCallBack(std::function<void()> callback) { event = callback; }
+	void Trigger() { 
+		flashTime = 0.12f;
+		if (event) event(); 
+	}
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
