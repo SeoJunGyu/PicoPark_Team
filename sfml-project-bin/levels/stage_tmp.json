@@ -5,28 +5,73 @@
     {
       "id": 0,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "path": [
+          [
+            112,
+            32
+          ],
+          [
+            112,
+            32
+          ]
+        ],
+        "speed": 30
       },
-      "type": "PlayerSpawn",
-      "x": 48,
-      "y": 16
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 112,
+      "y": 32
     },
     {
       "id": 1,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "path": [
+          [
+            32,
+            48
+          ],
+          [
+            32,
+            48
+          ]
+        ],
+        "speed": 30
       },
-      "type": "PlayerSpawn",
-      "x": 48,
-      "y": 32
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 32,
+      "y": 48
     },
     {
       "id": 2,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "path": [
+          [
+            96,
+            48
+          ],
+          [
+            96,
+            48
+          ]
+        ],
+        "speed": 30
       },
-      "type": "PlayerSpawn",
-      "x": 48,
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 96,
       "y": 48
     },
     {
@@ -35,6 +80,30 @@
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
+      "x": 0,
+      "y": 64
+    },
+    {
+      "id": 4,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            48,
+            64
+          ],
+          [
+            48,
+            64
+          ]
+        ],
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
       "x": 48,
       "y": 64
     }

@@ -124,6 +124,49 @@ void SceneGame::ClearStage()
     Variables::platforms.clear();
 }
 
+void SceneGame::updateCamera(float dt)
+{
+    sf::FloatRect playersBB;            // 모든 플레이어의 AABB
+    bool first = true;
+    for (auto* p : Variables::players) {
+        sf::Vector2f pos = p->GetPosition();
+        if (first) {
+            playersBB = { pos.x, pos.y, 0, 0 };
+            first = false;
+        }
+        else {
+            playersBB.left = std::min(playersBB.left, pos.x);
+            playersBB.top = std::min(playersBB.top, pos.y);
+            playersBB.width = std::max(playersBB.width, pos.x - playersBB.left);
+            playersBB.height = std::max(playersBB.height, pos.y - playersBB.top);
+        }
+    }
+
+    bool fits =
+        playersBB.width <= VIEW_W * 0.9f &&   // 10% 여유
+        playersBB.height <= VIEW_H * 0.9f;
+
+    if (fits) {
+        sf::Vector2f targetCenter(
+            playersBB.left + playersBB.width * 0.5f,
+            playersBB.top + playersBB.height * 0.5f);
+
+        // 부드러운 이동(옵션) : LERP
+        sf::Vector2f cur = worldView.getCenter();
+        float   smooth = 5.f;                 // 값이 클수록 빠르게 따라감
+        targetCenter = cur + (targetCenter - cur) * dt * smooth;
+
+        // 맵 경계 밖으로 나가지 않도록 클램프
+        sf::Vector2f half = worldView.getSize() * 0.5f;
+        float mapW = level->gridWidth * level->tileSize;
+        float mapH = level->gridHeight * level->tileSize;
+        targetCenter.x = Utils::Clamp(targetCenter.x, half.x, mapW - half.x);
+        targetCenter.y = Utils::Clamp(targetCenter.y, half.y, mapH - half.y);
+
+        worldView.setCenter(targetCenter);
+    }
+}
+
 //void SceneGame::buildWorld(const Level& lvl)
 //{
 //    tileMap.init(lvl.gridWidth, lvl.gridHeight, lvl.layers);
@@ -183,9 +226,10 @@ void SceneGame::Enter()
         LoadStage("levels/stageTest2.json");
     }
 
-    worldView.setSize(level->gridWidth  * level->tileSize,   
-                      level->gridHeight * level->tileSize);  
-    worldView.setCenter(worldView.getSize() / 2.f);
+    worldView.setSize(VIEW_W, VIEW_H);
+
+    //worldView.setSize(level->gridWidth  * level->tileSize, level->gridHeight * level->tileSize);  
+    //worldView.setCenter(worldView.getSize() / 2.f);
 
 
 //float winRatio  = FRAMEWORK.GetWindow().getSize().x / (float)FRAMEWORK.GetWindow().getSize().y;
@@ -207,6 +251,9 @@ void SceneGame::Enter()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
+
+    if (!Variables::players.empty())        // 플레이어가 하나라도 있으면
+        updateCamera(dt);
 
     /*
      if (Variables::players[0] != nullptr)

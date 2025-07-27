@@ -1,5 +1,7 @@
-#include "stdafx.h"
+Ôªø#include "stdafx.h"
 #include "TilePalette.h"
+#include "SceneEditor.h" 
+#include "PrefabMgr.h"
 
 void TilePalette::Load(const std::vector<std::string>& files, int ts)
 {
@@ -12,7 +14,7 @@ void TilePalette::Load(const std::vector<std::string>& files, int ts)
         if (!tex.loadFromFile(f))
         {
             std::cerr << "[TilePalette]  failed to load: " << f << '\n';
-            // √§øÏ¡ˆ æ ∞Ì continue «œ∏È ID ¡§∑ƒ¿Ã ≤ø¿Œ¥Ÿ. ¥ıπÃ ≈ÿΩ∫√≥∂Ûµµ push.
+            // Ï±ÑÏö∞ÏßÄ ÏïäÍ≥† continue ÌïòÎ©¥ ID Ï†ïÎ†¨Ïù¥ Íº¨Ïù∏Îã§. ÎçîÎØ∏ ÌÖçÏä§Ï≤òÎùºÎèÑ push.
             sf::Image img;  img.create(ts, ts, sf::Color::Magenta);
             tex.loadFromImage(img);
         }
@@ -21,12 +23,13 @@ void TilePalette::Load(const std::vector<std::string>& files, int ts)
     currentId = -1;            
 }
 
-void TilePalette::DrawImGui()
+
+void TilePalette::DrawImGui(SceneEditor& editor)
 {
     if (tileSet.textures.empty()) return;
 
-    constexpr int COLS = 5;          // «— ¡Ÿ 5ƒ≠
-    const ImVec2 BTN_SZ(48, 48);     // ΩÊ≥◊¿œ ≈©±‚
+    constexpr int COLS = 5;          // Ìïú Ï§Ñ 5Ïπ∏
+    const ImVec2 BTN_SZ(48, 48);     // Ïç∏ÎÑ§Ïùº ÌÅ¨Í∏∞
 
     ImGui::SetNextWindowSize(ImVec2(300, 400), ImGuiCond_FirstUseEver); 
     ImGui::SetNextWindowPos(ImVec2(1300, 100), ImGuiCond_FirstUseEver);
@@ -39,11 +42,9 @@ void TilePalette::DrawImGui()
         {
             ImTextureID img = (ImTextureID)tileSet.textures[id].getNativeHandle();
 
-            // πˆ∆∞: ≈¨∏Ø Ω√ currentId ∫Ø∞Ê
             if (ImGui::ImageButton(img, BTN_SZ))
                 currentId = id;
 
-            // º±≈√ ≈◊µŒ∏Æ
             if (currentId == id)
             {
                 ImGui::GetWindowDrawList()->AddRect(
@@ -51,12 +52,84 @@ void TilePalette::DrawImGui()
                     IM_COL32(255, 255, 0, 255), 0.0F, 0, 2.0F);
             }
 
-            // ¡Ÿ πŸ≤ﬁ √≥∏Æ
             if (++col < COLS) ImGui::SameLine();
             else              col = 0;
         }
 
         ImGui::EndChild();
+        if (currentId >= 0)
+        {
+            const std::string& selName = editor.prefabNames[currentId];
+            nlohmann::json& props = editor.prefabOverrides[selName];
+
+            if (props.is_null())
+                props = PrefabMgr::I().Get(selName)->defaultProps;
+
+            ImGui::Separator();
+            ImGui::Text("Props : %s", selName.c_str());
+
+            for (auto it = props.begin(); it != props.end(); ++it)
+            {
+                const char* key = it.key().c_str();
+
+                if (it->is_boolean())
+                {
+                    bool val = it->get<bool>();
+                    if (ImGui::Checkbox(key, &val))
+                        *it = val;
+                }
+                else if (it->is_number_integer())
+                {
+                    int val = it->get<int>();
+                    if (ImGui::InputInt(key, &val))
+                        *it = val;
+                }
+                else if (it->is_number_float())
+                {
+                    float val = it->get<float>();
+                    if (ImGui::InputFloat(key, &val))
+                        *it = val;
+                }
+                else if (it->is_string())
+                {
+                    char buf[128]; 
+                    std::snprintf(buf, sizeof(buf), "%s", it->get<std::string>().c_str());
+                    //std::strncpy(buf, it->get<std::string>().c_str(), 128);
+                    if (ImGui::InputText(key, buf, IM_ARRAYSIZE(buf)))
+                        *it = std::string(buf);
+                }
+                else if (it->is_array())
+                {
+                    //ImGui::Text("%s : (array size‚ÄØ%d)", key, (int)it->size());
+                    if (it.key() == "path") {
+                        if (it->size() == 2 &&
+                            (*it)[0].is_array() && (*it)[0].size() == 2 &&
+                            (*it)[1].is_array() && (*it)[1].size() == 2)
+                        {
+                            auto& arr = *it;          // alias
+
+                            int p[4] = {
+                                arr[0][0].get<int>(), arr[0][1].get<int>(),
+                                arr[1][0].get<int>(), arr[1][1].get<int>()
+                            };
+
+                            if (ImGui::InputInt4("path (x1,y1,x2,y2)", p))
+                            {
+                                arr[0][0] = p[0];
+                                arr[0][1] = p[1];
+                                arr[1][0] = p[2];
+                                arr[1][1] = p[3];
+                            }
+                        }
+                    }
+ 
+                }
+                else
+                {
+                    ImGui::TextDisabled("%s : <unsupported>", key);
+                }
+            }
+        }
     }
     ImGui::End();
 }
