@@ -419,6 +419,8 @@ void Player::Update(float dt)
 
 	position.x = Utils::Clamp(position.x, 0.f + halfW, tilemap->GetTileMapSize().x - halfW);
 
+	OutWindow();
+
 	//최종 위치 설정
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -515,4 +517,18 @@ void Player::ScanHeadStack()
 			standing.ptr = other;
 		}
 	}
+}
+
+void Player::OutWindow()
+{
+	sf::Vector2f windowSize = tilemap->GetTileMapSize();
+	sf::Vector2f pos = position; //현재 위치
+
+	if (pos.y > windowSize.y)
+	{
+		pos.x = pos.x - 30.f;
+		pos.y = 0.f;
+	}
+
+	position = pos;
 }

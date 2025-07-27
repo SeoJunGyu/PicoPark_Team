@@ -98,5 +98,7 @@ public:
 	sf::Vector2f GetSupportDelta();
 	void ApplySupport();
 	void ScanHeadStack();
+
+	void OutWindow();
 };
 
