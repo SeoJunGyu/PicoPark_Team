@@ -6,6 +6,7 @@ class RoundPlatform :
     Player* player = nullptr;
 
     bool collidable = true; 
+    bool isOne = false;
 
     float randFall = 100.f;
 
