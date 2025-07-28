@@ -87,6 +87,10 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             {
                 Variables::platforms.push_back(dynamic_cast<MovingPlatform*>(g));
             }
+            else if (tstr == "PushBlock")
+            {
+                Variables::blocks.push_back(dynamic_cast<PushBlock*>(g));
+            }
         }
         /*float ox = level->tileSize * 0.5f;
         float oy = level->tileSize * 0.5f;
@@ -132,6 +136,7 @@ void SceneGame::ClearStage()
     Variables::players.clear();
     Variables::gimmicks.clear();
     Variables::platforms.clear();
+    Variables::blocks.clear();
 }
 
 void SceneGame::updateCamera(float dt)

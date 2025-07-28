@@ -94,6 +94,8 @@ void Player::Reset()
 
 	sf::Vector2f pos(GetPosition().x + ox, GetPosition().y + oy + oy_fix);
 	SetPosition(pos);
+
+	deltaPos = { 0.f, 0.f };
 	
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -102,6 +104,8 @@ void Player::Reset()
 void Player::Update(float dt)
 {
 	animator.Update(dt);
+
+	sf::Vector2f before = GetPosition(); //프레임간 위치를 파악하기위해 이전 프레임 좌표 저장
 
 	hasRider = false; //플레이어가 내 머리 위에 있는지 확인
 
@@ -430,6 +434,9 @@ void Player::Update(float dt)
 	//최종 위치 설정
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
+	deltaPos = after - before; //실제 이동한 차이만 저장된다.
 	
 	//std::cout << hitBottom << " / " << hitTop << " / " << velocity.y << " / " << isGrounded << std::endl;
 	// Ani

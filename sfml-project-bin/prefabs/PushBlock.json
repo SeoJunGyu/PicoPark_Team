@@ -1,0 +1,7 @@
+{
+  "name":        "PushBlock",
+  "type":        "PushBlock",
+  "sprite":      "graphics/Item/WeightBlock.png",
+  "scale":       [0.2,0.5],
+  "properties": {"requireCount": 1, "color": 0}
+}

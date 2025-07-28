@@ -43,6 +43,7 @@ protected:
 
 
 	sf::Vector2f prvPos;
+	sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
 	sf::Vector2f gravity = { 0.f, 500.f };
 	
 	bool isFallen = false; //낙하 테스트 변수
@@ -103,5 +104,7 @@ public:
 	void ScanHeadStack();
 
 	void OutWindow();
+
+	sf::Vector2f GetDeltaPos() const { return deltaPos; }
 };
 

@@ -1,24 +1,32 @@
-#pragma once
+ï»¿#pragma once
 #include "Gimmick.h"
+#include "Player.h"
 
 class TileMap;
 
 class PushBlock :
     public Gimmick
 {
+public:
+    sf::Vector2f velocity{ 0.f, 0.f };
+    bool isGrounded = false;
+    bool hasRider = false; //ë‚´ ë¨¸ë¦¬ ìœ„ì— ëˆ„ê°€ ì˜¬ë¼íƒ”ìŒ
+    bool isOnPlayer = false; //ë‚´ê°€ ë‹¤ë¥¸ì‚¬ëŒ ë°Ÿê³  ìˆìŒ
+
+    StandMethod standing;
+
 protected:
     Player* player = nullptr;
 
-    int requireCount; //¸î¸íÀÌ ¹Ğ¾î¾ßÇÏ´ÂÁö È®ÀÎ
+    int requireCount; //ëª‡ëª…ì´ ë°€ì–´ì•¼í•˜ëŠ”ì§€ í™•ì¸
 
-    sf::Color blockColor; //ºí·°ÀÇ »ö°ú °°Àº ÇÃ·¹ÀÌ¾î°¡ ¹Ì´ÂÁö È®ÀÎ
+    int colorIndex;
+    sf::Color blockColor; //ë¸”ëŸ­ì˜ ìƒ‰ê³¼ ê°™ì€ í”Œë ˆì´ì–´ê°€ ë¯¸ëŠ”ì§€ í™•ì¸
+    bool colorPush = false;
 
-    sf::Vector2f moveDir; //ÀÌµ¿¹æÇâ
-    float moveSpeed; //¹Ğ¸®´Â ¼Óµµ
+    sf::Vector2f moveDir; //ì´ë™ë°©í–¥
 
-    sf::Vector2f velocity{ 0.f, 0.f };
     sf::Vector2f gravity = { 0.f, 500.f };
-    bool isGrounded = false;
 
     TileMap* tilemap;
     sf::Vector2f prvPos;
@@ -28,5 +36,9 @@ public:
 
     void Reset() override;
     void Update(float dt) override;
+
+    sf::Vector2f GetSupportDelta();
+    void ApplySupport();
+    void ScanUpStack();
 };
 

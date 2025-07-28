@@ -3,6 +3,18 @@
 #include "Player.h"
 #include "TileMap.h"
 
+static sf::Color makeColor(int tileId)
+{
+    static std::vector<sf::Color> palette2 = {
+        sf::Color::Blue,
+        sf::Color(207, 159, 253),
+        sf::Color::Green,
+        sf::Color::Yellow
+    };
+
+    return palette2[tileId];
+}
+
 PushBlock::PushBlock(nlohmann::json j)
 	: Gimmick(
 		j.value("id", 0),
@@ -17,29 +29,42 @@ PushBlock::PushBlock(nlohmann::json j)
 
 void PushBlock::Reset()
 {
-	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 0;
+    sortingLayer = SortingLayers::Foreground;
+    sortingOrder = 0;
 
-	body.setTexture(TEXTURE_MGR.Get("graphics/Item/WeightBlock.png"));
+    body.setTexture(TEXTURE_MGR.Get("graphics/Item/WeightBlock.png"));
 
-	player = nullptr;
+    player = nullptr;
 
-	requireCount = properties.value("requireCount", 1);
-	blockColor = sf::Color(properties["color"][0].get<std::uint8_t>(), properties["color"][1].get<std::uint8_t>(), properties["color"][2].get<std::uint8_t>(), properties["color"][3].get<std::uint8_t>());
+    requireCount = properties.value("requireCount", 1);
+    colorIndex = properties.value("color", -1);
+    if (colorIndex >= 0)
+    {
+        blockColor = makeColor(colorIndex);
+        body.setColor(blockColor);
+        colorPush = true;
+    }
+    else
+    {
+        colorPush = false;
+    }
 
-	velocity = { 0.f, 0.f };
-	isGrounded = false;
+    velocity = { 0.f, 0.f };
+    isGrounded = false;
 
-	tilemap = Variables::tilemap;
+    tilemap = Variables::tilemap;
 
-	SetOrigin(Origins::BC);
-	SetPosition(GetPosition());
-	SetScale(GetScale());
-	SetRotation(GetRotation());
+    standing.type = StandType::None;
+    standing.ptr = nullptr;
 
-	hitBox.UpdateTransform(body, body.getLocalBounds());
+    SetOrigin(Origins::BC);
+    SetPosition(GetPosition());
+    SetScale(GetScale());
+    SetRotation(GetRotation());
 
-	Gimmick::Reset();
+    hitBox.UpdateTransform(body, body.getLocalBounds());
+
+    Gimmick::Reset();
 }
 
 void PushBlock::Update(float dt)
@@ -60,6 +85,19 @@ void PushBlock::Update(float dt)
             continue;
         }
 
+        // 플레이어가 블럭 안으로 파고들지 않게 분리
+        float sepX = info.normal.x * info.depth;
+        p->SetPosition({ p->GetPosition().x + sepX, p->GetPosition().y });
+        p->velocity.x = 0.f;
+
+        if (colorPush)
+        {
+            if (p->GetIndex() != colorIndex)
+            {
+                continue;
+            }
+        }
+
         // 왼쪽에서 밀면 info.normal.x < 0
         if (info.normal.x < 0.f)
         {
@@ -70,10 +108,7 @@ void PushBlock::Update(float dt)
             ++rightPushers;
         }
 
-        // 플레이어가 블럭 안으로 파고들지 않게 분리
-        float sepX = info.normal.x * info.depth;
-        p->SetPosition({ p->GetPosition().x + sepX, p->GetPosition().y });
-        p->velocity.x = 0.f;
+        
     }
 
     const float pushSpeed = 80.f;
@@ -90,8 +125,15 @@ void PushBlock::Update(float dt)
         velocity.x = 0.f; // 그 외에는 정지
     }
 
+    ApplySupport();
+
     //중력
-    velocity.y += gravity.y * dt;
+    if (!isGrounded)
+    {
+        velocity.y += gravity.y * dt;
+        //standingPlatform = nullptr; //딛고 선 플랫폼 초기화
+        standing.clear();
+    }
 
     //수평 이동
     position.x += velocity.x * dt;
@@ -100,6 +142,32 @@ void PushBlock::Update(float dt)
 
     //수평 충돌
     bool collidedX = false;
+
+    //블럭 수평 충돌
+    SetPosition(position);
+    hitBox.UpdateTransform(body, body.getLocalBounds());
+
+    for (auto* b : Variables::blocks)
+    {
+        if (b == this || !Utils::CheckCollision(hitBox.rect, b->GetHitBox().rect))
+        {
+            continue;
+        }
+
+        auto blockRect = hitBox.rect.getGlobalBounds();
+        auto platRect = b->GetHitBox().rect.getGlobalBounds();
+        CollisionInfo info = Utils::GetAABBCollision(blockRect, platRect);
+
+        if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
+        {
+            position.x += info.normal.x * info.depth;
+            SetPosition(position);
+            hitBox.UpdateTransform(body, body.getLocalBounds());
+            velocity.x = 0.f;
+            collidedX = true;
+            break;
+        }
+    }
 
     //플랫폼 수평 충돌
     for (auto* plat : Variables::platforms)
@@ -170,6 +238,37 @@ void PushBlock::Update(float dt)
 
     //수직 충돌
     bool collidedY = false;
+
+    //블럭 수직 충돌
+    SetPosition(position);
+    hitBox.UpdateTransform(body, body.getLocalBounds());
+
+    for (auto* b : Variables::blocks)
+    {
+        if (b == this || !Utils::CheckCollision(hitBox.rect, b->GetHitBox().rect))
+        {
+            continue;
+        }
+
+        auto blockRect = hitBox.rect.getGlobalBounds();
+        auto platRect = b->GetHitBox().rect.getGlobalBounds();
+        CollisionInfo info = Utils::GetAABBCollision(blockRect, platRect);
+
+        if (info.depth > 0.f && std::abs(info.normal.y) > 0.5f)
+        {
+            position.y += info.normal.y * info.depth;
+            SetPosition(position);
+            hitBox.UpdateTransform(body, body.getLocalBounds());
+
+            if (info.normal.y < 0.f)
+            {
+                isGrounded = true;
+                velocity.y = 0.f;
+            }
+            collidedY = true;
+            break;
+        }
+    }
 
     //플랫폼 수직 충돌
     for (auto* plat : Variables::platforms)
@@ -252,12 +351,13 @@ void PushBlock::Update(float dt)
     {
         sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
 
-        CollisionInfo info = Utils::GetAABBCollision(pBox, blockBox);
+        CollisionInfo info = Utils::GetAABBCollision(blockBox, pBox);
         if (info.depth <= 0.f)
         {
             continue;
         }
 
+        /*
         // 옆면 충돌
         if (std::abs(info.normal.x) > 0.5f)
         {
@@ -266,25 +366,33 @@ void PushBlock::Update(float dt)
             p->velocity.x = 0.f;
             continue;
         }
+        */
+        
 
-        // 아랫면 충돌
-        if (info.normal.y > 0.5f && p->velocity.y < 0.f)
+        // 착지
+        if (info.normal.y > 0.5f && velocity.y >= 0.f)
         {
             float separationY = info.normal.y * info.depth;
-            p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
+            //p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
+            //p->velocity.y = 0.f;
 
-            p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
-            p->velocity.y = 0.f;
+            position.y += separationY;
+            SetPosition(position);
+            hitBox.UpdateTransform(body, body.getLocalBounds());
+
+            velocity.y = 0.f;
+            isGrounded = true;
+            standing.type = StandType::Player;
+            standing.ptr = p;
+
             continue;
         }
 
-        // 윗면 충돌
+        //
         if (info.normal.y < -0.5f)
         {
             float separationY = info.normal.y * info.depth;
             p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
-
-            // 착지 처리
             p->velocity.y = 0.f;
             p->isGrounded = true;
 
@@ -292,6 +400,7 @@ void PushBlock::Update(float dt)
         }
     }
 
+    SetPosition(position);
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	if (isGrounded)
@@ -300,4 +409,24 @@ void PushBlock::Update(float dt)
 	}
 
 	Gimmick::Update(dt);
+}
+
+sf::Vector2f PushBlock::GetSupportDelta()
+{
+    switch (standing.type)
+    {
+    case StandType::None:
+        return { 0.f, 0.f };
+    case StandType::Platform:
+        return standing.asPlatform()->GetDeltaPos();
+    case StandType::Player:
+        return standing.asPlayer()->GetDeltaPos();
+    }
+
+    return { 0.f, 0.f };
+}
+
+void PushBlock::ApplySupport()
+{
+    position += GetSupportDelta(); //지지물 이동량 재귀적으로 누적
 }

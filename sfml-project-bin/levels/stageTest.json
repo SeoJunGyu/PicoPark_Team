@@ -25,7 +25,8 @@
   ],
 
   "entities": [
-    { "id": 103, "type": "BouncePad",  "x": 60,  "y": 70, "scale": [0.05,0.05], 
+    
+    { "id": 103, "type": "BouncePad",  "x": 60,  "y": 60, "scale": [0.05,0.05], 
       "properties":{"Bounce": 200.0} },
     { "id": 104, "type": "PushBlock",  "x": 85,  "y": 10, "scale": [0.2,0.5], 
       "properties":{"requireCount": 2, "color": [255, 255, 255, 255]} },

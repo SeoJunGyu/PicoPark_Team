@@ -7,6 +7,7 @@ bool Variables::KeyObtained = false;
 std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
 std::vector<MovingPlatform*> Variables::platforms{};
+std::vector<PushBlock*> Variables::blocks{};
 
 TileMap* Variables::tilemap = nullptr;
 
