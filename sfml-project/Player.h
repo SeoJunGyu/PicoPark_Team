@@ -37,6 +37,8 @@ public:
 
 	StandMethod standing;
 
+	bool hasKey = false;
+
 protected:
 	sf::Sprite body;
 	Animator animator;

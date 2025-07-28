@@ -96,6 +96,7 @@ void Player::Reset()
 	SetPosition(pos);
 
 	deltaPos = { 0.f, 0.f };
+	hasKey = false;
 	
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());

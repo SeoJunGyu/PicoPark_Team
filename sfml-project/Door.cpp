@@ -38,11 +38,19 @@ void Door::Reset()
 
 void Door::Update(float dt)
 {
-	bool canOpen = locked == false || Variables::KeyObtained;
-	bool collide = std::any_of(
-		Variables::players.begin(), Variables::players.end(),
-		[&](Player* p) { return Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect); }
-	);
+	Player* player = nullptr;
+	for (Player* p : Variables::players)
+	{
+		if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+		{
+			player = p;
+			break;
+		}
+	}
+
+	bool collide = (player != nullptr);
+	bool playerHasKey = (player && player->hasKey);
+	bool canOpen = locked == false || playerHasKey;
 
 	if (!waColliding && collide)
 	{
@@ -51,6 +59,9 @@ void Door::Update(float dt)
 			opened = true;
 			locked = false;
 			body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));
+			player->hasKey = false;
+
+			Variables::KeyObtained = false;
 		}
 		else if (opened)
 		{

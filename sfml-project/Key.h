@@ -8,6 +8,7 @@ class Key :
 {
 protected:
     Player* player = nullptr;
+    Player* newPlayer = nullptr;
 
 public:
     Key(nlohmann::json j);

@@ -22,6 +22,7 @@ void Key::Reset()
 	body.setTexture(TEXTURE_MGR.Get("graphics/Item/key.png"));
 
 	player = nullptr;
+	newPlayer = nullptr;
 
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
@@ -37,10 +38,22 @@ void Key::Update(float dt)
 {
 	for (Player* p : Variables::players)
 	{
+		if (p->hasKey)
+		{
+			continue;
+		}
+
 		if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
 		{
-			Variables::KeyObtained = true;
+			if (newPlayer && newPlayer->hasKey)
+			{
+				newPlayer->hasKey = false;
+			}
+			p->hasKey = true;
 			player = p;
+			newPlayer = p;
+
+			Variables::KeyObtained = true;
 			break;
 		}
 	}
@@ -48,6 +61,11 @@ void Key::Update(float dt)
 	{
 		body.setPosition({ player->GetPosition().x, player->GetPosition().y - player->GetGlobalBounds().height - 6.f});
 		hitBox.UpdateTransform(body, body.getLocalBounds());
+	}
+
+	if (player && !Variables::KeyObtained)
+	{
+		SetActive(false);
 	}
 
 	Gimmick::Update(dt);
