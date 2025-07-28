@@ -56,6 +56,8 @@ void UiButton::SetText(const std::string& t, const std::string& fontid, int size
 	text.setString(t);
 	text.setFont(FONT_MGR.Get(fontid));
 	text.setCharacterSize(size);
+
+	Utils::SetOrigin(text, Origins::MC);
 }
 
 void UiButton::SetTextstyle(const ButtonStyle& style)
@@ -68,6 +70,8 @@ void UiButton::SetTextstyle(const ButtonStyle& style)
 void UiButton::SetSprit(const std::string& texID)
 {
 	sprite.setTexture(TEXTURE_MGR.Get(texID));
+
+	Utils::SetOrigin(text, Origins::MC);
 }
 
 void UiButton::Effect(bool on)
@@ -84,31 +88,34 @@ void UiButton::Effect(bool on)
 void UiButton::DrawEffect(float dt)
 {
 	sf::FloatRect bounds;
-
+	
 	if (!text.getString().isEmpty())
 	{
-		bounds = text.getGlobalBounds();
+		bounds = text.getGlobalBounds();		
 	}
 	else
 	{
-		bounds = sprite.getGlobalBounds();
+		bounds = sprite.getGlobalBounds();		
 	}
 
 	sf::Vector2f center = {
 	bounds.left + bounds.width * 0.5f,
 	bounds.top + bounds.height * 0.5f
 	};
+		
+
 	animTime += dt;
 
 	float scaleOffset = std::sin(animTime * speed) * amplitude;
 	float scale = 1.f + scaleOffset;
 
-	outline.setSize({ bounds.width + 20.f, bounds.height + 20.f });
-	outline.setPosition(center);
-	outline.setOutlineColor(sf::Color(255, 127, 80,255));	
+	outline.setSize({ bounds.width + 20.f, bounds.height + 20.f });	
+	outline.setOutlineThickness(7.f);
+	outline.setOutlineColor(sf::Color(255, 127, 80, 255));	
+	outline.setFillColor(sf::Color::Transparent);
 	Utils::SetOrigin(outline, Origins::MC);
-	outline.setOutlineThickness(5.f);
-	outline.setScale({ scale+0.08f, scale+0.08f });
+	outline.setScale({ scale + 0.08f, scale + 0.08f });
+	outline.setPosition(center.x+5.f,center.y+5.f);
 }
 
 
@@ -117,7 +124,7 @@ void UiButton::Init()
 	sortingLayer = SortingLayers::UI;
 	sortingOrder = 1;
 
-	SetOrigin(Origins::MC);	
+	SetOrigin(Origins::MC);
 }
 
 void UiButton::Release()
@@ -129,19 +136,32 @@ void UiButton::Reset()
 }
 
 void UiButton::Update(float dt)
-{	
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left)&&
-		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())|| 
-		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())))
-	{		
-		if (event)
-			event();
-	}
-	isOn = (InputMgr::GetMouseButton(sf::Mouse::Left)&&
-		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
-		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())));
+{
+	drawon = false;
 
-	if (flashTime > 0.f) {
+	bool hovered = sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
+		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition());
+
+	isOn = InputMgr::GetMouseButton(sf::Mouse::Left) && hovered;
+
+	if (hovered)
+	{
+		drawon = true;
+				
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		{
+			if (event)
+				event();
+		}
+	}
+	
+	if (useeffect && drawon)
+	{
+		this->DrawEffect(dt);
+	}
+
+	if (flashTime > 0.f)
+	{
 		flashTime -= dt;
 		isOn = true;
 	}
@@ -155,5 +175,5 @@ void UiButton::Draw(sf::RenderWindow& window)
 	}
 	window.draw(sprite);
 	window.draw(text);
-	
+
 }

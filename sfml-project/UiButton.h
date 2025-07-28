@@ -11,6 +11,7 @@ struct ButtonStyle
 class UiButton : public GameObject
 {
 protected:
+
 	std::function<void()> event;
 	float flashTime = 0.f;
 
@@ -18,16 +19,15 @@ protected:
 	sf::Sprite sprite;
 	sf::Color colorpull;
 
-	int Size;	
+	int Size;
 	bool drawon = false;
 
 	sf::RectangleShape outline;
-	
+
 	float animTime = 0.f;
 	float speed = 5.f;
 	float amplitude = 0.05f;
 
-	
 public:
 	bool isOn = false;
 	bool useeffect = false;
@@ -36,23 +36,26 @@ public:
 	virtual ~UiButton() = default;
 
 	void SetCallBack(std::function<void()> callback) { event = callback; }
-	void Trigger() { 
+	void Trigger()
+	{
 		flashTime = 0.12f;
-		if (event) event(); 
+		if (event) event();
 	}
 
-	
+
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
-	void SetColor(const sf::Color& color);	
+	void SetColor(const sf::Color& color);
 	void SetText(const std::string& t, const std::string& fontid, int size);
 	void SetTextstyle(const ButtonStyle& style);
 	void SetSprit(const std::string& texID);
 	sf::Vector2f GettextSize() const
-	{ return sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height); };
+	{
+		return sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height);
+	};
 	void Effect(bool on);
 	void DrawEffect(float dt);
 

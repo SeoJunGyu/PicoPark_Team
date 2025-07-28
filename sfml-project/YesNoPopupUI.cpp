@@ -100,14 +100,14 @@ void YesNoPopupUI::Reset()
 	yesbut->SetText("YES", "fonts/Pixelownfont-Regular.ttf", 50);
 	yesbut->SetColor(sf::Color::Black);
 	yesbut->GetGlobalBounds();
-	yesbut->SetPosition({ sprpos.x -250.f,sprpos.y + 80.f });
+	yesbut->SetPosition({ sprpos.x -200.f,sprpos.y + 100.f });
 	yesbut->useeffect = true;
 
 
 	nobut->SetText("NO", "fonts/Pixelownfont-Regular.ttf", 50);
 	nobut->SetColor(sf::Color::Black);
 	nobut->GetGlobalBounds();
-	nobut->SetPosition({ sprpos.x +160.f,sprpos.y + 80.f });
+	nobut->SetPosition({ sprpos.x +200.f,sprpos.y + 100.f });
 	nobut->useeffect = true;
 
 	closebut->SetText("X", "fonts/PixelOperator8.ttf", 25);

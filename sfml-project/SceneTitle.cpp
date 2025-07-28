@@ -23,7 +23,7 @@ void SceneTitle::Init()
 	fontIds.push_back("fonts/PixelOperator.ttf");	;
 	fontIds.push_back("fonts/PixelOperator8.ttf");//X¹öÆ°
 	fontIds.push_back("fonts/Pixelownfont-Regular.ttf");
-	fontIds.push_back("fonts/Pixelownfont-Regular.ttf");
+
 	
 
 
@@ -57,7 +57,7 @@ void SceneTitle::Enter()
 	titlebackground->SetActive(true);
 
 	startButton->SetText("PRESS ENTER KEY", "fonts/BACKTO1982.TTF", 50);
-	startButton->SetPosition({ size.x * 0.35f, size.y * 0.5f });
+	startButton->SetPosition({ size.x * 0.5f, size.y * 0.5f });
 	startButton->SetColor(sf::Color(255, 134, 77, 255));
 	startButton->GetGlobalBounds();
 	startButton->SetActive(true);
