@@ -34,6 +34,7 @@ void SceneEditor::Brush(LevelGrid& grid, int tileId, sf::Vector2i mouse, sf::Ren
         }
         grid.tiles[idx] = 0;
         grid.entities[idx] = 0;
+        grid.entitiesScale[idx] = { 0.f, 0.f };
         grid.entitiesType[idx].clear();
         grid.entitiesProps[idx].clear();
     }
@@ -44,12 +45,15 @@ void SceneEditor::Brush(LevelGrid& grid, int tileId, sf::Vector2i mouse, sf::Ren
         }
         grid.tiles[idx] = tileId;
         grid.entities[idx] = 0;
+        grid.entitiesScale[idx] = { 0.f, 0.f };
         grid.entitiesType[idx].clear();
         grid.entitiesProps[idx].clear();
     }
     else {                                           
         grid.tiles[idx] = 0;
         grid.entities[idx] = tileId;
+        int pid = palette.GetSelected();
+        grid.entitiesScale[idx] = penScale[pid];
         grid.entitiesType[idx] = currentEntity;
         grid.entitiesProps[idx] = pendingProps;
     }
@@ -65,10 +69,16 @@ void SceneEditor::Enter()
 {
 	Scene::Enter(); 
 
+    if (SceneGame::GetEditor()) {
+        SceneGame::SetEditor(false);
+        return;
+    }
+
     pendingProps = nlohmann::json::object();
     std::vector<std::string> texFiles;
     prefabNames.clear();                     // 같은 인덱스로 이름 저장
     texArr.clear();
+    penScale.clear();
     for (auto it = PrefabMgr::I().Table().begin(); it != PrefabMgr::I().Table().end(); ++it)
     {
         texFiles.push_back(it->second.sprite);
@@ -79,11 +89,13 @@ void SceneEditor::Enter()
     }
     palette.Load(texFiles, 16);
 
+    penScale.assign(prefabNames.size(), { -1.f, -1.f });
+
  /*   palette.Load({ "graphics/Characters/Icon/Player0.png",
                    "graphics/Item/key.png",
                    "graphics/Item/door.png"}, 16);*/
 
-    constexpr float UI_WIDTH = 1000.f;                // 팔레트 폭
+    constexpr float UI_WIDTH = 500.f;                // 팔레트 폭
     const auto winSize = FRAMEWORK.GetWindow().getSize();
     const float uiRatio = UI_WIDTH / winSize.x;
     uiStartX = float(winSize.x) - UI_WIDTH;
@@ -137,7 +149,7 @@ void SceneEditor::Update(float dt)
         currentEntity = "";
         Brush(grid, 0, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
     }
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i mp = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
         if (mp.x >= uiStartX) {           
             int localX = mp.x - int(uiStartX);
@@ -173,10 +185,17 @@ void SceneEditor::Update(float dt)
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             {
-                if (!currentEntity.empty() && grid.entitiesType[ty * grid.width + tx] != currentEntity) {
+                if (!ImGui::GetIO().WantCaptureMouse)
+                {
+                    Brush(grid,
+                        (palette.GetSelected() == -1 ? currentTile : palette.GetSelected() + 100),
+                        InputMgr::GetMousePosition(),
+                        FRAMEWORK.GetWindow());
+                }
+                /*if (!currentEntity.empty() && grid.entitiesType[ty * grid.width + tx] != currentEntity) {
                     Brush(grid, palette.GetSelected() + 100, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
                 }
-                if (palette.GetSelected() == -1) Brush(grid, currentTile, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());
+                if (palette.GetSelected() == -1) Brush(grid, currentTile, InputMgr::GetMousePosition(), FRAMEWORK.GetWindow());*/
             }
         }
     }
@@ -195,13 +214,64 @@ void SceneEditor::Update(float dt)
     if (InputMgr::GetKeyDown(sf::Keyboard::F5)) {
         std::string file = "levels/" + std::string(lvlName) + ".json";
         SceneGame::SetPendingStage(file);
+        SceneGame::SetEditor(true);
         SCENE_MGR.ChangeScene(SceneIds::Game); 
     }
 
     // ←↑↓→ : worldView 이동
-    float pan = 300 * dt;
+    /*float pan = 300 * dt;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  worldView.move(-pan, 0);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  worldView.move(pan, 0);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  worldView.move(pan, 0);*/
+
+    //마우스 관련 조작
+    static sf::Vector2i lastPix{ -1, -1 };
+
+    bool dragging = sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) &&
+        sf::Mouse::isButtonPressed(sf::Mouse::Left);
+
+    if (dragging)
+    {
+        sf::Vector2i pix = InputMgr::GetMousePosition();
+        if (lastPix.x != -1)
+        {
+            sf::Vector2f delta = worldView.getCenter() -
+                FRAMEWORK.GetWindow().mapPixelToCoords(lastPix, worldView);
+            sf::Vector2f deltaNow = worldView.getCenter() -
+                FRAMEWORK.GetWindow().mapPixelToCoords(pix, worldView);
+            worldView.move(deltaNow - delta);
+        }
+        lastPix = pix;                     
+    }
+    else
+    {
+        lastPix = { -1, -1 };               
+    }
+
+    int d = InputMgr::PopWheelDelta();
+    if (d != 0 && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+    {
+        const float STEP = 1.25f;            
+        const float MIN_ZOOM = 0.2f;
+        const float MAX_ZOOM = 5.f;
+
+        float factor = (d > 0) ? 1.f / STEP : STEP;
+        factor = std::pow(factor, std::abs(d));
+
+        sf::Vector2i pix = InputMgr::GetMousePosition();
+        sf::Vector2f before = FRAMEWORK.GetWindow().mapPixelToCoords(pix, worldView);
+
+        float cur = worldView.getSize().x;        
+        float next = cur * factor;
+        if (next < grid.width * grid.tileSize * MIN_ZOOM) factor = 1.f;
+        if (next > grid.width * grid.tileSize * MAX_ZOOM) factor = 1.f;
+
+
+        worldView.zoom(factor);
+
+        sf::Vector2f after = FRAMEWORK.GetWindow().mapPixelToCoords(pix, worldView);
+        worldView.move(before - after);
+    }
+
 }
 
 void SceneEditor::SaveAsLevel(const std::string& path)
@@ -273,11 +343,15 @@ void SceneEditor::SaveAsLevel(const std::string& path)
                 props["path"] = jPath;
             }
 
+            sf::Vector2f sc = PreA->scale;                       // 기본값
+            auto scIt = grid.entitiesScale[y * grid.width + x];
+            if (scIt.x != 0.f) sc = scIt;
+
             ent["id"] = nextId++;
             ent["type"] = type;
             ent["x"] = x * grid.tileSize;
             ent["y"] = y * grid.tileSize;
-            ent["scale"] = PreA->scale;
+            ent["scale"] = sc;
             ent["properties"] = props;
 
             level.entities.push_back(ent);
@@ -309,6 +383,7 @@ void SceneEditor::ResizeGrid(int w, int h)
     std::vector<int> oldTiles = grid.tiles;
     std::vector<int> oldEntities = grid.entities;
     std::vector<std::string> oldEt = grid.entitiesType;
+    std::vector<sf::Vector2f> oldScale = grid.entitiesScale;
     int oldW = grid.width, oldH = grid.height;
 
     grid.width = w;
@@ -317,6 +392,7 @@ void SceneEditor::ResizeGrid(int w, int h)
     grid.entities.assign(w * h, 0);
     grid.entitiesType.assign(w * h, {});
     grid.entitiesProps.assign(w * h, nlohmann::json::object());
+    grid.entitiesScale.assign(w * h, { 0.f, 0.f });
 
     int copyW = std::min(oldW, w);
     int copyH = std::min(oldH, h);
@@ -328,6 +404,7 @@ void SceneEditor::ResizeGrid(int w, int h)
             grid.tiles[nIdx] = oldTiles[oIdx];
             grid.entities[nIdx] = oldEntities[oIdx];
             grid.entitiesType[nIdx] = oldEt[oIdx];
+            grid.entitiesScale[nIdx] = oldScale[oIdx];
         }
 
     worldView.setSize(w * grid.tileSize, h * grid.tileSize);
@@ -428,8 +505,53 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
 
 
     w.setView(uiView);
+    ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowPos(ImVec2(1100, 100), ImGuiCond_FirstUseEver);
     ImGui::Begin("Level Settings");
+
+    ImGui::Separator();
+    //ImGui::Text("Tile palette");
+
+    const int COLS = 5;
+    const ImVec2 BTN_SZ(24, 24);
+
+    for (int i = 1; i < (int)Palette.size(); ++i)        // 색 1~9
+    {
+        ImGui::PushID(i);
+
+        ImVec4 col(
+            Palette[i].r / 255.f,
+            Palette[i].g / 255.f,
+            Palette[i].b / 255.f,
+            Palette[i].a / 255.f);
+        bool pressed = ImGui::ColorButton("##c", col,
+            ImGuiColorEditFlags_NoTooltip, BTN_SZ);
+
+        if (pressed)
+        {
+            currentTile = i;       
+            palette.ClearSelected();   
+            currentEntity.clear();
+        }
+
+        if (currentTile == i && palette.GetSelected() == -1)
+        {
+            const float pad = 2.f;
+            ImVec2 pmin = ImGui::GetItemRectMin();
+            ImVec2 pmax = ImGui::GetItemRectMax();
+            ImGui::GetWindowDrawList()->AddRect(
+                ImVec2(pmin.x - pad, pmin.y - pad),
+                ImVec2(pmax.x + pad, pmax.y + pad),
+                IM_COL32(255, 255, 0, 255), 0.f, 0, 2.f);
+        }
+
+        ImGui::PopID();
+
+        int colIdx = (i - 1) % COLS;
+        if (colIdx + 1 < COLS) ImGui::SameLine();
+    }
+    ImGui::Separator();
+
     ImGui::InputText("Level file name", lvlName, IM_ARRAYSIZE(lvlName));
     ImGui::InputText("Author", author, IM_ARRAYSIZE(author));
     ImGui::InputTextMultiline("Description", desc,
@@ -454,40 +576,4 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
     }
     ImGui::End();
     palette.DrawImGui(*this);
-    DrawPaletteAndButtons(w); 
-}
-
-void SceneEditor::DrawPaletteAndButtons(sf::RenderWindow& w)
-{
-    const float margin = 8.f;
-    const float slotGap = 36.f;
-
-    sf::RectangleShape slot({ 32,32 });
-    slot.setFillColor(sf::Color(50, 50, 50));
-    slot.setOutlineThickness(1);
-    slot.setOutlineColor(sf::Color::White);
-
-    /* --- 팔레트 색칠 --- */
-    for (std::size_t i = 1; i < Palette.size(); ++i) {        // 1~9
-        int row = int(i - 1) / 5;
-        int col = int(i - 1) % 5;
-        slot.setPosition(margin + col * slotGap, margin + row * slotGap);
-        w.draw(slot);
-
-        sf::RectangleShape prev({ 24,24 });
-        prev.setFillColor(Palette[i]);
-        prev.setPosition(slot.getPosition() + sf::Vector2f(4, 4));
-        w.draw(prev);
-    }
-
-    ///* --- 엔티티 버튼 --- */
-    //static const char* names[] = { "Key","Door","PlayerSpawn" };
-    //for (int i = 0; i < 3; ++i) {
-    //    slot.setPosition(margin, 200 + i * 40);
-    //    w.draw(slot);
-    //    sf::Text txt(names[i],
-    //        FONT_MGR.Get("fonts/DS-DIGIT.ttf"), 14);
-    //    txt.setPosition(slot.getPosition() + sf::Vector2f(4, 6));
-    //    w.draw(txt);
-    //}
 }

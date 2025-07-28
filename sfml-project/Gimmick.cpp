@@ -19,6 +19,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new BouncePad(j);
 	case GimmickType::FallingPlatform:
 		return new FallingPlatform(j);
+	case GimmickType::RoundPlatform:
+		return new RoundPlatform(j);
 	case GimmickType::PushBlock:
 		return new PushBlock(j);
 	}

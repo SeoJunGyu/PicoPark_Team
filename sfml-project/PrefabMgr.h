@@ -36,7 +36,7 @@ public:
 
     /** @brief 프리팹 이름 + 오버라이드 → 실제 Gimmick* 반환 */
     GameObject* Instantiate(const std::string& name,
-        sf::Vector2f pos,
+        sf::Vector2f pos, sf::Vector2f scale,
         const nlohmann::json& overrideProps = {});
 private:
     std::unordered_map<std::string, PrefabAsset> table;

@@ -13,6 +13,7 @@ protected:
 	sf::Sprite bgSpr;
 
 	static std::string pendingStage;
+	static bool isEditor;
 
 public:
 	SceneGame();
@@ -29,5 +30,7 @@ public:
 	void updateCamera(float dt);
 	static void SetPendingStage(const std::string& p) { pendingStage = p; }
 	static void applyLetterBox(sf::View& v, sf::Vector2u win);
+	static void SetEditor(const bool& b) { isEditor = b; }
+	static const bool& GetEditor() { return isEditor; }
 };
 

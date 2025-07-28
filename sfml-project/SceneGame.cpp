@@ -5,6 +5,7 @@
 #include "PrefabMgr.h"
 
 std::string SceneGame::pendingStage;
+bool SceneGame::isEditor = false;
 
 constexpr float BASE_W = 240.f;   // 15 tile
 constexpr float BASE_H = 144.f;   //  9 tile
@@ -74,9 +75,11 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             continue;          // Gimmick 생성 생략
         }
 
+        sf::Vector2f scl(entobj["scale"][0], entobj["scale"][1]);
+
         GameObject* g = PrefabMgr::I().Instantiate(
             entobj["type"],
-            { entobj["x"], entobj["y"] },
+            { entobj["x"], entobj["y"] }, scl,
             entobj.value("properties", nlohmann::json::object()));
         if (g) {
             g->Init();
@@ -283,6 +286,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/jump1.png");
     texIds.push_back("graphics/Item/jump3.png");
     texIds.push_back("graphics/Item/FallingPlatform.png");
+    texIds.push_back("graphics/Item/RoundPlatform.png");
     texIds.push_back("graphics/Item/elevator.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
     bgTex.loadFromFile("graphics/Background.png");
@@ -346,6 +350,11 @@ void SceneGame::Update(float dt)
 
     if (!Variables::players.empty())        // 플레이어가 하나라도 있으면
         updateCamera(dt);
+
+    if (InputMgr::GetKeyDown(sf::Keyboard::Escape) && isEditor) {
+        //isEditor = false;
+        SCENE_MGR.ChangeScene(SceneIds::Editor);
+    }
 
     /*
      if (Variables::players[0] != nullptr)

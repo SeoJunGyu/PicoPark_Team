@@ -44,5 +44,6 @@
 #include "MovingPlatform.h"
 #include "BouncePad.h"
 #include "FallingPlatform.h"
+#include "RoundPlatform.h"
 #include "PushBlock.h"
 

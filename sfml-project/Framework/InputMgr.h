@@ -33,11 +33,15 @@ private:
 	static std::unordered_map<Axis, AxisInfo> axisInfoMap;
 	static sf::Vector2i mousePosition;
 
+	static int wheelDelta;
+
 	static std::array<PlayerKeyMap, 4> keyMaps;
 
 public:
 	static void Init();
 	static void Clear();
+
+	static int PopWheelDelta();
 
 	static void UpdateEvent(const sf::Event& ev);
 	static void Update(float dt);

@@ -184,6 +184,7 @@
     <ClCompile Include="PopupWindowUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="RoundPlatform.cpp" />
     <ClCompile Include="SceneEditor.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
@@ -242,6 +243,7 @@
     </ClInclude>
     <ClInclude Include="PrefabMgr.h" />
     <ClInclude Include="PushBlock.h" />
+    <ClInclude Include="RoundPlatform.h" />
     <ClInclude Include="SceneEditor.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />

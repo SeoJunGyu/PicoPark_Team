@@ -68,6 +68,20 @@ void TilePalette::DrawImGui(SceneEditor& editor)
             ImGui::Separator();
             ImGui::Text("Props : %s", selName.c_str());
 
+            sf::Vector2f& sc = editor.penScale[currentId];
+
+            if (sc.x < 0.f) {                       // 처음 열었을 때만 기본값 복사
+                const auto* a = PrefabMgr::I().Get(selName);
+                sc = a ? a->scale : sf::Vector2f{ 1.f,1.f };
+            }
+
+            ImGui::InputFloat("scaleX", &sc.x, 0.01f, 0.1f, "%.3f");
+            ImGui::InputFloat("scaleY", &sc.y, 0.01f, 0.1f, "%.3f");
+
+            sc.x = Utils::Clamp(sc.x, 0.01f, 10.f);
+            sc.y = Utils::Clamp(sc.y, 0.01f, 10.f);
+
+
             for (auto it = props.begin(); it != props.end(); ++it)
             {
                 const char* key = it.key().c_str();
