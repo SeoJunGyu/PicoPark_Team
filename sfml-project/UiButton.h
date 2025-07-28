@@ -13,13 +13,23 @@ class UiButton : public GameObject
 protected:
 	std::function<void()> event;
 
-public:
 	sf::Text text;
 	sf::Sprite sprite;
-	sf::Color colorpull;	
-	int Size;
-	bool isOn = false;
+	sf::Color colorpull;
+
+	int Size;	
+	bool drawon = false;
+
+	sf::RectangleShape outline;
 	
+	float animTime = 0.f;
+	float speed = 5.f;
+	float amplitude = 0.05f;
+
+	bool drawon = false;
+public:
+	bool isOn = false;
+	bool useeffect = false;
 
 	UiButton(const std::string& name = "");
 	virtual ~UiButton() = default;
@@ -39,6 +49,7 @@ public:
 	sf::Vector2f GettextSize() const
 	{ return sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height); };
 	void Effect(bool on);
+	void DrawEffect(float dt);
 
 	sf::FloatRect GetLocalBounds() const override
 	{

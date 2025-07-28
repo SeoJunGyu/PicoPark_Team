@@ -27,6 +27,8 @@ void SceneTitle::Init()
 	AddGameObject(startButton);
 	AddGameObject(popup);
 
+	startButton->SetCallBack([this]() {popup->SetActive(true); });
+
 	Scene::Init();
 }
 void SceneTitle::Enter()
@@ -43,11 +45,11 @@ void SceneTitle::Enter()
 	titlebackground->SetActive(true);
 			
 	startButton->SetText("PRESS ENTER KEY", "fonts/BACKTO1982.TTF", 50);
-	startButton->UiButton::SetPosition({ size.x * 0.35f, size.y * 0.5f });
+	startButton->SetPosition({ size.x * 0.35f, size.y * 0.5f });
 	startButton->SetColor(sf::Color(255, 134, 77, 255));	
 	startButton->GetGlobalBounds();	
 	startButton->SetActive(true);
-	startButton->SetCallBack([this]() {popup->SetActive(true); });
+	/*startButton->SetCallBack([this]() {popup->SetActive(true); });*/
 
 	popup->SetActive(false);
 }

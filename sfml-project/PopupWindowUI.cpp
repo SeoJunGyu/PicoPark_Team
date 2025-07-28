@@ -2,6 +2,10 @@
 #include "PopupWindowUI.h"
 #include "UiButton.h"
 #include "Scene.h"
+#include "YesNoPopupUI.h"
+#include "SceneGame.h"
+#include "Framework.h"
+
 
 
 PopupWindowUI::PopupWindowUI(const std::string name)
@@ -43,43 +47,64 @@ void PopupWindowUI::Init()
 	SetOrigin(Origins::MC);
 
 	Local = new UiButton("Local");
-	Option = new UiButton("Option");
+	Editor = new UiButton("Editor");
 	Exit = new UiButton("Exit");
 
 	Rightbut = new UiButton("Right");
 	Leftbut = new UiButton("Left");
 	closebut = new UiButton("Close");
 
+	yesno = new YesNoPopupUI("YesNoPopup");
+
 	startbut.push_back(Local);
-	startbut.push_back(Option);
+	startbut.push_back(Editor);
 	startbut.push_back(Exit);
 
-	Local->SetCallBack([]() {std::cout << "버튼" << std::endl; });
-	Option->SetCallBack([]() {std::cout << "버튼" << std::endl; });
-	Exit->SetCallBack([]() {std::cout << "버튼" << std::endl; });
-		
+	Local->SetCallBack([this]()
+		{
+			yesno->SetText("START GAME ? ", "fonts/BACKTO1982.TTF", 20);
+			yesno->SetActive(true);
+			yesno->yesbut->SetCallBack([]() {
+				SCENE_MGR.ChangeScene(SceneIds::Select);
+				});
+		});
+	Editor->SetCallBack([this]()
+		{
+			yesno->SetText("EDTIOR MODE ? ", "fonts/BACKTO1982.TTF", 20);
+			yesno->SetActive(true);
+			yesno->yesbut->SetCallBack([]() {
+				SCENE_MGR.ChangeScene(SceneIds::Select);
+				});
+		});
+	Exit->SetCallBack([this]() {
+		yesno->SetText("EXIT GAME ? ", "fonts/BACKTO1982.TTF", 20);
+		yesno->SetActive(true);
+		yesno->yesbut->SetCallBack([]() {
+			FRAMEWORK.GetWindow().close();
+			}); });
 
-	Rightbut->SetCallBack([this]()
-		{
-			startbut[currentPage]->SetActive(false);
-			currentPage++;
-			if (currentPage >= startbut.size())
+
+		Rightbut->SetCallBack([this]()
 			{
-				currentPage = 0;
-			}
-			startbut[currentPage]->SetActive(true);
-		});
-	Leftbut->SetCallBack([this]()
-		{
-			startbut[currentPage]->SetActive(false);
-			currentPage--;
-			if (currentPage < 0)
+				startbut[currentPage]->SetActive(false);
+				currentPage++;
+				if (currentPage >= startbut.size())
+				{
+					currentPage = 0;
+				}
+				startbut[currentPage]->SetActive(true);
+			});
+		Leftbut->SetCallBack([this]()
 			{
-				currentPage = startbut.size() - 1;
-			}
-			startbut[currentPage]->SetActive(true);
-		});
-	closebut->SetCallBack([this]() {this->SetActive(false); });
+				startbut[currentPage]->SetActive(false);
+				currentPage--;
+				if (currentPage < 0)
+				{
+					currentPage = startbut.size() - 1;
+				}
+				startbut[currentPage]->SetActive(true);
+			});
+		closebut->SetCallBack([this]() {this->SetActive(false); });
 
 
 }
@@ -96,20 +121,21 @@ void PopupWindowUI::Release()
 	delete Rightbut;
 	delete Leftbut;
 	delete closebut;
+	delete yesno;
 }
 
 void PopupWindowUI::Reset()
 {
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
-	
+
 	spr = sprite.getGlobalBounds();
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
 
 	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.5f);
-	
+
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
@@ -123,28 +149,29 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetTextstyle(button[i]);
 		startbut[i]->GetGlobalBounds();
 		startbut[i]->SetColor(sf::Color::Black);
-		startbut[i]->SetPosition({ sprpos.x + 140.f, sprpos.y + spry+20.f  });
+		startbut[i]->SetPosition({ sprpos.x + 140.f, sprpos.y + spry + 20.f });
 		startbut[i]->SetActive(false);
 
 	}
 
 	Rightbut->SetSprit("graphics/rightbut.png");
 	Rightbut->GetGlobalBounds();
-	Rightbut->SetScale({ 2.f,2.f });	
-	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height*0.6f });
+	Rightbut->SetScale({ 2.f,2.f });
+	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height * 0.6f });
 
 	Leftbut->SetSprit("graphics/rightbut.png");
 	Leftbut->SetScale({ -2.f, 2.f });
-	Leftbut->GetGlobalBounds();	
+	Leftbut->GetGlobalBounds();
 	Leftbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });
 
-	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);	
+	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x +spr.width-35.f,sprpos.y+20.f });	
+	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
 
 	startbut[currentPage]->SetActive(true);
 
+	yesno->SetActive(false);
 }
 
 

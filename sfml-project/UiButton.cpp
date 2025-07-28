@@ -81,6 +81,33 @@ void UiButton::Effect(bool on)
 	sprite.setColor(spritecolor);
 }
 
+void UiButton::DrawEffect(float dt)
+{
+	sf::FloatRect bounds;
+
+	if (!text.getString().isEmpty())
+	{
+		bounds = text.getGlobalBounds();
+	}
+	else
+	{
+		bounds = sprite.getGlobalBounds();
+	}
+
+	animTime += dt;
+
+	float scaleOffset = std::sin(animTime * speed) * amplitude;
+	float scale = 1.f + scaleOffset;
+
+	outline.setSize({ bounds.width + 15.f, bounds.height + 15.f });
+	outline.setPosition(GetPosition());
+	outline.setOutlineColor(sf::Color(255, 127, 80,255));
+	Utils::SetOrigin(outline, Origins::MC);
+	outline.setOutlineThickness(3.f);
+	outline.setScale({ scale, scale });
+}
+
+
 void UiButton::Init()
 {
 	sortingLayer = SortingLayers::UI;
@@ -99,17 +126,29 @@ void UiButton::Reset()
 
 void UiButton::Update(float dt)
 {	
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left)&&
-		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())|| 
-		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())))
-	{		
-		if (event)
-			event();
-	}
-	isOn = (InputMgr::GetMouseButton(sf::Mouse::Left)&&
+	isOn = (InputMgr::GetMouseButton(sf::Mouse::Left) &&
 		(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
-		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())));
+			text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition())));
+
+	if(sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
+		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()))
+	{
+		drawon = true;
+		if (useeffect && drawon)
+		{
+			this->DrawEffect(dt);
+		}
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		{
+			if (event)
+				event();
+		}
+	}	
+	else
+	{
+		drawon = false;
+	}
+
 	
 }
 
@@ -117,4 +156,8 @@ void UiButton::Draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
 	window.draw(text);
+	if (useeffect && drawon)
+	{
+		window.draw(outline);
+	}
 }

@@ -11,7 +11,7 @@ protected:
     sf::Text text;
   
 
-    UiButton* yesbut;
+    
     UiButton* nobut;
     UiButton* closebut;
         
@@ -24,6 +24,8 @@ protected:
 
 
 public:
+    UiButton* yesbut;
+
     YesNoPopupUI(const std::string name ="");
     ~YesNoPopupUI() override = default;
 
@@ -32,8 +34,8 @@ public:
     void SetScale(const sf::Vector2f& s) override;
     void SetOrigin(const sf::Vector2f& o) override;
     void SetOrigin(Origins preset) override;
-    void SetText(const std::string& text, std::string& fontid, int size);
-    void Choiceevent(const UiButton* t, float dt);
+    void SetText(const std::string& t, const std::string& fontid, int size);
+    /*void Choiceevent(const UiButton* t, float dt);*/
 
     void Init() override;
 

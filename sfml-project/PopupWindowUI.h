@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 class UiButton;
-
+class YesNoPopupUI;
 
 class PopupWindowUI :
 	public GameObject
@@ -19,12 +19,14 @@ protected:
 
 	sf::FloatRect spr;
 	UiButton* Local;
-	UiButton* Option;
+	UiButton* Editor;
 	UiButton* Exit;
 
 	UiButton* Rightbut;
 	UiButton* Leftbut;
 	UiButton* closebut;
+
+	YesNoPopupUI* yesno;
 
 	
 
