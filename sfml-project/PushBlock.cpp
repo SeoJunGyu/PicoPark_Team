@@ -57,7 +57,7 @@ void PushBlock::Reset()
     standing.type = StandType::None;
     standing.ptr = nullptr;
 
-    SetOrigin(Origins::BC);
+    SetOrigin(Origins::MC);
     SetPosition(GetPosition());
     SetScale(GetScale());
     SetRotation(GetRotation());
@@ -345,8 +345,6 @@ void PushBlock::Update(float dt)
     sf::FloatRect blockBox = hitBox.rect.getGlobalBounds();
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
-    int count = 0;
-
     for (Player* p : Variables::players)
     {
         sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
@@ -357,46 +355,33 @@ void PushBlock::Update(float dt)
             continue;
         }
 
-        /*
-        // 옆면 충돌
         if (std::abs(info.normal.x) > 0.5f)
+            continue;
+
+        if (info.normal.y > 0.5f && p->velocity.y > 0.f)
         {
-            float separationX = info.normal.x * info.depth;
-            p->SetPosition({ p->GetPosition().x + separationX, p->GetPosition().y });
-            p->velocity.x = 0.f;
+            float separationY = info.normal.y * info.depth;
+            p->SetPosition({ p->GetPosition().x, p->GetPosition().y - separationY });
+            p->velocity.y = 0.f;
+            p->isGrounded = true;
+
             continue;
         }
-        */
-        
 
-        // 착지
-        if (info.normal.y > 0.5f && velocity.y >= 0.f)
+        if (info.normal.y < -0.5f && p->velocity.y >= 0.f)
         {
             float separationY = info.normal.y * info.depth;
             //p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
-            //p->velocity.y = 0.f;
+
+            p->velocity.y = 0.f;
 
             position.y += separationY;
-            SetPosition(position);
-            hitBox.UpdateTransform(body, body.getLocalBounds());
-
             velocity.y = 0.f;
             isGrounded = true;
             standing.type = StandType::Player;
             standing.ptr = p;
 
-            continue;
-        }
-
-        //
-        if (info.normal.y < -0.5f)
-        {
-            float separationY = info.normal.y * info.depth;
-            p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
-            p->velocity.y = 0.f;
-            p->isGrounded = true;
-
-            continue;
+            break;
         }
     }
 
