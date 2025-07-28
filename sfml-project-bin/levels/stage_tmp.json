@@ -5,43 +5,6 @@
     {
       "id": 0,
       "properties": {
-        "color": 0,
-        "requireCount": 1
-      },
-      "scale": [
-        0.20000000298023224,
-        0.5
-      ],
-      "type": "PushBlock",
-      "x": 85,
-      "y": 32
-    },
-    {
-      "id": 1,
-      "properties": {
-        "color": -1,
-        "requireCount": 1
-      },
-      "scale": [
-        0.20000000298023224,
-        0.5
-      ],
-      "type": "PushBlock",
-      "x": 128,
-      "y": 32
-    },
-    {
-      "id": 2,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 0,
-      "y": 48
-    },
-    {
-      "id": 3,
-      "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
@@ -49,12 +12,81 @@
       "y": 64
     },
     {
+      "id": 1,
+      "properties": {
+        "RandFall": 50.0
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 32,
+      "y": 64
+    },
+    {
+      "id": 2,
+      "properties": {
+        "RandFall": 50.0
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 48,
+      "y": 64
+    },
+    {
+      "id": 3,
+      "properties": {
+        "RandFall": 50.0
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 64,
+      "y": 64
+    },
+    {
       "id": 4,
       "properties": {
-        "playerIndex": 0
+        "RandFall": 50.0
       },
-      "type": "PlayerSpawn",
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
       "x": 80,
+      "y": 64
+    },
+    {
+      "id": 5,
+      "properties": {
+        "RandFall": 50.0
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 96,
+      "y": 64
+    },
+    {
+      "id": 6,
+      "properties": {
+        "RandFall": 50.0
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 112,
       "y": 64
     }
   ],
@@ -72,6 +104,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -81,6 +114,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -90,6 +124,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -99,6 +134,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -108,21 +144,17 @@
         0,
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
       ],
       "name": "Main",
       "parallax": 1.0,

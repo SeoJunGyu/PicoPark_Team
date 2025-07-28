@@ -26,6 +26,7 @@ void RoundPlatform::Reset()
 	randFall = properties.value("RandFall", 100.f);
 
 	collidable = true;
+	isOne = false;
 
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
@@ -91,11 +92,12 @@ void RoundPlatform::Update(float dt)
 			}
 		}
 
-		if (playerOnTop)
+		if (playerOnTop && !isOne)
 		{
-			if (randFall != 100.f && Utils::RandomRange(1, 100) < randFall) {
+			if (randFall != 0.f && Utils::RandomRange(1, 100) < randFall) {
 				collidable = false;
 			}
+			isOne = true;
 		}
 
 		hitBox.UpdateTransform(body, body.getLocalBounds());
