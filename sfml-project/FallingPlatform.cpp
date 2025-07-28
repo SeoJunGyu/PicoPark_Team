@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "FallingPlatform.h"
 #include "Player.h"
 
@@ -59,7 +59,7 @@ void FallingPlatform::Update(float dt)
 				continue;
 			}
 
-			// ¿·¸é Ãæµ¹
+			// ì˜†ë©´ ì¶©ëŒ
 			if (std::abs(info.normal.x) > 0.5f)
 			{
 				float separationX = info.normal.x * info.depth;
@@ -68,7 +68,7 @@ void FallingPlatform::Update(float dt)
 				continue;
 			}
 
-			// ¾Æ·§¸é Ãæµ¹
+			// ì•„ëž«ë©´ ì¶©ëŒ
 			if (info.normal.y > 0.5f && p->velocity.y < 0.f)
 			{
 				float separationY = info.normal.y * info.depth;
@@ -79,13 +79,13 @@ void FallingPlatform::Update(float dt)
 				continue;
 			}
 
-			// À­¸é Ãæµ¹
-			if (info.normal.y < -0.5f)
+			// ìœ—ë©´ ì¶©ëŒ
+			if (info.normal.y < -0.5f && p->velocity.y > 0.f)
 			{
 				float separationY = info.normal.y * info.depth;
 				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 
-				// ÂøÁö Ã³¸®
+				// ì°©ì§€ ì²˜ë¦¬
 				p->velocity.y = 0.f;
 				p->isGrounded = true;
 

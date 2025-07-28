@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "PopupWindowUI.h"
 #include "UiButton.h"
 #include "Scene.h"
@@ -118,9 +118,9 @@ void PopupWindowUI::Reset()
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
-	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",50},
-	   {"       EDITOR    ","fonts/BACKTO1982.TTF",50},
-	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",50}
+	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",40},
+	   {"       EDITOR    ","fonts/BACKTO1982.TTF",40},
+	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",40}
 	};
 
 	for (int i = 0; i < startbut.size(); ++i)
