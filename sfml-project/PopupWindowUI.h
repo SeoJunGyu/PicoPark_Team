@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 class UiButton;
-
+class YesNoPopupUI;
 
 class PopupWindowUI :
 	public GameObject
@@ -10,16 +10,17 @@ class PopupWindowUI :
 protected:
 	sf::Sprite sprite;
 
+	int uType = -1;
 	
 	std::vector<UiButton*> startbut;
 
-	std::vector<UiButton*> moodchoi;
+	/*std::vector<UiButton*> moodchoi;*/
 
 	int currentPage = 0;
 
 	sf::FloatRect spr;
 	UiButton* Local;
-	UiButton* Option;
+	UiButton* Editor;
 	UiButton* Exit;
 
 	UiButton* Rightbut;
@@ -27,11 +28,13 @@ protected:
 	UiButton* closebut;
 
 	bool enterLock = true;
+	YesNoPopupUI* yesno;
 
 	
 
 
 public:
+	bool drawon = false;
 	PopupWindowUI(const std::string name = "");
 	~PopupWindowUI() override = default;
 
@@ -40,6 +43,8 @@ public:
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+
+	YesNoPopupUI* GetYesNoPopup() const { return yesno; }
 
 
 	void Init() override;

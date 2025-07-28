@@ -2,7 +2,10 @@
 #include "PopupWindowUI.h"
 #include "UiButton.h"
 #include "Scene.h"
+#include "YesNoPopupUI.h"
 #include "SceneGame.h"
+#include "Framework.h"
+
 
 
 PopupWindowUI::PopupWindowUI(const std::string name)
@@ -38,43 +41,38 @@ void PopupWindowUI::SetOrigin(Origins preset)
 
 void PopupWindowUI::Init()
 {
+	
 
 	sortingLayer = SortingLayers::UI;
 	sortingOrder = 1;
 	SetOrigin(Origins::MC);
 
 	Local = new UiButton("Local");
-	Option = new UiButton("Option");
+	Editor = new UiButton("Editor");
 	Exit = new UiButton("Exit");
 
 	Rightbut = new UiButton("Right");
 	Leftbut = new UiButton("Left");
 	closebut = new UiButton("Close");
 
+	yesno = new YesNoPopupUI("YesNoPopup");
+	yesno->Init();
 	startbut.push_back(Local);
-	startbut.push_back(Option);
+	startbut.push_back(Editor);
 	startbut.push_back(Exit);
 
-	Local->SetCallBack([]() {std::cout << "¹öÆ°" << std::endl; });
-	Option->SetCallBack([]() {std::cout << "¹öÆ°" << std::endl; });
-	Exit->SetCallBack([]() {std::cout << "¹öÆ°" << std::endl; });
-		
 
-	Rightbut->SetCallBack([this]()
-		{
-			startbut[currentPage]->SetActive(false);
-			currentPage++;
-			if (currentPage >= startbut.size())
+		Rightbut->SetCallBack([this]()
 			{
-				currentPage = 0;
-			}
-			startbut[currentPage]->SetActive(true);
-		});
-	Leftbut->SetCallBack([this]()
-		{
-			startbut[currentPage]->SetActive(false);
-			currentPage--;
-			if (currentPage < 0)
+				startbut[currentPage]->SetActive(false);
+				currentPage++;
+				if (currentPage >= startbut.size())
+				{
+					currentPage = 0;
+				}
+				startbut[currentPage]->SetActive(true);
+			});
+		Leftbut->SetCallBack([this]()
 			{
 				currentPage = startbut.size() - 1;
 			}
@@ -92,14 +90,17 @@ void PopupWindowUI::Release()
 {
 	for (auto btn : startbut)
 	{
-		btn->Release();  // ¹öÆ° ³»ºÎ ¸®¼Ò½º ÇØÁ¦
-		delete btn;      // ¹öÆ° ¸Þ¸ð¸® ÇØÁ¦
+		btn->Release();  // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		delete btn;      // ï¿½ï¿½Æ° ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	startbut.clear();
 
 	delete Rightbut;
 	delete Leftbut;
 	delete closebut;
+	yesno->Release();
+	delete yesno;
+	yesno = nullptr;
 }
 
 void PopupWindowUI::Reset()
@@ -114,13 +115,13 @@ void PopupWindowUI::Reset()
 	float spry = spr.top + spr.height * 0.5f;
 
 	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.5f);
-	
+
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
-	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",40},
-	   {"       EDITOR    ","fonts/BACKTO1982.TTF",40},
-	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",40}
+	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",50},
+	   {"       EDITOR    ","fonts/BACKTO1982.TTF",50},
+	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",50}
 	};
 
 	for (int i = 0; i < startbut.size(); ++i)
@@ -128,7 +129,7 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetTextstyle(button[i]);
 		startbut[i]->GetGlobalBounds();
 		startbut[i]->SetColor(sf::Color::Black);
-		startbut[i]->SetPosition({ sprpos.x + 140.f, sprpos.y + spry+20.f  });
+		startbut[i]->SetPosition({ sprpos.x + 200.f, sprpos.y + spry + 35.f });
 		startbut[i]->SetActive(false);
 		switch (i)
 		{
@@ -160,23 +161,51 @@ void PopupWindowUI::Reset()
 	Rightbut->SetSprit("graphics/rightbut.png");
 	Rightbut->GetGlobalBounds();
 	Rightbut->SetScale({ 2.f,2.f });
-	Rightbut->SetActive(true);
-	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height*0.6f });
+	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height * 0.6f });
 
 	Leftbut->SetSprit("graphics/rightbut.png");
 	Leftbut->SetScale({ -2.f, 2.f });
 	Leftbut->GetGlobalBounds();
-	Leftbut->SetActive(true);
 	Leftbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });
 
-	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);
-	closebut->SetPosition({ spr.width,spr.top });
+	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x +spr.width-35.f,sprpos.y+20.f });
-	closebut->SetActive(true);
+	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
 
 	startbut[currentPage]->SetActive(true);
+		
+	Local->SetCallBack([this]()
+		{
+			
+			yesno->SetText("START GAME","fonts/Pixelownfont-Regular.ttf", 50);				
+			yesno->Reset();
+			yesno->SetActive(true);
+			drawon = false;
+			yesno->yesbut->SetCallBack([=]() {SCENE_MGR.ChangeScene(SceneIds::Select); });
+
+		});
+	Editor->SetCallBack([this]()
+		{			
+			yesno->SetText("EDTIOR MODE","fonts/Pixelownfont-Regular.ttf",50);			
+			yesno->Reset();
+			yesno->SetActive(true);
+			drawon =false;
+			yesno->yesbut->SetCallBack([]() {SCENE_MGR.ChangeScene(SceneIds::Editor); });
+
+		});
+	Exit->SetCallBack([this]() {		
+		yesno->SetText("EXIT GAME","fonts/Pixelownfont-Regular.ttf", 50);		
+		yesno->Reset();
+		yesno->SetActive(true);
+		this->SetActive(false);
+		yesno->yesbut->SetCallBack([]() {FRAMEWORK.GetWindow().close();	});
+
+		});
+
+	if (yesno != nullptr)
+		yesno->Reset();
+	yesno->SetActive(false);
 
 }
 
@@ -231,18 +260,30 @@ void PopupWindowUI::Update(float dt)
 	{
 		Leftbut->SetSprit("graphics/rightbut.png");
 	}
+	if (yesno->GetActive())
+		yesno->Update(dt);
+		
 
 
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
+	if (drawon)
+	{
+		window.draw(sprite);
 
-	if (startbut[currentPage]->GetActive())
-		startbut[currentPage]->Draw(window);
+		if (startbut[currentPage]->GetActive())
+			startbut[currentPage]->Draw(window);
 
-	Rightbut->Draw(window);
-	Leftbut->Draw(window);
-	closebut->Draw(window);
+		Rightbut->Draw(window);
+		Leftbut->Draw(window);
+		closebut->Draw(window);
+	}
+	if (yesno->GetActive())
+	{
+		yesno->Draw(window);
+	}		
+	
+	
 }

@@ -45,6 +45,7 @@
     <ClCompile Include="BouncePad.cpp" />
     <ClCompile Include="FallingPlatform.cpp" />
     <ClCompile Include="PushBlock.cpp" />
+    <ClCompile Include="SceneModeSelect.cpp" />
     <ClCompile Include="RoundPlatform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +103,7 @@
     <ClInclude Include="BouncePad.h" />
     <ClInclude Include="FallingPlatform.h" />
     <ClInclude Include="PushBlock.h" />
+    <ClInclude Include="SceneModeSelect.h" />
     <ClInclude Include="RoundPlatform.h" />
   </ItemGroup>
   <ItemGroup>

@@ -14,12 +14,23 @@ protected:
 	std::function<void()> event;
 	float flashTime = 0.f;
 
-public:
 	sf::Text text;
 	sf::Sprite sprite;
-	sf::Color colorpull;	
-	bool isOn = false;
+	sf::Color colorpull;
+
+	int Size;	
+	bool drawon = false;
+
+	sf::RectangleShape outline;
 	
+	float animTime = 0.f;
+	float speed = 5.f;
+	float amplitude = 0.05f;
+
+	
+public:
+	bool isOn = false;
+	bool useeffect = false;
 
 	UiButton(const std::string& name = "");
 	virtual ~UiButton() = default;
@@ -30,6 +41,7 @@ public:
 		if (event) event(); 
 	}
 
+	
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
 	void SetScale(const sf::Vector2f& s) override;
@@ -39,7 +51,10 @@ public:
 	void SetText(const std::string& t, const std::string& fontid, int size);
 	void SetTextstyle(const ButtonStyle& style);
 	void SetSprit(const std::string& texID);
+	sf::Vector2f GettextSize() const
+	{ return sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height); };
 	void Effect(bool on);
+	void DrawEffect(float dt);
 
 	sf::FloatRect GetLocalBounds() const override
 	{

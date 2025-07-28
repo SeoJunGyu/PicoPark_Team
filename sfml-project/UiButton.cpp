@@ -81,6 +81,37 @@ void UiButton::Effect(bool on)
 	sprite.setColor(spritecolor);
 }
 
+void UiButton::DrawEffect(float dt)
+{
+	sf::FloatRect bounds;
+
+	if (!text.getString().isEmpty())
+	{
+		bounds = text.getGlobalBounds();
+	}
+	else
+	{
+		bounds = sprite.getGlobalBounds();
+	}
+
+	sf::Vector2f center = {
+	bounds.left + bounds.width * 0.5f,
+	bounds.top + bounds.height * 0.5f
+	};
+	animTime += dt;
+
+	float scaleOffset = std::sin(animTime * speed) * amplitude;
+	float scale = 1.f + scaleOffset;
+
+	outline.setSize({ bounds.width + 20.f, bounds.height + 20.f });
+	outline.setPosition(center);
+	outline.setOutlineColor(sf::Color(255, 127, 80,255));	
+	Utils::SetOrigin(outline, Origins::MC);
+	outline.setOutlineThickness(5.f);
+	outline.setScale({ scale+0.08f, scale+0.08f });
+}
+
+
 void UiButton::Init()
 {
 	sortingLayer = SortingLayers::UI;
@@ -118,6 +149,11 @@ void UiButton::Update(float dt)
 
 void UiButton::Draw(sf::RenderWindow& window)
 {
+	if (useeffect && drawon)
+	{
+		window.draw(outline);
+	}
 	window.draw(sprite);
 	window.draw(text);
+	
 }
