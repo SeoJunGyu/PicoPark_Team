@@ -85,35 +85,35 @@ void YesNoPopupUI::Reset()
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/yesnobut.png"));
 	sprite.setScale(1.3f, 1.3f);
+	Utils::SetOrigin(sprite, Origins::MC);
 	spr = sprite.getGlobalBounds();
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
-
-	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.46f);
+	sprite.setPosition(winSize.x * 0.5f, winSize.y * 0.62f);	
 
 	sf::Vector2f sprpos = sprite.getPosition();
 
-	text.setPosition(sprpos.x + 200.f, sprpos.y + spr.height * 0.5f);
+	text.setPosition(sprpos.x -220.f, sprpos.y);
 	text.setFillColor(sf::Color::Black);
 
 	yesbut->SetText("YES", "fonts/Pixelownfont-Regular.ttf", 50);
 	yesbut->SetColor(sf::Color::Black);
 	yesbut->GetGlobalBounds();
-	yesbut->SetPosition({ sprpos.x + 130.f,sprpos.y + spr.height * 0.7f });
+	yesbut->SetPosition({ sprpos.x -250.f,sprpos.y + 80.f });
 	yesbut->useeffect = true;
 
 
 	nobut->SetText("NO", "fonts/Pixelownfont-Regular.ttf", 50);
 	nobut->SetColor(sf::Color::Black);
 	nobut->GetGlobalBounds();
-	nobut->SetPosition({ sprpos.x + spr.width -200.f,sprpos.y + spr.height * 0.7f });
+	nobut->SetPosition({ sprpos.x +160.f,sprpos.y + 80.f });
 	nobut->useeffect = true;
 
-	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
+	closebut->SetText("X", "fonts/PixelOperator8.ttf", 25);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
+	closebut->SetPosition({ sprpos.x + spr.width*0.5f-40.f ,spr.top+10.f });
 
 }
 

@@ -33,6 +33,7 @@ protected:
 
 
 public:
+	bool drawon = false;
 	PopupWindowUI(const std::string name = "");
 	~PopupWindowUI() override = default;
 

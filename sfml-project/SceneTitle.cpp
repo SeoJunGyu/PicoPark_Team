@@ -38,7 +38,7 @@ void SceneTitle::Init()
 
 	
 
-	startButton->SetCallBack([this]() {popup->SetActive(true); });
+	startButton->SetCallBack([this]() {popup->SetActive(true); popup->drawon = true; });
 
 	Scene::Init();
 }

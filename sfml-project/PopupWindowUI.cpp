@@ -154,24 +154,25 @@ void PopupWindowUI::Reset()
 		
 	Local->SetCallBack([this]()
 		{
-			yesno->SetText("START GAME","fonts/Pixelownfont-Regular.ttf", 50);	
+			
+			yesno->SetText("START GAME","fonts/Pixelownfont-Regular.ttf", 50);				
 			yesno->Reset();
 			yesno->SetActive(true);
-			this->SetActive(false);
+			drawon = false;
 			yesno->yesbut->SetCallBack([=]() {SCENE_MGR.ChangeScene(SceneIds::Select); });
 
 		});
 	Editor->SetCallBack([this]()
-		{
-			yesno->SetText("EDTIOR MODE","fonts/Pixelownfont-Regular.ttf",50);
+		{			
+			yesno->SetText("EDTIOR MODE","fonts/Pixelownfont-Regular.ttf",50);			
 			yesno->Reset();
 			yesno->SetActive(true);
-			this->SetActive(false);
+			drawon =false;
 			yesno->yesbut->SetCallBack([]() {SCENE_MGR.ChangeScene(SceneIds::Editor); });
 
 		});
-	Exit->SetCallBack([this]() {
-		yesno->SetText("EXIT GAME","fonts/Pixelownfont-Regular.ttf", 50);
+	Exit->SetCallBack([this]() {		
+		yesno->SetText("EXIT GAME","fonts/Pixelownfont-Regular.ttf", 50);		
 		yesno->Reset();
 		yesno->SetActive(true);
 		this->SetActive(false);
@@ -179,7 +180,9 @@ void PopupWindowUI::Reset()
 
 		});
 
-
+	if (yesno != nullptr)
+		yesno->Reset();
+	yesno->SetActive(false);
 
 }
 
@@ -220,7 +223,7 @@ void PopupWindowUI::Update(float dt)
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)
 {
-	if (this->GetActive())
+	if (drawon)
 	{
 		window.draw(sprite);
 
