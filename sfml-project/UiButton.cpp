@@ -103,12 +103,12 @@ void UiButton::DrawEffect(float dt)
 	float scaleOffset = std::sin(animTime * speed) * amplitude;
 	float scale = 1.f + scaleOffset;
 
-	outline.setSize({ bounds.width + 15.f, bounds.height + 15.f });
+	outline.setSize({ bounds.width + 20.f, bounds.height + 20.f });
 	outline.setPosition(center);
 	outline.setOutlineColor(sf::Color(255, 127, 80,255));	
 	Utils::SetOrigin(outline, Origins::MC);
-	outline.setOutlineThickness(3.f);
-	outline.setScale({ scale, scale });
+	outline.setOutlineThickness(5.f);
+	outline.setScale({ scale+0.08f, scale+0.08f });
 }
 
 
@@ -142,12 +142,18 @@ void UiButton::Update(float dt)
 		{
 			this->DrawEffect(dt);
 		}
-		if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
 		{
 			if (event)
 				event();
-		}
-	}	
+		}		
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		
+		if (event)
+			event();
+	}
 	else
 	{
 		drawon = false;

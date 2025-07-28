@@ -10,15 +10,16 @@ SceneModeSelect::SceneModeSelect()
 void SceneModeSelect::Init()
 {
     texIds.push_back("graphics/moodback.png");
+    texIds.push_back("graphics/anibox.png");
     fontIds.push_back("fonts/BACKTO1982.TTF");
         
     back = new BackGround("back");
     AddGameObject(back);    
 
-    stage1 = new UiButton("stage1");
-    AddGameObject(stage1);
+    stage = new UiButton("stage");
+    AddGameObject(stage);
 
-    stage1->SetCallBack([]()
+    stage->SetCallBack([]()
         {
             SCENE_MGR.ChangeScene(SceneIds::Game);
         });
@@ -33,25 +34,33 @@ void SceneModeSelect::Enter()
 
     worldView.setSize(size);
     worldView.setCenter(size * 0.5f);
-    uiView.setSize(size.x*0.5f,size.y);
-    uiView.setCenter(uiView.getSize() * 0.5f);
+    uiView.setSize(size);
+    uiView.setCenter(size * 0.5f);
 
-    sf::Vector2f uiviewbase = uiView.getSize();
     sf::Vector2f worldpos = worldView.getCenter();
-        
-    text.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));    
+
+    text.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
     text.setString("HELLO PICO PARK");
     text.setFillColor(sf::Color(255, 134, 77, 255));
-    text.setPosition(uiviewbase.x *0.1f, uiviewbase.y * 0.1f);
-   
+    text.setPosition(size.x * 0.1f - 30.f, size.y * 0.1f - 50.f);
+    text.setCharacterSize(80);
+    
     back->Settext("graphics/moodback.png");
     back->SetActive(true);
-       
-    stage1->SetSprit("graphics/stagebox.png");
-    stage1->GetGlobalBounds();
-    stage1->SetPosition({ worldpos.x * 0.5f,worldpos.y * 0.3f });
-    stage1->SetActive(true);
-    stage1->useeffect = true;
+
+    stage->SetSprit("graphics/anibox.png");
+    stage->GetGlobalBounds();
+    stage->SetPosition({ size.x * 0.1f, size.y *0.3f});
+    stage->SetActive(true);
+    stage->SetScale({3.f, 3.f});
+    stage->SetOrigin(Origins::MC);
+    stage->useeffect = true;
+
+    stagetext.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
+    stagetext.setString("1");
+    stagetext.setFillColor(sf::Color(255, 134, 77, 255));
+    stagetext.setPosition(stage->GetPosition().x-10.f, stage->GetPosition().y-35.f);
+    stagetext.setCharacterSize(50);
 
 }
 
@@ -64,7 +73,7 @@ void SceneModeSelect::Update(float dt)
 }
 void SceneModeSelect::Draw(sf::RenderWindow& window)
 {
-    Scene::Draw(window);
-    window.setView(uiView);
+    Scene::Draw(window);   
     window.draw(text);
+    window.draw(stagetext);
 }
