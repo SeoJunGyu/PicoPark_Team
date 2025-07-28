@@ -74,8 +74,7 @@ void PopupWindowUI::Init()
 			});
 		Leftbut->SetCallBack([this]()
 			{
-				currentPage = startbut.size() - 1;
-			}
+			currentPage = startbut.size() - 1;
 			startbut[currentPage]->SetActive(true);
 		});
 	closebut->SetCallBack([this]() {
@@ -107,7 +106,7 @@ void PopupWindowUI::Reset()
 {
 	enterLock = true;
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
-	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
+	sprite.setTexture(TEXTURE_MGR.Get("graphics/startbut.png"));
 	
 	spr = sprite.getLocalBounds();
 
