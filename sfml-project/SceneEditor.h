@@ -13,12 +13,12 @@ public:
     void Enter() override;
     void Update(float dt) override;
     void Draw(sf::RenderWindow&) override;
-    void DrawPaletteAndButtons(sf::RenderWindow& w);
     void SaveAsLevel(const std::string& path);
     void ResizeGrid(int w, int h);
     std::unordered_map<std::string, nlohmann::json> prefabOverrides;
     std::vector<std::string> prefabNames;
     nlohmann::json pendingProps;
+    std::vector<sf::Vector2f> penScale;
 private:
     Level level;     
     TilePalette palette;
@@ -36,6 +36,8 @@ private:
 
     int   pendingW = 10;                // 그리드 사이즈
     int   pendingH = 6;
+
+    sf::Vector2i mPos = { 0, 0 };
 
     std::array<sf::Color, 10> Palette = {
         sf::Color::Transparent,   // 더미

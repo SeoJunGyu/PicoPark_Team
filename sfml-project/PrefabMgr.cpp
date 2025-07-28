@@ -30,7 +30,7 @@ const PrefabAsset* PrefabMgr::Get(const std::string& name) const
 }
 
 GameObject* PrefabMgr::Instantiate(const std::string& name,
-    sf::Vector2f pos,
+    sf::Vector2f pos, sf::Vector2f scale,
     const nlohmann::json& ov)
 {
     const auto* asset = Get(name);
@@ -40,7 +40,9 @@ GameObject* PrefabMgr::Instantiate(const std::string& name,
     j["id"] = -1;                     // 런타임용
     j["type"] = TypeToStr(asset->type);
     j["x"] = pos.x;  j["y"] = pos.y;
-    j["scale"] = { asset->scale.x, asset->scale.y };
+    if(scale.x == 0)
+     j["scale"] = { asset->scale.x, asset->scale.y };
+    else j["scale"] = { scale.x, scale.y };
     j["properties"] = asset->defaultProps;
     for (auto it = ov.begin(); it != ov.end(); ++it)
     {

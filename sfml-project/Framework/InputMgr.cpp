@@ -11,6 +11,8 @@ sf::Vector2i InputMgr::mousePosition;
 
 std::array<PlayerKeyMap, 4> InputMgr::keyMaps;
 
+int InputMgr::wheelDelta;
+
 void InputMgr::Init()
 {
 	AxisInfo infoH;
@@ -49,6 +51,14 @@ void InputMgr::Clear()
 {
 	downKeys.clear();
 	upKeys.clear();
+	wheelDelta = 0;
+}
+
+int InputMgr::PopWheelDelta()
+{
+	int d = wheelDelta;
+	wheelDelta = 0;               
+	return d;
 }
 
 void InputMgr::UpdateEvent(const sf::Event& ev) 
@@ -75,6 +85,10 @@ void InputMgr::UpdateEvent(const sf::Event& ev)
 			heldKeys.push_back(code);
 		}
 	}
+		break;
+	case sf::Event::MouseWheelScrolled:
+		if (ev.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel)
+			wheelDelta += static_cast<int>(ev.mouseWheelScroll.delta);
 		break;
 	case sf::Event::MouseButtonReleased:
 	{

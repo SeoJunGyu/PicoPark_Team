@@ -13,11 +13,12 @@ struct LevelGrid {
     std::vector<int> tiles;
     std::vector<int> entities;
     std::vector<std::string> entitiesType;
+    std::vector<sf::Vector2f> entitiesScale;
     std::vector<nlohmann::json> entitiesProps;
 
     LevelGrid() = default;                     
     LevelGrid(int w, int h, int ts)
         : width(w), height(h), tileSize(ts),
-        tiles(w* h, 0), entities(w* h, 0), entitiesType(w* h, ""), entitiesProps(w* h, nlohmann::json::object()){
+        tiles(w* h, 0), entities(w* h, 0), entitiesType(w* h, ""), entitiesScale(w* h, {0.f, 0.f}), entitiesProps(w* h, nlohmann::json::object()) {
     }
 };

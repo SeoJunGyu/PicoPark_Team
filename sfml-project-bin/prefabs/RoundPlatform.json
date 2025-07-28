@@ -1,0 +1,9 @@
+{
+  "name":        "RoundPlatform",
+  "type":        "RoundPlatform",
+  "sprite":      "graphics/Item/RoundPlatform.png",
+  "scale":       0.3,
+  "properties": {
+    "RandFall" : 100.0
+  }
+}

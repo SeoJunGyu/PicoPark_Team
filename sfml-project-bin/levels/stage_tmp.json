@@ -3,35 +3,187 @@
   "description": "desc",
   "entities": [
     {
-      "id": 0,
+      "id": 1,
       "properties": {
-        "color": 0,
-        "requireCount": 1
+        "channel": 1,
+        "path": [
+          [
+            32,
+            16
+          ],
+          [
+            32,
+            16
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
       },
       "scale": [
         0.20000000298023224,
-        0.5
+        0.20000000298023224
       ],
-      "type": "PushBlock",
-      "x": 64,
+      "type": "MovingPlatform",
+      "x": 32,
       "y": 16
-    },
-    {
-      "id": 1,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 0,
-      "y": 48
     },
     {
       "id": 2,
       "properties": {
+        "channel": 1,
+        "path": [
+          [
+            48,
+            16
+          ],
+          [
+            48,
+            16
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 48,
+      "y": 16
+    },
+    {
+      "id": 3,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            64,
+            16
+          ],
+          [
+            64,
+            16
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 64,
+      "y": 16
+    },
+    {
+      "id": 4,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            80,
+            16
+          ],
+          [
+            80,
+            16
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 80,
+      "y": 16
+    },
+    {
+      "id": 5,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            32,
+            32
+          ],
+          [
+            32,
+            32
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 32,
+      "y": 32
+    },
+    {
+      "id": 6,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            48,
+            32
+          ],
+          [
+            48,
+            32
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 48,
+      "y": 32
+    },
+    {
+      "id": 7,
+      "properties": {
+        "channel": 1,
+        "path": [
+          [
+            64,
+            32
+          ],
+          [
+            64,
+            32
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 64,
+      "y": 32
+    },
+    {
+      "id": 8,
+      "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 0,
+      "x": 96,
       "y": 64
     }
   ],
@@ -49,6 +201,7 @@
         0,
         0,
         0,
+        8,
         0,
         0,
         0,
@@ -58,6 +211,7 @@
         0,
         0,
         0,
+        8,
         0,
         0,
         0,
@@ -67,6 +221,7 @@
         0,
         0,
         0,
+        8,
         0,
         0,
         0,
@@ -76,20 +231,17 @@
         0,
         0,
         0,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
         0,
         0,
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        8,
         8,
         8,
         8,
