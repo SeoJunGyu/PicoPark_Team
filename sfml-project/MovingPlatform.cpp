@@ -124,6 +124,10 @@ void MovingPlatform::Update(float dt)
 		{
 			dir = -1;
 		}
+		else if (dir == -1)
+		{
+			dir = 1;
+		}
 	}
 	else //신호 off
 	{

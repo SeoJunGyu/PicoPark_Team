@@ -304,7 +304,7 @@ void SceneGame::Enter()
     Scene::Enter();
 
     std::string path = pendingStage.empty()
-        ? "levels/stage_tmp.json"
+        ? "levels/stageTest.json"
         : std::move(pendingStage);
     pendingStage.clear();
 
