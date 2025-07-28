@@ -94,14 +94,18 @@ void UiButton::DrawEffect(float dt)
 		bounds = sprite.getGlobalBounds();
 	}
 
+	sf::Vector2f center = {
+	bounds.left + bounds.width * 0.5f,
+	bounds.top + bounds.height * 0.5f
+	};
 	animTime += dt;
 
 	float scaleOffset = std::sin(animTime * speed) * amplitude;
 	float scale = 1.f + scaleOffset;
 
 	outline.setSize({ bounds.width + 15.f, bounds.height + 15.f });
-	outline.setPosition(GetPosition());
-	outline.setOutlineColor(sf::Color(255, 127, 80,255));
+	outline.setPosition(center);
+	outline.setOutlineColor(sf::Color(255, 127, 80,255));	
 	Utils::SetOrigin(outline, Origins::MC);
 	outline.setOutlineThickness(3.f);
 	outline.setScale({ scale, scale });
@@ -154,10 +158,11 @@ void UiButton::Update(float dt)
 
 void UiButton::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
-	window.draw(text);
 	if (useeffect && drawon)
 	{
 		window.draw(outline);
 	}
+	window.draw(sprite);
+	window.draw(text);
+	
 }

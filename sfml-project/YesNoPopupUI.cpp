@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "YesNoPopupUI.h"
 #include "UiButton.h"
+#include "Scene.h"
+
+YesNoPopupUI::YesNoPopupUI(const std::string name)
+	: GameObject(name)
+{
+}
 
 void YesNoPopupUI::SetPosition(const sf::Vector2f& pos)
 {
@@ -36,32 +42,17 @@ void YesNoPopupUI::SetOrigin(Origins preset)
 	}
 }
 
-void YesNoPopupUI::SetText(const std::string& t,const std::string& fontid, int size)
+void YesNoPopupUI::SetText(const std::string& t, const std::string& fontid, int size)
 {
 	text.setString(t);
 	text.setFont(FONT_MGR.Get(fontid));
 	text.setCharacterSize(size);
 }
 
-//void YesNoPopupUI::Choiceevent(const UiButton* t, float dt)
-//{
-//	sf::Vector2f btnSize = t->GettextSize();             
-//	sf::Vector2f btnPos = t->GetPosition();          
-//	sf::Vector2f center = btnPos + btnSize * 0.5f;  
-//
-//	animTime += dt;                                  
-//
-//	float scaleOffset = std::sin(animTime * speed) * amplitude; 
-//	float scale = 1.f + scaleOffset;
-//
-//	outline.setPosition(center);
-//	outline.setOrigin(outline.getSize() * 0.5f);  
-//	outline.setScale({ scale, scale });
-//
-//}
 
 void YesNoPopupUI::Init()
-{
+{	
+
 	sortingLayer = SortingLayers::UI;
 	sortingOrder = 1;
 	SetOrigin(Origins::MC);
@@ -79,45 +70,47 @@ void YesNoPopupUI::Init()
 			this->SetActive(false);
 		});
 
-
+	this->SetActive(false);
 }
 
 void YesNoPopupUI::Release()
 {
 	delete yesbut;
 	delete nobut;
+	delete closebut;
 }
 
 void YesNoPopupUI::Reset()
 {
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
-	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
-
+	sprite.setTexture(TEXTURE_MGR.Get("graphics/yesnobut.png"));
+	sprite.setScale(1.3f, 1.3f);
 	spr = sprite.getGlobalBounds();
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
 
-	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.5f);
+	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.46f);
 
 	sf::Vector2f sprpos = sprite.getPosition();
 
-	text.setPosition(sprpos.x + spr.width * 0.5f, sprpos.y + 40.f);
+	text.setPosition(sprpos.x + 200.f, sprpos.y + spr.height * 0.5f);
+	text.setFillColor(sf::Color::Black);
 
-	yesbut->SetText("YES", "fonts/BACKTO1982.TTF", 40);	
+	yesbut->SetText("YES", "fonts/Pixelownfont-Regular.ttf", 50);
 	yesbut->SetColor(sf::Color::Black);
 	yesbut->GetGlobalBounds();
-	yesbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });	
+	yesbut->SetPosition({ sprpos.x + 130.f,sprpos.y + spr.height * 0.7f });
 	yesbut->useeffect = true;
-	
 
-	nobut->SetText("NO", "fonts/BACKTO1982.TTF", 40);	
+
+	nobut->SetText("NO", "fonts/Pixelownfont-Regular.ttf", 50);
 	nobut->SetColor(sf::Color::Black);
 	nobut->GetGlobalBounds();
-	nobut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height * 0.6f });
+	nobut->SetPosition({ sprpos.x + spr.width -200.f,sprpos.y + spr.height * 0.7f });
 	nobut->useeffect = true;
 
-	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);	
+	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
 	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
@@ -126,7 +119,7 @@ void YesNoPopupUI::Reset()
 
 void YesNoPopupUI::Update(float dt)
 {
-	yesbut->Update(dt);	
+	yesbut->Update(dt);
 	nobut->Update(dt);
 	closebut->Update(dt);
 
@@ -134,12 +127,9 @@ void YesNoPopupUI::Update(float dt)
 
 void YesNoPopupUI::Draw(sf::RenderWindow& window)
 {
-	if (GetActive())
-	{
-		window.draw(sprite);
-		window.draw(text);
-		yesbut->Draw(window);
-		nobut->Draw(window);
-		closebut->Draw(window);
-	}
+	window.draw(sprite);
+	window.draw(text);
+	yesbut->Draw(window);
+	nobut->Draw(window);
+	closebut->Draw(window);
 }

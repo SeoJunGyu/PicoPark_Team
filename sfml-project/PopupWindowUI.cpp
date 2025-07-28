@@ -41,6 +41,7 @@ void PopupWindowUI::SetOrigin(Origins preset)
 
 void PopupWindowUI::Init()
 {
+	
 
 	sortingLayer = SortingLayers::UI;
 	sortingOrder = 1;
@@ -55,33 +56,10 @@ void PopupWindowUI::Init()
 	closebut = new UiButton("Close");
 
 	yesno = new YesNoPopupUI("YesNoPopup");
-
+	yesno->Init();
 	startbut.push_back(Local);
 	startbut.push_back(Editor);
 	startbut.push_back(Exit);
-
-	Local->SetCallBack([this]()
-		{
-			yesno->SetText("START GAME ? ", "fonts/BACKTO1982.TTF", 20);
-			yesno->SetActive(true);
-			yesno->yesbut->SetCallBack([]() {
-				SCENE_MGR.ChangeScene(SceneIds::Select);
-				});
-		});
-	Editor->SetCallBack([this]()
-		{
-			yesno->SetText("EDTIOR MODE ? ", "fonts/BACKTO1982.TTF", 20);
-			yesno->SetActive(true);
-			yesno->yesbut->SetCallBack([]() {
-				SCENE_MGR.ChangeScene(SceneIds::Select);
-				});
-		});
-	Exit->SetCallBack([this]() {
-		yesno->SetText("EXIT GAME ? ", "fonts/BACKTO1982.TTF", 20);
-		yesno->SetActive(true);
-		yesno->yesbut->SetCallBack([]() {
-			FRAMEWORK.GetWindow().close();
-			}); });
 
 
 		Rightbut->SetCallBack([this]()
@@ -121,15 +99,18 @@ void PopupWindowUI::Release()
 	delete Rightbut;
 	delete Leftbut;
 	delete closebut;
+	yesno->Release();
 	delete yesno;
+	yesno = nullptr;
 }
 
 void PopupWindowUI::Reset()
-{
+{	
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
-	sprite.setTexture(TEXTURE_MGR.Get("graphics/MainMenuButton.png"));
+	sprite.setTexture(TEXTURE_MGR.Get("graphics/startbut.png"));
+	sprite.setScale(1.5f, 1.5f);
 
-	spr = sprite.getGlobalBounds();
+	spr = sprite.getGlobalBounds();	
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
@@ -139,9 +120,9 @@ void PopupWindowUI::Reset()
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
-	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",40},
-	   {"       OPTION    ","fonts/BACKTO1982.TTF",40},
-	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",40}
+	   {" LOCAL  PLAY  MODE","fonts/BACKTO1982.TTF",50},
+	   {"         OPTION ","fonts/BACKTO1982.TTF",50},
+	   {"      EXIT  GAME ","fonts/BACKTO1982.TTF",50}
 	};
 
 	for (int i = 0; i < startbut.size(); ++i)
@@ -149,7 +130,7 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetTextstyle(button[i]);
 		startbut[i]->GetGlobalBounds();
 		startbut[i]->SetColor(sf::Color::Black);
-		startbut[i]->SetPosition({ sprpos.x + 140.f, sprpos.y + spry + 20.f });
+		startbut[i]->SetPosition({ sprpos.x + 200.f, sprpos.y + spry + 35.f });
 		startbut[i]->SetActive(false);
 
 	}
@@ -164,20 +145,47 @@ void PopupWindowUI::Reset()
 	Leftbut->GetGlobalBounds();
 	Leftbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });
 
-	closebut->SetText("X", "fonts/BACKTO1982.TTF", 20);
+	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
 	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
 
 	startbut[currentPage]->SetActive(true);
+		
+	Local->SetCallBack([this]()
+		{
+			yesno->SetText("START GAME","fonts/Pixelownfont-Regular.ttf", 50);	
+			yesno->Reset();
+			yesno->SetActive(true);
+			this->SetActive(false);
+			yesno->yesbut->SetCallBack([=]() {SCENE_MGR.ChangeScene(SceneIds::Select); });
 
-	yesno->SetActive(false);
+		});
+	Editor->SetCallBack([this]()
+		{
+			yesno->SetText("EDTIOR MODE","fonts/Pixelownfont-Regular.ttf",50);
+			yesno->Reset();
+			yesno->SetActive(true);
+			this->SetActive(false);
+			yesno->yesbut->SetCallBack([]() {SCENE_MGR.ChangeScene(SceneIds::Editor); });
+
+		});
+	Exit->SetCallBack([this]() {
+		yesno->SetText("EXIT GAME","fonts/Pixelownfont-Regular.ttf", 50);
+		yesno->Reset();
+		yesno->SetActive(true);
+		this->SetActive(false);
+		yesno->yesbut->SetCallBack([]() {FRAMEWORK.GetWindow().close();	});
+
+		});
+
+
+
 }
 
 
 void PopupWindowUI::Update(float dt)
 {
-
 	if (startbut[currentPage]->GetActive())
 		startbut[currentPage]->Update(dt);
 
@@ -203,19 +211,30 @@ void PopupWindowUI::Update(float dt)
 	{
 		Leftbut->SetSprit("graphics/rightbut.png");
 	}
+	if (yesno->GetActive())
+		yesno->Update(dt);
+		
 
-
-
+	
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)
 {
-	window.draw(sprite);
+	if (this->GetActive())
+	{
+		window.draw(sprite);
 
-	if (startbut[currentPage]->GetActive())
-		startbut[currentPage]->Draw(window);
+		if (startbut[currentPage]->GetActive())
+			startbut[currentPage]->Draw(window);
 
-	Rightbut->Draw(window);
-	Leftbut->Draw(window);
-	closebut->Draw(window);
+		Rightbut->Draw(window);
+		Leftbut->Draw(window);
+		closebut->Draw(window);
+	}
+	if (yesno->GetActive())
+	{
+		yesno->Draw(window);
+	}		
+	
+	
 }

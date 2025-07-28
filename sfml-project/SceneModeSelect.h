@@ -8,11 +8,9 @@ class SceneModeSelect :   public Scene
 {
 protected:
 	sf::Text text;
+	
 
-
-	BackGround* back;
-
-	UiButton* mood1;
+	BackGround* back;	
 
 	UiButton* stage1;
 

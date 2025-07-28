@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 class UiButton;
+class Scene;
 
 class YesNoPopupUI :
     public GameObject
@@ -9,8 +10,7 @@ class YesNoPopupUI :
 protected:
     sf::Sprite sprite;
     sf::Text text;
-  
-
+        
     
     UiButton* nobut;
     UiButton* closebut;
@@ -35,7 +35,8 @@ public:
     void SetOrigin(const sf::Vector2f& o) override;
     void SetOrigin(Origins preset) override;
     void SetText(const std::string& t, const std::string& fontid, int size);
-    /*void Choiceevent(const UiButton* t, float dt);*/
+    
+    
 
     void Init() override;
 

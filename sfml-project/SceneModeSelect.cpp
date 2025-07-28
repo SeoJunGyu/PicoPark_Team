@@ -13,13 +13,15 @@ void SceneModeSelect::Init()
     fontIds.push_back("fonts/BACKTO1982.TTF");
         
     back = new BackGround("back");
-    AddGameObject(back);
-
-    mood1 = new UiButton("mood1");
-    AddGameObject(mood1);
+    AddGameObject(back);    
 
     stage1 = new UiButton("stage1");
     AddGameObject(stage1);
+
+    stage1->SetCallBack([]()
+        {
+            SCENE_MGR.ChangeScene(SceneIds::Game);
+        });
 
     Scene::Init();
 }
@@ -39,22 +41,15 @@ void SceneModeSelect::Enter()
         
     text.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));    
     text.setString("HELLO PICO PARK");
-    text.setColor(sf::Color(255, 134, 77, 255));
-    text.setPosition(uiviewbase.x + 30.f, uiviewbase.y + 30.f);
+    text.setFillColor(sf::Color(255, 134, 77, 255));
+    text.setPosition(uiviewbase.x *0.1f, uiviewbase.y * 0.1f);
    
     back->Settext("graphics/moodback.png");
     back->SetActive(true);
-
-
-    mood1->SetSprit("graphics/stagebox.png");
-    mood1->GetGlobalBounds();
-    mood1->SetPosition({ worldpos.x *0.5f,worldpos.y*0.3f });
-    mood1->SetActive(true);
-    mood1->useeffect = true;
-
+       
     stage1->SetSprit("graphics/stagebox.png");
     stage1->GetGlobalBounds();
-    stage1->SetPosition({ worldpos.x * 1.5f,worldpos.y * 0.3f });
+    stage1->SetPosition({ worldpos.x * 0.5f,worldpos.y * 0.3f });
     stage1->SetActive(true);
     stage1->useeffect = true;
 

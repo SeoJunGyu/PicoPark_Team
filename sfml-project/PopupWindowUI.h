@@ -10,10 +10,11 @@ class PopupWindowUI :
 protected:
 	sf::Sprite sprite;
 
+	int uType = -1;
 	
 	std::vector<UiButton*> startbut;
 
-	std::vector<UiButton*> moodchoi;
+	/*std::vector<UiButton*> moodchoi;*/
 
 	int currentPage = 0;
 
@@ -40,6 +41,8 @@ public:
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+
+	YesNoPopupUI* GetYesNoPopup() const { return yesno; }
 
 
 	void Init() override;

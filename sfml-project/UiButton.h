@@ -26,7 +26,7 @@ protected:
 	float speed = 5.f;
 	float amplitude = 0.05f;
 
-	bool drawon = false;
+	
 public:
 	bool isOn = false;
 	bool useeffect = false;
