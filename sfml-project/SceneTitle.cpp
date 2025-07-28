@@ -57,7 +57,7 @@ void SceneTitle::Enter()
 	titlebackground->SetActive(true);
 
 	startButton->SetText("PRESS ENTER KEY", "fonts/BACKTO1982.TTF", 50);
-	startButton->SetPosition({ size.x * 0.5f, size.y * 0.5f });
+	startButton->SetPosition({ size.x * 0.5f, size.y * 0.6f });
 	startButton->SetColor(sf::Color(255, 134, 77, 255));
 	startButton->GetGlobalBounds();
 	startButton->SetActive(true);
