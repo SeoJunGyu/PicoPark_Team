@@ -234,6 +234,18 @@ void PopupWindowUI::Update(float dt)
 	{
 		closebut->Trigger();
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		if (Exit->GetActive()) {
+			Exit->Trigger();
+		}
+		if (Editor->GetActive()) {
+			Editor->Trigger();
+		}
+		if (Local->GetActive()) {
+			Local->Trigger();
+		}
+	}
 
 	if (startbut[currentPage]->GetActive())
 		startbut[currentPage]->Update(dt);

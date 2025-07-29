@@ -165,8 +165,8 @@ void UiButton::Update(float dt)
 	}
 	else if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
-		if (event)
-			event();
+		//if (event)
+			//event();
 		enterLock = true;
 		/*yesnolock = true;*/
 	}
