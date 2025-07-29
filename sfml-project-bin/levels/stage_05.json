@@ -196,8 +196,8 @@
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 416,
-      "y": 112
+      "x": 50,
+      "y": 100
     },
     {
       "id": 485,
@@ -310,8 +310,8 @@
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 416,
-      "y": 128
+      "x": 50,
+      "y": 50
     },
     {
       "id": 492,
