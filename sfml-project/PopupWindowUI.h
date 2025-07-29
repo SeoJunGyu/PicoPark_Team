@@ -8,13 +8,9 @@ class PopupWindowUI :
 	public GameObject
 {
 protected:
-	sf::Sprite sprite;
-
-	int uType = -1;
+	sf::Sprite sprite;	
 	
-	std::vector<UiButton*> startbut;
-
-	/*std::vector<UiButton*> moodchoi;*/
+	std::vector<UiButton*> startbut;	
 
 	int currentPage = 0;
 

@@ -41,7 +41,7 @@ void PopupWindowUI::SetOrigin(Origins preset)
 
 void PopupWindowUI::Init()
 {
-	
+
 
 	sortingLayer = SortingLayers::UI;
 	sortingOrder = 1;
@@ -62,25 +62,27 @@ void PopupWindowUI::Init()
 	startbut.push_back(Exit);
 
 
-		Rightbut->SetCallBack([this]()
+	Rightbut->SetCallBack([this]()
+		{
+			startbut[currentPage]->SetActive(false);
+			currentPage++;
+			if (currentPage >= startbut.size())
 			{
-				startbut[currentPage]->SetActive(false);
-				currentPage++;
-				if (currentPage >= startbut.size())
-				{
-					currentPage = 0;
-				}
-				startbut[currentPage]->SetActive(true);
-			});
-		Leftbut->SetCallBack([this]()
-			{
-			currentPage = startbut.size() - 1;
+				currentPage = 0;
+			}
 			startbut[currentPage]->SetActive(true);
 		});
-	closebut->SetCallBack([this]() {
-		this->SetActive(false); 
-		enterLock = true;
+	Leftbut->SetCallBack([this]()
+		{
+			startbut[currentPage]->SetActive(false);	
+			currentPage--;
+			if (currentPage < 0)
+			{
+				currentPage = startbut.size() - 1;
+			}
+			startbut[currentPage]->SetActive(true);
 		});
+	closebut->SetCallBack([this]() {this->SetActive(false);	enterLock = true;});
 
 
 }
@@ -107,8 +109,9 @@ void PopupWindowUI::Reset()
 	enterLock = true;
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/startbut.png"));
-	
-	spr = sprite.getLocalBounds();
+	sprite.setScale(1.5f, 1.5f);
+
+	spr = sprite.getGlobalBounds();
 
 	float sprx = spr.left + spr.width * 0.5f;
 	float spry = spr.top + spr.height * 0.5f;
@@ -118,9 +121,9 @@ void PopupWindowUI::Reset()
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
-	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",40},
-	   {"       EDITOR    ","fonts/BACKTO1982.TTF",40},
-	   {"     EXIT GAME  ","fonts/BACKTO1982.TTF",40}
+	   {"  LOCAL PLAY MODE","fonts/BACKTO1982.TTF",50},
+	   {"    EDITOR MODE ","fonts/BACKTO1982.TTF",50},
+	   {"      EXIT GAME  ","fonts/BACKTO1982.TTF",50}
 	};
 
 	for (int i = 0; i < startbut.size(); ++i)
@@ -130,7 +133,7 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetColor(sf::Color::Black);
 		startbut[i]->SetPosition({ sprpos.x + 200.f, sprpos.y + spry + 35.f });
 		startbut[i]->SetActive(false);
-		switch (i)
+		/*switch (i)
 		{
 		case 0:
 			startbut[i]->SetCallBack([this]()
@@ -153,7 +156,7 @@ void PopupWindowUI::Reset()
 			break;
 		default:
 			break;
-		}
+		}*/
 
 	}
 
@@ -173,11 +176,11 @@ void PopupWindowUI::Reset()
 	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
 
 	startbut[currentPage]->SetActive(true);
-		
+
 	Local->SetCallBack([this]()
 		{
-			
-			yesno->SetText("START GAME","fonts/Pixelownfont-Regular.ttf", 50);				
+
+			yesno->SetText("START GAME", "fonts/Pixelownfont-Regular.ttf", 50);
 			yesno->Reset();
 			yesno->SetActive(true);
 			drawon = false;
@@ -185,19 +188,19 @@ void PopupWindowUI::Reset()
 
 		});
 	Editor->SetCallBack([this]()
-		{			
-			yesno->SetText("EDTIOR MODE","fonts/Pixelownfont-Regular.ttf",50);			
+		{
+			yesno->SetText("EDTIOR MODE", "fonts/Pixelownfont-Regular.ttf", 50);
 			yesno->Reset();
 			yesno->SetActive(true);
-			drawon =false;
+			drawon = false;
 			yesno->yesbut->SetCallBack([]() {SCENE_MGR.ChangeScene(SceneIds::Editor); });
 
 		});
-	Exit->SetCallBack([this]() {		
-		yesno->SetText("EXIT GAME","fonts/Pixelownfont-Regular.ttf", 50);		
+	Exit->SetCallBack([this]() {
+		yesno->SetText("    EXIT GAME", "fonts/Pixelownfont-Regular.ttf", 50);
 		yesno->Reset();
 		yesno->SetActive(true);
-		this->SetActive(false);
+		drawon = false;
 		yesno->yesbut->SetCallBack([]() {FRAMEWORK.GetWindow().close();	});
 
 		});
@@ -212,26 +215,31 @@ void PopupWindowUI::Reset()
 void PopupWindowUI::Update(float dt)
 {
 
-	if (enterLock) {
-		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter))  
+	if (enterLock)
+	{
+		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter))
 			enterLock = false;
 		return;
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Right)) {
-		Rightbut->Trigger();          
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+	{
+		Rightbut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Left)) {
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+	{
 		Leftbut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
 		closebut->Trigger();
 	}
 
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter)) {
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
 		startbut[currentPage]->Trigger();
-		enterLock = true;            
+		enterLock = true;
 	}
 
 	if (startbut[currentPage]->GetActive())
@@ -261,7 +269,7 @@ void PopupWindowUI::Update(float dt)
 	}
 	if (yesno->GetActive())
 		yesno->Update(dt);
-		
+
 
 
 }
@@ -282,7 +290,7 @@ void PopupWindowUI::Draw(sf::RenderWindow& window)
 	if (yesno->GetActive())
 	{
 		yesno->Draw(window);
-	}		
-	
-	
+	}
+
+
 }
