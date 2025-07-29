@@ -68,7 +68,7 @@ void TileMap::Draw(sf::RenderWindow& window)
 	// 히트박스 그리기
 	if (Variables::isDrawHitBox) 
 	{
-		for (auto& r : solids) 
+		for (auto& r : drawBox) 
 		{
 			if (r.getOutlineThickness() <= 0)
 			{
@@ -88,6 +88,7 @@ bool TileMap::load(const Level& lvl, int solidStart)
 	tiles = lvl.tiles; //전체 복사
 
 	solids.clear();
+	drawBox.clear();
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -105,10 +106,12 @@ bool TileMap::load(const Level& lvl, int solidStart)
 			//rect.setOutlineThickness(0.5f);
 			//rect.setOutlineColor(sf::Color::Green);
 			solids.push_back(rect);
+			drawBox.push_back(rect);
 
 			if (id >= firstSolid) {
-				solids.back().setOutlineThickness(0.1f);
-				solids.back().setOutlineColor(sf::Color::Green);
+				
+				drawBox.back().setOutlineThickness(0.1f);
+				drawBox.back().setOutlineColor(sf::Color::Green);
 			}
 		}
 	}

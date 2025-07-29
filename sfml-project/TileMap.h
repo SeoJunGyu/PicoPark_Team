@@ -13,6 +13,7 @@ protected:
 	//sf::VertexArray vertices; 
 	//std::vector<HitBox> solidHB;
 	std::vector<sf::RectangleShape> solids;
+	std::vector<sf::RectangleShape> drawBox;
 
 	sf::Texture* texture = nullptr;
 	sf::Transform transform;
