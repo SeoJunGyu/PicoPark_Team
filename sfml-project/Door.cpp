@@ -65,7 +65,7 @@ void Door::Update(float dt)
 		}
 		else if (opened)
 		{
-			SCENE_MGR.ChangeScene(SceneIds::Title);
+			SCENE_MGR.ChangeScene(SceneIds::Select);
 		}
 	}
 	else if (!canOpen)
