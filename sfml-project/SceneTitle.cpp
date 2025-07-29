@@ -3,6 +3,7 @@
 #include "UiButton.h"
 #include "BackGround.h"
 #include "PopupWindowUI.h"
+#include "YesNoPopupUI.h"
 
 
 SceneTitle::SceneTitle()
@@ -75,9 +76,13 @@ void SceneTitle::Update(float dt)
 		startButton->Effect(coolOn);
 		cooltime = 0;
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter)) {
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) && !popup->GetActive()) {
+		popup->SetActive(true); 
+		YesNoPopupUI* y = popup->GetYesNoPopup();
+		y->SetActive(false);
+		popup->drawon = true;
 		//std::cout << "엔터 호출" << std::endl;
-		startButton->Trigger();
+		//startButton->Trigger();
 	}
 
 }

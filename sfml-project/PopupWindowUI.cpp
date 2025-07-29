@@ -283,6 +283,7 @@ void PopupWindowUI::Draw(sf::RenderWindow& window)
 {
 	if (drawon)
 	{
+		std::cout << "그려지는중" << std::endl;
 		window.draw(sprite);
 
 		if (startbut[currentPage]->GetActive())
