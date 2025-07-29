@@ -16,6 +16,8 @@ protected:
 
     float totalTime;
     float currentTime;
+    float resetTime;
+    float resetDuration;
 
     float changeYellow; //주황불로 전환 시간 - totalTime * 0.3 -> 30% 남은 시간일때
 
@@ -26,6 +28,9 @@ protected:
     sf::Texture texRed;
 
     State state;
+
+    bool playerKill = false;
+    bool enterRed = false;
 
 public:
     Blinker(nlohmann::json j);

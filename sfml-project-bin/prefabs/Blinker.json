@@ -3,5 +3,5 @@
   "type":        "Blinker",
   "sprite":      "graphics/Item/Blinkergreen.png",
   "scale":       0.2,
-  "properties": {"minTime": 10, "maxTime": 20}
+  "properties": {"minTime": 10, "maxTime": 20, "resetDuration": 3.0}
 }
