@@ -604,7 +604,21 @@ void Player::OnDie()
 {
 	isDead = true;
 	deathTimer = 0.f;
-	body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player_Death.png"));
+	switch (index)
+	{
+	case 0:
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player_Death.png"));
+		break;
+	case 1:
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player1_Death.png"));
+		break;
+	case 2:
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player2_Death.png"));
+		break;
+	case 3:
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player3_Death.png"));
+		break;
+	}
 	velocity = { 0.f, -100.f };
 
 }

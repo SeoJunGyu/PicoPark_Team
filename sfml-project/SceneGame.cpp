@@ -283,6 +283,9 @@ void SceneGame::Init()
     texIds.push_back("graphics/Characters/Icon/Player2.png");
     texIds.push_back("graphics/Characters/Icon/Player3.png");
     texIds.push_back("graphics/Characters/Player_Death.png");
+    texIds.push_back("graphics/Characters/Player1_Death.png");
+    texIds.push_back("graphics/Characters/Player2_Death.png");
+    texIds.push_back("graphics/Characters/Player3_Death.png");
     texIds.push_back("graphics/Item/key.png");
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
