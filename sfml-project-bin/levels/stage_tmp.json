@@ -5,37 +5,103 @@
     {
       "id": 0,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "dontPush": false,
+        "latch": false
       },
-      "type": "PlayerSpawn",
-      "x": 32,
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 16,
       "y": 64
     },
     {
       "id": 1,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "loop": false,
+        "path": [
+          [
+            32,
+            64
+          ],
+          [
+            32,
+            14
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
       },
-      "type": "PlayerSpawn",
-      "x": 48,
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 32,
       "y": 64
     },
     {
       "id": 2,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "loop": false,
+        "path": [
+          [
+            64,
+            64
+          ],
+          [
+            64,
+            14
+          ]
+        ],
+        "requireCount": 1,
+        "speed": 30
       },
-      "type": "PlayerSpawn",
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
       "x": 64,
       "y": 64
     },
     {
       "id": 3,
       "properties": {
+        "channel": 0,
+        "loop": true,
+        "path": [
+          [
+            96,
+            64
+          ],
+          [
+            96,
+            14
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 96,
+      "y": 64
+    },
+    {
+      "id": 4,
+      "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 80,
+      "x": 128,
       "y": 64
     }
   ],
@@ -94,16 +160,16 @@
         0,
         0,
         0,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
       ],
       "name": "Main",
       "parallax": 1.0,

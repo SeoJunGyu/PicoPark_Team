@@ -8,6 +8,7 @@ protected:
     bool pressed = false;
 
     bool latch;
+    bool dontPush;
 
     static std::vector<int> momentaryCount; //채널별 누르고 있는 순간 수
     static std::vector<bool> latchState; //채널별 래치 on/off

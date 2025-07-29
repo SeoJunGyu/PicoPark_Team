@@ -3,5 +3,5 @@
   "type":        "MovingPlatform",
   "sprite":      "graphics/Item/Pad.png",
   "scale":       0.2,
-  "properties": { "channel": 1, "path":[[0,0],[0,0]], "speed":30, "requireCount": 0 }
+  "properties": { "channel": 1, "path":[[0,0],[0,0]], "speed":30, "requireCount": 0, "loop": false }
 }

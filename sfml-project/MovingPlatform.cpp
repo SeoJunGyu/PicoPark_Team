@@ -28,6 +28,7 @@ void MovingPlatform::Reset()
 
 	startPos = { properties["path"][0][0].get<float>(), properties["path"][0][1].get<float>() };
 	endPos = { properties["path"][1][0].get<float>(), properties["path"][1][1].get<float>() };
+	loop = properties.value("loop", false);
 	speed = properties.value("speed", 0.f);
 	prvSpeed = speed;
 
@@ -113,32 +114,54 @@ void MovingPlatform::Update(float dt)
 	bool atStart = std::abs((pos - startPos).x) + std::abs((pos - startPos).y) < 0.01f;
 	bool atEnd = std::abs((pos - endPos).x) + std::abs((pos - endPos).y) < 0.01f;
 
-	if (active)
+	//자동모드일 경우
+	if (loop)
 	{
 		if (atStart)
 		{
-			dir = 1;
+			state = MState::Ascending;
 		}
 		else if (atEnd)
 		{
-			dir = -1;
+			state = MState::Descending;
 		}
+	}
+
+
+	else if (active)
+	{
+		state = MState::Ascending;
+		/*
 		else if (dir == -1)
 		{
 			dir = 1;
 		}
+		*/
+		
 	}
 	else //신호 off
 	{
 		if (atStart)
 		{
-			deltaPos = { 0.f, 0.f };
-			dir = 0;
+			state = MState::Ascending;
 		}
 		else
 		{
-			dir = -1;
+			state = MState::Descending;
 		}
+	}
+
+	switch (state)
+	{
+	case MovingPlatform::Idle:
+		dir = 0;
+		break;
+	case MovingPlatform::Ascending:
+		dir = 1;
+		break;
+	case MovingPlatform::Descending:
+		dir = -1;
+		break;
 	}
 
 	if (dir != 0)

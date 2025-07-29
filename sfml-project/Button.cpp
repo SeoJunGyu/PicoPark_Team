@@ -26,6 +26,7 @@ void Button::Reset()
 	pressed = false;
 	channel = properties.value("channel", 0);
 	latch = properties.value("latch", false);
+	dontPush = properties.value("dontPush", false);
 	//Variables::signals[channel] = false;
 
 	EnsureSize(channel);
@@ -65,6 +66,18 @@ void Button::Update(float dt)
 		if (overlapY < overlapX && contacY <= hitBox.GetTop() + 1.0f)
 		{
 			detect = true;
+
+			if (dontPush) //자폭버튼일경우
+			{
+				for (auto* p : Variables::players)
+				{
+					if (p->isDead)
+					{
+						continue;
+					}
+					p->OnDie();
+				}
+			}
 			break;
 		}
 	}
