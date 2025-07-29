@@ -294,11 +294,14 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/RoundPlatform.png");
     texIds.push_back("graphics/Item/elevator.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
+    texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
     bgTex.loadFromFile("graphics/Background.png");
     bgSpr.setTexture(bgTex);
     bgSpr.setScale({ 1.3f, 1.3f });
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
+
+    ANI_CLIP_MGR.Load("animations/Pico_Player_Jump_Final.csv");
 
     level = new Level();
     tileMap = new TileMap();

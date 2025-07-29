@@ -116,7 +116,7 @@ void Player::Update(float dt)
 	if (InputMgr::GetJump(index))
 	{
 		jumpBufferCounter = jumpBuffer; //점프 입력 기록
-		animator.Play("animation/Pico Player Jump Final.csv");
+		//animator.Play("animations/Pico_Player_Jump_Final.csv");
 	}
 
 	//코요테 타임 갱신
