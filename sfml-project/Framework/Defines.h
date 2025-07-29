@@ -76,5 +76,6 @@ enum class StandType
 	None,
 	Platform,
 	Player,
+	PushBlock,
 	Count,
 };

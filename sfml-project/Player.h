@@ -22,6 +22,11 @@ struct StandMethod
 	{
 		return type == StandType::Player ? static_cast<Player*>(ptr) : nullptr;
 	}
+
+	PushBlock* asPushBlock()
+	{
+		return type == StandType::PushBlock ? static_cast<PushBlock*>(ptr) : nullptr;
+	}
 };
 
 class TileMap;

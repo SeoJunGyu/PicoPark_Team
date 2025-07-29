@@ -409,6 +409,40 @@ void Player::Update(float dt)
 		}
 	}
 
+	//블럭 수직 충돌
+	SetPosition(position);
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	for (PushBlock* b : Variables::blocks)
+	{
+		sf::FloatRect bBox = b->GetHitBox().rect.getGlobalBounds();
+
+		CollisionInfo info = Utils::GetAABBCollision(hitBox.rect.getGlobalBounds(), bBox);
+		if (info.depth <= 0.f)
+		{
+			continue;
+		}
+
+		if (info.normal.y < -0.5f && b->velocity.y >= 0.f)
+		{
+			float separationY = info.normal.y * info.depth;
+			//p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
+
+			position.y += separationY;
+			velocity.y = 0.f;
+			isGrounded = true;
+			standing.type = StandType::PushBlock;
+			standing.ptr = b;
+
+			break;
+		}
+		else if (info.normal.y > 0.5f) //내가 아래
+		{
+			hasRider = true;
+			velocity.y = 50.f;
+		}
+	}
+
 	//점프 수행 조건
 	if (coyoteCounter > 0.f && jumpBufferCounter > 0.f && !hasRider)
 	{
@@ -467,6 +501,8 @@ sf::Vector2f Player::GetSupportDelta()
 			Player* base = standing.asPlayer();
 			return (base->position - base->prvPos) + base->GetSupportDelta();
 		}
+		case StandType::PushBlock:
+			return standing.asPushBlock()->GetDeltaPos();
 	}
 
 	return { 0.f, 0.f };

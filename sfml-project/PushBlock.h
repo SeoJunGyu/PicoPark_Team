@@ -31,6 +31,8 @@ protected:
     TileMap* tilemap;
     sf::Vector2f prvPos;
 
+    sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
+
 public:
     PushBlock(nlohmann::json j);
 
@@ -39,6 +41,6 @@ public:
 
     sf::Vector2f GetSupportDelta();
     void ApplySupport();
-    void ScanUpStack();
+    sf::Vector2f GetDeltaPos() const { return deltaPos; }
 };
 

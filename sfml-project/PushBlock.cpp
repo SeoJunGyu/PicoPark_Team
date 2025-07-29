@@ -57,6 +57,8 @@ void PushBlock::Reset()
     standing.type = StandType::None;
     standing.ptr = nullptr;
 
+    deltaPos = { 0.f, 0.f };
+
     SetOrigin(Origins::MC);
     SetPosition(GetPosition());
     SetScale(GetScale());
@@ -69,6 +71,8 @@ void PushBlock::Reset()
 
 void PushBlock::Update(float dt)
 {
+    sf::Vector2f before = GetPosition(); //프레임간 위치를 파악하기위해 이전 프레임 좌표 저장
+
     sf::FloatRect bBox = hitBox.rect.getGlobalBounds();
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
@@ -264,6 +268,9 @@ void PushBlock::Update(float dt)
             {
                 isGrounded = true;
                 velocity.y = 0.f;
+
+                standing.type = StandType::PushBlock;
+                standing.ptr = b;
             }
             collidedY = true;
             break;
@@ -292,6 +299,9 @@ void PushBlock::Update(float dt)
             {
                 isGrounded = true;
                 velocity.y = 0.f;
+
+                standing.type = StandType::Platform;
+                standing.ptr = plat;
             }
             collidedY = true;
             break;
@@ -393,6 +403,9 @@ void PushBlock::Update(float dt)
 		velocity.y = 0.f;
 	}
 
+    sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
+    deltaPos = after - before; //실제 이동한 차이만 저장된다.
+
 	Gimmick::Update(dt);
 }
 
@@ -406,6 +419,8 @@ sf::Vector2f PushBlock::GetSupportDelta()
         return standing.asPlatform()->GetDeltaPos();
     case StandType::Player:
         return standing.asPlayer()->GetDeltaPos();
+    case StandType::PushBlock:
+        return standing.asPushBlock()->GetDeltaPos();
     }
 
     return { 0.f, 0.f };
