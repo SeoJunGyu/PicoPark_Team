@@ -73,7 +73,7 @@ void Player::Reset()
 	switch (index)
 	{
 	case 0:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player0.png"));
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player0.png"));		
 		break;
 	case 1:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player1.png"));
@@ -115,8 +115,8 @@ void Player::Update(float dt)
 
 	if (InputMgr::GetJump(index))
 	{
-
 		jumpBufferCounter = jumpBuffer; //점프 입력 기록
+		animator.Play("animation/Pico Player Jump Final.csv");
 	}
 
 	//코요테 타임 갱신

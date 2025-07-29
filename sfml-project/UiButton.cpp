@@ -137,7 +137,15 @@ void UiButton::Reset()
 
 void UiButton::Update(float dt)
 {
-	drawon = false;
+	effectdrawon = false;
+
+	if (enterLock)
+	{
+		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter)||(!InputMgr::GetMouseButtonUp(sf::Mouse::Left)))
+			enterLock = false;
+		/*yesnolock = false;*/
+		return;
+	}
 
 	bool hovered = sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
 		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition());
@@ -146,16 +154,25 @@ void UiButton::Update(float dt)
 
 	if (hovered)
 	{
-		drawon = true;
+		effectdrawon = true;
 				
-		if (InputMgr::GetKeyDown(sf::Keyboard::Enter) || InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
 		{
 			if (event)
 				event();
+			enterLock = true;
 		}
 	}
+	else if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		if (event)
+			event();
+		enterLock = true;
+		/*yesnolock = true;*/
+	}
 	
-	if (useeffect && drawon)
+
+	if (useeffect && effectdrawon)
 	{
 		this->DrawEffect(dt);
 	}
@@ -169,7 +186,7 @@ void UiButton::Update(float dt)
 
 void UiButton::Draw(sf::RenderWindow& window)
 {
-	if (useeffect && drawon)
+	if (useeffect && effectdrawon)
 	{
 		window.draw(outline);
 	}

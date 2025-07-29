@@ -20,7 +20,7 @@ protected:
 	sf::Color colorpull;
 
 	int Size;
-	bool drawon = false;
+	bool effectdrawon = false;
 
 	sf::RectangleShape outline;
 
@@ -28,9 +28,12 @@ protected:
 	float speed = 5.f;
 	float amplitude = 0.05f;
 
+	bool enterLock = true;
+
 public:
 	bool isOn = false;
 	bool useeffect = false;
+	/*static bool yesnolock;*/
 
 	UiButton(const std::string& name = "");
 	virtual ~UiButton() = default;
