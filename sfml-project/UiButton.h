@@ -30,6 +30,8 @@ protected:
 
 	bool enterLock = true;
 
+	sf::Text innerText;
+
 public:
 	bool isOn = false;
 	bool useeffect = false;
@@ -85,4 +87,6 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
+	void SetInnerText(const sf::Text& t);
+	bool IsMouseOver() const;
 };

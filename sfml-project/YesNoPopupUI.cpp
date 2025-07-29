@@ -125,6 +125,12 @@ void YesNoPopupUI::Update(float dt)
 	nobut->Update(dt);
 	closebut->Update(dt);
 
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num1)) {
+		yesbut->Trigger();
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num2)) {
+		nobut->Trigger();
+	}
 }
 
 void YesNoPopupUI::Draw(sf::RenderWindow& window)

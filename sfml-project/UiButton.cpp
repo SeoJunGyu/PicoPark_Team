@@ -141,7 +141,7 @@ void UiButton::Update(float dt)
 
 	if (enterLock)
 	{
-		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter)||(!InputMgr::GetMouseButtonUp(sf::Mouse::Left)))
+		if (!InputMgr::GetMouseButtonUp(sf::Mouse::Left))
 			enterLock = false;
 		/*yesnolock = false;*/
 		return;
@@ -163,13 +163,13 @@ void UiButton::Update(float dt)
 			enterLock = true;
 		}
 	}
-	else if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
-	{
-		//if (event)
-			//event();
-		enterLock = true;
-		/*yesnolock = true;*/
-	}
+	//else if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	//{
+	//	//if (event)
+	//		//event();
+	//	enterLock = true;
+	//	/*yesnolock = true;*/
+	//}
 	
 
 	if (useeffect && effectdrawon)
@@ -192,5 +192,22 @@ void UiButton::Draw(sf::RenderWindow& window)
 	}
 	window.draw(sprite);
 	window.draw(text);
+	if (innerText.getString() != "")
+	{
+		innerText.setPosition(sprite.getPosition());
+		window.draw(innerText);
+	}
+}
 
+void UiButton::SetInnerText(const sf::Text& t)
+{
+	innerText = t;                       
+	Utils::SetOrigin(innerText, Origins::MC);
+}
+
+bool UiButton::IsMouseOver() const
+{
+	bool hovered = sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
+		text.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition());
+	return hovered;
 }
