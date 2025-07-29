@@ -44,6 +44,8 @@ public:
 
 	bool hasKey = false;
 
+	bool isDead = false;
+
 protected:
 	sf::Sprite body;
 	Animator animator;
@@ -73,7 +75,6 @@ protected:
 	sf::Vector2f mapSize;
 
 	//사망 관련 변수
-	bool isDead = false;
 	float deathTimer = 0.f;
 	float deathDuration = 2.f; //2초 후 장면전환
 
