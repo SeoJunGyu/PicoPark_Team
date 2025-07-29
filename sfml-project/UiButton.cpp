@@ -195,6 +195,7 @@ void UiButton::Draw(sf::RenderWindow& window)
 	if (innerText.getString() != "")
 	{
 		innerText.setPosition(sprite.getPosition());
+		innerText.setFont(FONT_MGR.Get("fonts/BACKTO1982.TTF"));
 		window.draw(innerText);
 	}
 }
