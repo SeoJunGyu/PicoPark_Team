@@ -23,6 +23,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new RoundPlatform(j);
 	case GimmickType::PushBlock:
 		return new PushBlock(j);
+	case GimmickType::Blinker:
+		return new Blinker(j);
 	}
 
 	return nullptr;

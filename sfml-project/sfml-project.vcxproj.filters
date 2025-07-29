@@ -47,6 +47,7 @@
     <ClCompile Include="PushBlock.cpp" />
     <ClCompile Include="SceneModeSelect.cpp" />
     <ClCompile Include="RoundPlatform.cpp" />
+    <ClCompile Include="Blinker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="PushBlock.h" />
     <ClInclude Include="SceneModeSelect.h" />
     <ClInclude Include="RoundPlatform.h" />
+    <ClInclude Include="Blinker.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

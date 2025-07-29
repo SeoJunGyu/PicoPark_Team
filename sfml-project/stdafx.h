@@ -46,4 +46,5 @@
 #include "FallingPlatform.h"
 #include "RoundPlatform.h"
 #include "PushBlock.h"
+#include "Blinker.h"
 

@@ -295,6 +295,9 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/RoundPlatform.png");
     texIds.push_back("graphics/Item/elevator.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
+    texIds.push_back("graphics/Item/BlinkerRed.png");
+    texIds.push_back("graphics/Item/BlinkerOrange.png");
+    texIds.push_back("graphics/Item/Blinkergreen.png");
     texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
     bgTex.loadFromFile("graphics/Background.png");
     bgSpr.setTexture(bgTex);
@@ -317,7 +320,7 @@ void SceneGame::Enter()
     Scene::Enter();
 
     std::string path = pendingStage.empty()
-        ? "levels/stage_05.json"
+        ? "levels/stage_tmp.json"
         : std::move(pendingStage);
     pendingStage.clear();
 

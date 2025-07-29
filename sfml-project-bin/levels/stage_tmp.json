@@ -5,91 +5,24 @@
     {
       "id": 0,
       "properties": {
-        "color": 0,
-        "requireCount": 1
+        "maxTime": 20,
+        "minTime": 10
       },
       "scale": [
         0.20000000298023224,
-        0.5
+        0.20000000298023224
       ],
-      "type": "PushBlock",
-      "x": 48,
-      "y": 16
+      "type": "Blinker",
+      "x": 64,
+      "y": 48
     },
     {
       "id": 1,
       "properties": {
-        "color": 0,
-        "requireCount": 1
-      },
-      "scale": [
-        0.20000000298023224,
-        0.5
-      ],
-      "type": "PushBlock",
-      "x": 96,
-      "y": 16
-    },
-    {
-      "id": 2,
-      "properties": {
-        "channel": 1,
-        "path": [
-          [
-            96,
-            32
-          ],
-          [
-            146,
-            32
-          ]
-        ],
-        "requireCount": 0,
-        "speed": 30
-      },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "MovingPlatform",
-      "x": 96,
-      "y": 32
-    },
-    {
-      "id": 3,
-      "properties": {
-        "color": 0,
-        "requireCount": 1
-      },
-      "scale": [
-        0.20000000298023224,
-        0.5
-      ],
-      "type": "PushBlock",
-      "x": 48,
-      "y": 48
-    },
-    {
-      "id": 4,
-      "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 16,
-      "y": 64
-    },
-    {
-      "id": 5,
-      "properties": {
-        "channel": 1,
-        "latch": false
-      },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "Button",
-      "x": 80,
+      "x": 64,
       "y": 64
     }
   ],
@@ -148,16 +81,16 @@
         0,
         0,
         0,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8,
-        8
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
       ],
       "name": "Main",
       "parallax": 1.0,

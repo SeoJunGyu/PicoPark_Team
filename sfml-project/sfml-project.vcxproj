@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Blinker.cpp" />
     <ClCompile Include="BouncePad.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -206,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Blinker.h" />
     <ClInclude Include="BouncePad.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Door.h" />

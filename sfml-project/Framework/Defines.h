@@ -59,6 +59,7 @@ enum class GimmickType
 	BouncePad,
 	WeightPad,
 	KillLine,
+	Blinker,
 	//움직임 -> Update 필요
 	MovingPlatform,
 	FallingPlatform,

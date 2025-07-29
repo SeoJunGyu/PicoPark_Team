@@ -14,6 +14,7 @@ inline GimmickType StrToType(const std::string& s)
     if (s == "FallingPlatform") return GimmickType::FallingPlatform;
     if (s == "RoundPlatform") return GimmickType::RoundPlatform;
     if (s == "PushBlock") return GimmickType::PushBlock;
+    if (s == "Blinker") return GimmickType::Blinker;
     return GimmickType::Count;                     // 예외 대응
 }
 
@@ -30,6 +31,7 @@ inline const char* TypeToStr(GimmickType t)
     case GimmickType::FallingPlatform: return "FallingPlatform";
     case GimmickType::RoundPlatform: return "RoundPlatform";
     case GimmickType::PushBlock: return "PushBlock";
+    case GimmickType::Blinker: return "Blinker";
     default:                       return "Unknown";
     }
 }
