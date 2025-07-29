@@ -229,9 +229,9 @@ void Player::Update(float dt)
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	leftTx = int(hitBox.GetLeft() / ts);
+	leftTx = int(hitBox.GetLeft() -0.2f / ts);
 	rightTx = int((hitBox.GetRight() - 0.2f) / ts);
-	topTy = int((hitBox.GetTop() + 0.2f) / ts);
+	topTy = int((hitBox.GetTop() - 0.2f) / ts);
 	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
 
 	float footMargin = 0.5f; //벽타일 제외용 여유
