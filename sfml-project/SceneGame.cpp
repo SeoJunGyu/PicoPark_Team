@@ -68,7 +68,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
         if (tstr == "PlayerSpawn")
         {
-            int tmp = entobj["properties"].value("playerIndex", 0);
+            //int tmp = entobj["properties"].value("playerIndex", 0);
             float x = entobj.at("x").get<float>();
             float y = entobj.at("y").get<float>();
             spawnPoints.emplace_back(x, y);
