@@ -383,7 +383,7 @@ void PushBlock::Update(float dt)
             float separationY = info.normal.y * info.depth;
             //p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 
-            p->velocity.y = 0.f;
+            p->velocity.y += 50.f;
 
             position.y += separationY;
             velocity.y = 0.f;
