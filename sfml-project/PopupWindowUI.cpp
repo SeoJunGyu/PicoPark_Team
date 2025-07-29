@@ -36,7 +36,10 @@ void PopupWindowUI::SetOrigin(const sf::Vector2f& o)
 void PopupWindowUI::SetOrigin(Origins preset)
 {
 	GameObject::SetOrigin(preset);
-	Utils::SetOrigin(sprite, preset);
+	if (preset != Origins::Custom)
+	{
+		Utils::SetOrigin(sprite, preset);
+	}
 }
 
 void PopupWindowUI::Init()
@@ -110,20 +113,24 @@ void PopupWindowUI::Reset()
 	sf::Vector2f winSize = FRAMEWORK.GetWindowSizeF();
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/startbut.png"));
 	sprite.setScale(1.5f, 1.5f);
+	Utils::SetOrigin(sprite, Origins::MC);
+	
+	
 
-	spr = sprite.getGlobalBounds();
+	spr = sprite.getLocalBounds();
+	
+	float sprlocalx = (spr.width * sprite.getScale().x) * 0.5f;
+	float sprlocaly = (spr.height * sprite.getScale().y) * 0.5f;
 
-	float sprx = spr.left + spr.width * 0.5f;
-	float spry = spr.top + spr.height * 0.5f;
 
-	sprite.setPosition(winSize.x * 0.5f - sprx, winSize.y * 0.5f);
+	sprite.setPosition(winSize.x * 0.5f, winSize.y * 0.65f);
 
 	sf::Vector2f sprpos = sprite.getPosition();
 
 	std::vector<ButtonStyle> button = {
-	   {"  LOCAL PLAY MODE","fonts/BACKTO1982.TTF",50},
-	   {"    EDITOR MODE ","fonts/BACKTO1982.TTF",50},
-	   {"      EXIT GAME  ","fonts/BACKTO1982.TTF",50}
+	   {"LOCAL PLAY MODE","fonts/BACKTO1982.TTF",50},
+	   {"EDITOR MODE","fonts/BACKTO1982.TTF",50},
+	   {"EXIT GAME","fonts/BACKTO1982.TTF",50}
 	};
 
 	for (int i = 0; i < startbut.size(); ++i)
@@ -131,7 +138,8 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetTextstyle(button[i]);
 		startbut[i]->GetGlobalBounds();
 		startbut[i]->SetColor(sf::Color::Black);
-		startbut[i]->SetPosition({ sprpos.x + 200.f, sprpos.y + spry + 35.f });
+		startbut[i]->SetPosition({ sprlocalx +425.f, sprite.getPosition().y+70.f });
+		startbut[i]->SetOrigin(Origins::MC);
 		startbut[i]->SetActive(false);
 		/*switch (i)
 		{
@@ -163,17 +171,17 @@ void PopupWindowUI::Reset()
 	Rightbut->SetSprit("graphics/rightbut.png");
 	Rightbut->GetGlobalBounds();
 	Rightbut->SetScale({ 2.f,2.f });
-	Rightbut->SetPosition({ sprpos.x + spr.width - 100.f,sprpos.y + spr.height * 0.6f });
+	Rightbut->SetPosition({ sprite.getPosition().x+sprlocalx-120.f ,sprite.getPosition().y + 50.f });
 
 	Leftbut->SetSprit("graphics/rightbut.png");
 	Leftbut->SetScale({ -2.f, 2.f });
 	Leftbut->GetGlobalBounds();
-	Leftbut->SetPosition({ sprpos.x + 100.f,sprpos.y + spr.height * 0.6f });
+	Leftbut->SetPosition({ sprite.getPosition().x-sprlocalx+120.f,sprite.getPosition().y + 50.f });
 
 	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x + spr.width - 35.f,sprpos.y + 20.f });
+	closebut->SetPosition({ sprite.getPosition().x + sprlocalx -30.f,sprite.getPosition().y-sprlocaly+30.f });
 
 	startbut[currentPage]->SetActive(true);
 

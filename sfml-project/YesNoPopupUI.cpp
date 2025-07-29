@@ -64,10 +64,12 @@ void YesNoPopupUI::Init()
 	nobut->SetCallBack([this]()
 		{
 			this->SetActive(false);
+			this->Reset();
 		});
 	closebut->SetCallBack([this]()
 		{
 			this->SetActive(false);
+			this->Reset();
 		});
 
 	this->SetActive(false);
