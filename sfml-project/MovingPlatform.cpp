@@ -89,8 +89,7 @@ void MovingPlatform::Update(float dt)
 				support = support->standing.asPlayer();
 
 			// 지지 타입이 Platform 이고, ptr 이 this 인 경우만 카운트
-			if (support->standing.type == StandType::Platform &&
-				support->standing.ptr == this)
+			if (support->standing.type == StandType::Platform && support->standing.ptr == this)
 			{
 				++count;
 			}
