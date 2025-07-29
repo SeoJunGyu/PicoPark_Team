@@ -72,6 +72,11 @@ protected:
 
 	sf::Vector2f mapSize;
 
+	//사망 관련 변수
+	bool isDead = false;
+	float deathTimer = 0.f;
+	float deathDuration = 2.f; //2초 후 장면전환
+
 public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;
@@ -113,5 +118,7 @@ public:
 	void OutWindow();
 
 	sf::Vector2f GetDeltaPos() const { return deltaPos; }
+
+	void OnDie();
 };
 

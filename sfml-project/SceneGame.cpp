@@ -282,6 +282,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Characters/Icon/Player1.png");
     texIds.push_back("graphics/Characters/Icon/Player2.png");
     texIds.push_back("graphics/Characters/Icon/Player3.png");
+    texIds.push_back("graphics/Characters/Player_Death.png");
     texIds.push_back("graphics/Item/key.png");
     texIds.push_back("graphics/Item/door.png");
     texIds.push_back("graphics/Item/doorOpen.png");
@@ -362,6 +363,14 @@ void SceneGame::Update(float dt)
     if (InputMgr::GetKeyDown(sf::Keyboard::Escape) && isEditor) {
         //isEditor = false;
         SCENE_MGR.ChangeScene(SceneIds::Editor);
+    }
+
+    if (InputMgr::GetKeyDown(sf::Keyboard::F11))
+    {
+        for (Player* p : Variables::players)
+        {
+            p->OnDie();
+        }
     }
 
     /*

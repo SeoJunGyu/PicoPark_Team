@@ -97,6 +97,7 @@ void Player::Reset()
 
 	deltaPos = { 0.f, 0.f };
 	hasKey = false;
+	isDead = false;
 	
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
@@ -104,6 +105,22 @@ void Player::Reset()
 
 void Player::Update(float dt)
 {
+	if (isDead)
+	{
+		deathTimer += dt;
+
+		velocity.y += gravity.y * dt;
+		position += velocity * dt;
+		SetPosition(position);
+		hitBox.UpdateTransform(body, body.getLocalBounds());
+
+		if (deathTimer >= deathDuration)
+		{
+			SCENE_MGR.ChangeScene(SceneIds::Game); //재시작
+		}
+		return; //충돌로직 스킵
+	}
+
 	animator.Update(dt);
 
 	sf::Vector2f before = GetPosition(); //프레임간 위치를 파악하기위해 이전 프레임 좌표 저장
@@ -581,4 +598,13 @@ void Player::OutWindow()
 	}
 
 	position = pos;
+}
+
+void Player::OnDie()
+{
+	isDead = true;
+	deathTimer = 0.f;
+	body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player_Death.png"));
+	velocity = { 0.f, -100.f };
+
 }
