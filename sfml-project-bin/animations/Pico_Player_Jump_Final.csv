@@ -1,7 +1,7 @@
 ID,FPS,"LoopType (0: Single, 1: Loop)		",,,
-Idle,10,"1	",,,
+Idle,3,"0	",,,
 "				",,,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,"FLIPX (0:Fale, 1:True)"
-graphics/Characters/Pico Player Jump Final.png,0,0,99,127,0
-graphics/Characters/Pico Player Jump Final.png,99,0,99,127,0
-graphics/Characters/Pico Player Jump Final.png,198,0,99,127,0
+graphics/Characters/Pico_Player_Jump_Final.png,99,0,99,127,0
+graphics/Characters/Pico_Player_Jump_Final.png,99,0,99,127,0
+graphics/Characters/Pico_Player_Jump_Final.png,99,0,99,127,0

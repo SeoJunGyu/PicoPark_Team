@@ -40,6 +40,7 @@ void Animator::Update(float dt)
 		{
 		case AnimationLoopTypes::Single:
 			currentFrame = speed > 0.f ? totalFrame - 1 : 0;
+			isPlaying = false;
 			break;
 		case AnimationLoopTypes::Loop:
 			currentFrame = speed > 0.f ? 0 : totalFrame - 1;
@@ -69,6 +70,10 @@ void Animator::Play(const std::string& clipId, bool clearQueue)
 
 void Animator::Play(AnimationClip* clip, bool clearQueue)
 {
+	if (currentClip == clip )
+		return;
+
+
 	if (clearQueue)
 	{
 		while (!playQueue.empty())
@@ -104,4 +109,6 @@ void Animator::SetFrame(const AnimationFrame& frame)
 	sprite->setTexture(TEXTURE_MGR.Get(frame.texId));
 	sprite->setTextureRect(frame.texCoord);
 	//sprite->
+	sf::FloatRect bounds = sprite->getLocalBounds();
+	sprite->setOrigin(bounds.width * 0.5f, bounds.height);
 }

@@ -1,5 +1,5 @@
 ID,FPS,"LoopType (0: Single, 1: Loop)		",,,
-Idle,10,"1	",,,
+Idle,8,"0	",,,
 "				",,,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,"FLIPX (0:Fale, 1:True)"
 graphics/Characters/player2_pushwalk.png,0,0,100,124,0

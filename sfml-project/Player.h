@@ -112,6 +112,8 @@ public:
 
 	void OutWindow();
 
+	void playeraniinit();
+
 	sf::Vector2f GetDeltaPos() const { return deltaPos; }
 };
 

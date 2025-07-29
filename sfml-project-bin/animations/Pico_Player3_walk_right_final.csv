@@ -1,0 +1,12 @@
+﻿ID,FPS,"LoopType (0: Single, 1: Loop)",,,
+Run,8,0,,,
+,,,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,"FLIPX (0:Fale, 1:True)"
+graphics/Characters/Pico_Player3_walk_right_final.png,0,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,100,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,200,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,300,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,400,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,500,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,600,0,100,132,0
+graphics/Characters/Pico_Player3_walk_right_final.png,700,0,100,132,0

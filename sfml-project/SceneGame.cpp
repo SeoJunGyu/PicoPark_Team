@@ -294,14 +294,45 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/RoundPlatform.png");
     texIds.push_back("graphics/Item/elevator.png");
     texIds.push_back("graphics/Item/WeightBlock.png");
-    texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player_Idle_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player_Jump_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player_walk_right_final.png");
+    texIds.push_back("graphics/Characters/player_pushwalk.png");
+    texIds.push_back("graphics/Characters/Pico_Player1_Idle_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player1_Jump_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player1_walk_right_final.png");
+    texIds.push_back("graphics/Characters/player1_pushwalk.png");
+    texIds.push_back("graphics/Characters/Pico_Player2_Idle_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player2_Jump_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player2_walk_right_final.png");
+    texIds.push_back("graphics/Characters/player2_pushwalk.png");
+    texIds.push_back("graphics/Characters/Pico_Player3_Idle_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player3_Jump_Final.png");
+    texIds.push_back("graphics/Characters/Pico_Player3_walk_right_final.png");
+    texIds.push_back("graphics/Characters/player3_pushwalk.png");
+
     bgTex.loadFromFile("graphics/Background.png");
     bgSpr.setTexture(bgTex);
     bgSpr.setScale({ 1.3f, 1.3f });
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
+    ANI_CLIP_MGR.Load("animations/Pico_Player_Idle_Final.csv");
     ANI_CLIP_MGR.Load("animations/Pico_Player_Jump_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player_walk_right_final.csv");
+    ANI_CLIP_MGR.Load("animations/player_pushwalk.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player1_Idle_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player1_Jump_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player1_walk_right_final.csv");
+    ANI_CLIP_MGR.Load("animations/player1_pushwalk.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player2_Idle_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player2_Jump_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player2_walk_right_final.csv");
+    ANI_CLIP_MGR.Load("animations/player2_pushwalk.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player3_Idle_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player3_Jump_Final.csv");
+    ANI_CLIP_MGR.Load("animations/Pico_Player3_walk_right_final.csv");
+    ANI_CLIP_MGR.Load("animations/player3_pushwalk.csv");
 
     level = new Level();
     tileMap = new TileMap();
