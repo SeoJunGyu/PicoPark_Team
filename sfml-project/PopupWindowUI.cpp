@@ -6,7 +6,7 @@
 #include "SceneGame.h"
 #include "Framework.h"
 
-
+//bool UiButton::yesnolock = false;
 
 PopupWindowUI::PopupWindowUI(const std::string name)
 	:GameObject(name)
@@ -74,7 +74,7 @@ void PopupWindowUI::Init()
 		});
 	Leftbut->SetCallBack([this]()
 		{
-			startbut[currentPage]->SetActive(false);	
+			startbut[currentPage]->SetActive(false);
 			currentPage--;
 			if (currentPage < 0)
 			{
@@ -82,7 +82,7 @@ void PopupWindowUI::Init()
 			}
 			startbut[currentPage]->SetActive(true);
 		});
-	closebut->SetCallBack([this]() {this->SetActive(false);	enterLock = true;});
+	closebut->SetCallBack([this]() {this->SetActive(false);	enterLock = true; });
 
 
 }
@@ -214,14 +214,6 @@ void PopupWindowUI::Reset()
 
 void PopupWindowUI::Update(float dt)
 {
-
-	if (enterLock)
-	{
-		if (!InputMgr::GetKeyUp(sf::Keyboard::Enter))
-			enterLock = false;
-		return;
-	}
-
 	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
 	{
 		Rightbut->Trigger();
@@ -233,13 +225,6 @@ void PopupWindowUI::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
 		closebut->Trigger();
-	}
-
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
-	{
-		startbut[currentPage]->Trigger();
-		enterLock = true;
 	}
 
 	if (startbut[currentPage]->GetActive())
@@ -268,10 +253,10 @@ void PopupWindowUI::Update(float dt)
 		Leftbut->SetSprit("graphics/rightbut.png");
 	}
 	if (yesno->GetActive())
-		yesno->Update(dt);
 
-
-
+		
+			yesno->Update(dt);
+		
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)
