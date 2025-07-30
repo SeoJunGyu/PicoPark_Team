@@ -3,5 +3,5 @@
   "type":        "Button",
   "sprite":      "graphics/Item/Button.png",
   "scale":       0.2,
-  "properties": { "channel": 1, "latch": false, "dontPush": false }
+  "properties": { "channel": 1, "latch": false, "dontPush": false, "scalePlus": false, "scaleMinus": false }
 }

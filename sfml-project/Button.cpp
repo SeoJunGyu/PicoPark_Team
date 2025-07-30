@@ -27,6 +27,8 @@ void Button::Reset()
 	channel = properties.value("channel", 0);
 	latch = properties.value("latch", false);
 	dontPush = properties.value("dontPush", false);
+	scalePlus = properties.value("scalePlus", false);
+	scaleMinus = properties.value("scaleMinus", false);
 	//Variables::signals[channel] = false;
 
 	EnsureSize(channel);
@@ -37,7 +39,7 @@ void Button::Reset()
 	SetRotation(GetRotation());
 
 	hitBox.UpdateTransform(body, body.getLocalBounds());
-	
+
 
 	Gimmick::Reset();
 }
@@ -62,6 +64,23 @@ void Button::Update(float dt)
 
 		float contacY = p->GetHitBox().GetTop() + p->GetHitBox().GetHeight() - overlapY;
 
+		sf::Vector2f scl = p->GetScale();
+		auto clampSigned = [&](float scaleValue)
+			{
+				float s = (scaleValue < 0.f ? -1.f : 1.f);
+				float absScale = std::abs(scaleValue);
+				if (absScale < 0.05f)
+				{
+					absScale = 0.05f;
+				}
+				else if (absScale > 0.5f)
+				{
+					absScale = 0.5f;
+				}
+				return s * absScale;
+			};
+		//sf::Vector2f prvPos = p->GetPosition();
+
 		//if (overlapY < overlapX && p->GetHitBox().GetTop() < hitBox.GetTop())
 		if (overlapY < overlapX && contacY <= hitBox.GetTop() + 1.0f)
 		{
@@ -78,6 +97,39 @@ void Button::Update(float dt)
 					p->OnDie();
 				}
 			}
+
+			//스케일 설정 버튼일경우
+			std::cout << "before : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+			if (scalePlus && !scaleMinus)
+			{
+				scl.x *= (1.f + dt);
+				scl.y *= (1.f + dt);
+
+				//scl.x += 0.02f * dt;
+				//scl.y += 0.02f * dt;
+
+				//scl.x = Utils::Clamp(scl.x, 0.05f, 0.5f);
+				//scl.y = Utils::Clamp(scl.y, 0.05f, 0.5f);
+			}
+			else if (scaleMinus && !scalePlus)
+			{
+				scl.x *= (1.f - dt);
+				scl.y *= (1.f - dt);
+
+				//scl.x -= 0.02f * dt;
+				//scl.y -= 0.02f * dt;
+
+				//scl.x = Utils::Clamp(scl.x, 0.01f, 1.0f);
+				//scl.y = Utils::Clamp(scl.y, 0.01f, 1.0f);
+			}
+
+			scl.x = clampSigned(scl.x);
+			scl.y = clampSigned(scl.y);
+
+			p->SetScale(scl);
+			//p->SetPosition(prvPos);
+			p->GetHitBox().UpdateTransform(p->body, p->body.getLocalBounds());
+			std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
 			break;
 		}
 	}
@@ -143,11 +195,11 @@ void Button::EnsureSize(int channel)
 
 bool Button::IsActive(int channel)
 {
-	if (channel < 0)                   
+	if (channel < 0)
 		return true;
 
 	if (channel >= (int)latchState.size())
-		return false;                  
+		return false;
 
 	return latchState[channel] || (momentaryCount[channel] > 0);
 }
