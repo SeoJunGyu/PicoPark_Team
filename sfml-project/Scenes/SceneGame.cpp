@@ -347,7 +347,38 @@ void SceneGame::Init()
 
     Variables::tilemap = tileMap;
 
+    clearFont.loadFromFile("fonts/Galmuri11-Bold.TTF");
+    clearTxt.setFont(clearFont);
+    clearTxt.setString("C L E A R !");
+    clearTxt.setCharacterSize(20);
+    clearTxt.setFillColor(sf::Color(255, 134, 77));
+    clearTxt.setOutlineColor(sf::Color::White);
+    clearTxt.setOutlineThickness(2.f);
+
     Scene::Init();
+}
+
+void SceneGame::StartStageClear()
+{
+    if (stageClear) return;              
+    stageClear = true;
+    clearTime = 0.f;
+
+    sf::Vector2u winSize = FRAMEWORK.GetWindow().getSize();
+    sf::FloatRect vp = worldView.getViewport();
+    sf::Vector2f vpSize(winSize.x * vp.width, winSize.y * vp.height);
+    //sf::FloatRect b = clearTxt.getLocalBounds();
+    //clearTxt.setOrigin(b.left + b.width * 0.5f,
+        //b.top + b.height * 0.5f);
+
+    toPos = { vp.left * winSize.x + vpSize.x * 0.5f,
+        vp.top * winSize.y + vpSize.y * 0.5f };
+    fromPos = { toPos.x - worldView.getSize().x * 2.f,
+               toPos.y };
+
+    clearTxt.setPosition(fromPos);
+
+    for (auto* p : Variables::players) p->SetActive(false);
 }
 
 void SceneGame::Enter()
@@ -394,6 +425,27 @@ void SceneGame::Enter()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
+
+    if (stageClear)            
+    {
+        constexpr float SLIDE_DUR = 1.0f;   // 텍스트 이동 1초
+        constexpr float HOLD_DUR = 1.0f;   // 중앙에서 1초 정지
+        clearTime += dt;
+
+        if (clearTime < SLIDE_DUR)
+        {   
+            float t = clearTime / SLIDE_DUR;  
+            clearTxt.setPosition(Utils::Lerp(fromPos, toPos, t));
+        }
+        else if (clearTime >= SLIDE_DUR + HOLD_DUR)
+        {   
+            SCENE_MGR.ChangeScene(SceneIds::Select);
+            stageClear = false;
+            return;
+        }
+
+        return;     
+    }
 
     if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
         SCENE_MGR.ChangeScene(SceneIds::Select);
@@ -452,9 +504,30 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
+    window.setView(worldView);
     window.draw(bgSpr);
     tileMap->Draw(window);
     Scene::Draw(window);
+    if (stageClear)
+    {
+        sf::FloatRect vp = worldView.getViewport();   
+
+        sf::View uiView = window.getDefaultView();
+        uiView.setViewport(vp);
+
+        window.setView(uiView);
+
+        sf::Vector2u winSize = window.getSize();
+        sf::Vector2f vpSize(winSize.x * vp.width, winSize.y * vp.height);
+        clearTxt.setCharacterSize(std::round(vpSize.y * 0.15f)); // 비율로 글자크기
+        sf::FloatRect b = clearTxt.getLocalBounds();
+        clearTxt.setOrigin(b.left + b.width * 0.5f,
+            b.top + b.height * 0.5f);
+        /*clearTxt.setPosition(vp.left * winSize.x + vpSize.x * 0.5f,
+            vp.top * winSize.y + vpSize.y * 0.5f);*/
+
+        window.draw(clearTxt);
+    }
     //auto activeView = FRAMEWORK.GetWindow().getView();
     //std::cout << "Active view size: "
     //    << activeView.getSize().x << ", "
