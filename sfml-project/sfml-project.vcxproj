@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\Scenes;$(ProjectDir);$(ProjectDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\Scenes;.\Gimmick;.\Ui;$(ProjectDir);$(ProjectDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\Scenes;$(ProjectDir);$(ProjectDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\Scenes;.\Gimmick;.\Ui;$(ProjectDir);$(ProjectDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,12 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="Blinker.cpp" />
-    <ClCompile Include="BouncePad.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Door.cpp" />
-    <ClCompile Include="FallingPlatform.cpp" />
+    <ClCompile Include="Scenes\BackGround.cpp" />
+    <ClCompile Include="Gimmick\Blinker.cpp" />
+    <ClCompile Include="Gimmick\BouncePad.cpp" />
+    <ClCompile Include="Gimmick\Button.cpp" />
+    <ClCompile Include="Gimmick\Door.cpp" />
+    <ClCompile Include="Gimmick\FallingPlatform.cpp" />
     <ClCompile Include="Framework\AnimationClip.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="AniPlayer.cpp" />
@@ -175,44 +175,44 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Gimmick.cpp" />
-    <ClCompile Include="Key.cpp" />
-    <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Gimmick\Gimmick.cpp" />
+    <ClCompile Include="Gimmick\Key.cpp" />
+    <ClCompile Include="Framework\LevelLoader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="Gimmick\MovingPlatform.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PrefabMgr.cpp" />
-    <ClCompile Include="PushBlock.cpp" />
-    <ClCompile Include="PopupWindowUI.cpp">
+    <ClCompile Include="Framework\PrefabMgr.cpp" />
+    <ClCompile Include="Gimmick\PushBlock.cpp" />
+    <ClCompile Include="Ui\PopupWindowUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="RoundPlatform.cpp" />
-    <ClCompile Include="SceneEditor.cpp" />
-    <ClCompile Include="SceneGame.cpp" />
-    <ClCompile Include="SceneModeSelect.cpp" />
+    <ClCompile Include="Gimmick\RoundPlatform.cpp" />
+    <ClCompile Include="Scenes\SceneEditor.cpp" />
+    <ClCompile Include="Scenes\SceneGame.cpp" />
+    <ClCompile Include="Scenes\SceneModeSelect.cpp" />
     <ClCompile Include="Scenes\SceneDev1.cpp" />
     <ClCompile Include="Scenes\SceneDev2.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="Framework\SoundMgr.cpp" />
-    <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Scenes\SceneTitle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Framework\TextGo.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\Variables.cpp" />
-    <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="TilePalette.cpp" />
-    <ClCompile Include="UiButton.cpp" />
-    <ClCompile Include="YesNoPopupUI.cpp" />
+    <ClCompile Include="Framework\TileMap.cpp" />
+    <ClCompile Include="Framework\TilePalette.cpp" />
+    <ClCompile Include="Ui\UiButton.cpp" />
+    <ClCompile Include="Ui\YesNoPopupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BackGround.h" />
-    <ClInclude Include="Blinker.h" />
-    <ClInclude Include="BouncePad.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="Door.h" />
-    <ClInclude Include="FallingPlatform.h" />
+    <ClInclude Include="Scenes\BackGround.h" />
+    <ClInclude Include="Gimmick\Blinker.h" />
+    <ClInclude Include="Gimmick\BouncePad.h" />
+    <ClInclude Include="Gimmick\Button.h" />
+    <ClInclude Include="Gimmick\Door.h" />
+    <ClInclude Include="Gimmick\FallingPlatform.h" />
     <ClInclude Include="Framework\AnimationClip.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="AniPlayer.h" />
@@ -237,36 +237,36 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
-    <ClInclude Include="Gimmick.h" />
-    <ClInclude Include="GimmickTypeConv.hpp" />
-    <ClInclude Include="JsonSerializer.hpp" />
-    <ClInclude Include="Key.h" />
-    <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="Gimmick\Gimmick.h" />
+    <ClInclude Include="Gimmick\GimmickTypeConv.hpp" />
+    <ClInclude Include="Framework\JsonSerializer.hpp" />
+    <ClInclude Include="Gimmick\Key.h" />
+    <ClInclude Include="Gimmick\MovingPlatform.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PopupWindowUI.h">
+    <ClInclude Include="Ui\PopupWindowUI.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="PrefabMgr.h" />
-    <ClInclude Include="PushBlock.h" />
-    <ClInclude Include="RoundPlatform.h" />
-    <ClInclude Include="SceneEditor.h" />
-    <ClInclude Include="SceneGame.h" />
-    <ClInclude Include="SceneModeSelect.h" />
+    <ClInclude Include="Framework\PrefabMgr.h" />
+    <ClInclude Include="Gimmick\PushBlock.h" />
+    <ClInclude Include="Gimmick\RoundPlatform.h" />
+    <ClInclude Include="Scenes\SceneEditor.h" />
+    <ClInclude Include="Scenes\SceneGame.h" />
+    <ClInclude Include="Scenes\SceneModeSelect.h" />
     <ClInclude Include="Scenes\SceneDev1.h" />
     <ClInclude Include="Scenes\SceneDev2.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
     <ClInclude Include="Framework\SoundMgr.h" />
-    <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Scenes\SceneTitle.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Framework\TextGo.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="Framework\Variables.h" />
-    <ClInclude Include="LevelLoader.h" />
-    <ClInclude Include="TileCore.hpp" />
-    <ClInclude Include="TileMap.h" />
-    <ClInclude Include="TilePalette.h" />
-    <ClInclude Include="UiButton.h" />
-    <ClInclude Include="YesNoPopupUI.h" />
+    <ClInclude Include="Framework\LevelLoader.h" />
+    <ClInclude Include="Framework\TileCore.hpp" />
+    <ClInclude Include="Framework\TileMap.h" />
+    <ClInclude Include="Framework\TilePalette.h" />
+    <ClInclude Include="Ui\UiButton.h" />
+    <ClInclude Include="Ui\YesNoPopupUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

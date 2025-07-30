@@ -363,6 +363,10 @@ void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
 
+    if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
+        SCENE_MGR.ChangeScene(SceneIds::Select);
+    }
+
     if (!Variables::players.empty())        // 플레이어가 하나라도 있으면
         updateCamera(dt);
 

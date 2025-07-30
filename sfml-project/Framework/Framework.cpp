@@ -9,8 +9,7 @@
 
 void Framework::Init(int w, int h, const std::string& t)
 {
-	window.create(sf::VideoMode(w, h), t);
-
+    window.create(sf::VideoMode(w, h), t, sf::Style::Fullscreen);
     ImGui::SFML::Init(window);
     /*ImGuiIO& io = ImGui::GetIO();
     ImFont* font = io.Fonts->AddFontFromFileTTF("fonts/Galmuri11-Bold.ttf", 16.f, nullptr,

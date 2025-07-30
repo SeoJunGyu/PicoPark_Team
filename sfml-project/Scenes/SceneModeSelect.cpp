@@ -113,7 +113,9 @@ void SceneModeSelect::Update(float dt)
 {
     Scene::Update(dt);
 
-
+    if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
+        SCENE_MGR.ChangeScene(SceneIds::Title);
+    }
 
 }
 void SceneModeSelect::Draw(sf::RenderWindow& window)
