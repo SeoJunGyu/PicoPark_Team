@@ -5,49 +5,85 @@
     {
       "id": 0,
       "properties": {
-        "channel": 1,
-        "dontPush": false,
-        "latch": false,
-        "scaleMinus": true,
-        "scalePlus": false
+        "playerIndex": 0
       },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "Button",
-      "x": 16,
+      "type": "PlayerSpawn",
+      "x": 80,
       "y": 64
     },
     {
       "id": 1,
       "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 64,
-      "y": 64
-    },
-    {
-      "id": 2,
-      "properties": {
         "channel": 1,
-        "dontPush": false,
-        "latch": false,
-        "scaleMinus": false,
-        "scalePlus": true
+        "loop": false,
+        "path": [
+          [
+            176,
+            64
+          ],
+          [
+            176,
+            64
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
       },
       "scale": [
         0.20000000298023224,
         0.20000000298023224
       ],
-      "type": "Button",
-      "x": 112,
+      "type": "MovingPlatform",
+      "x": 176,
+      "y": 64
+    },
+    {
+      "id": 2,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 64
+    },
+    {
+      "id": 3,
+      "properties": {
+        "fallDelay": 2.0,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "FallingPlatform",
+      "x": 256,
+      "y": 64
+    },
+    {
+      "id": 4,
+      "properties": {
+        "color": 0,
+        "requireCount": 1
+      },
+      "scale": [
+        0.20000000298023224,
+        0.5
+      ],
+      "type": "PushBlock",
+      "x": 352,
       "y": 64
     }
   ],
   "gridHeight": 6,
-  "gridWidth": 10,
+  "gridWidth": 24,
   "layers": [
     {
       "data": [
@@ -60,7 +96,60 @@
         0,
         0,
         0,
-        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -80,6 +169,20 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
         1,
         0,
         0,
@@ -90,16 +193,33 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         1,
         1,
         1,
