@@ -156,6 +156,7 @@
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
+    <ClCompile Include="Framework\tinyfiledialogs.cpp" />
     <ClCompile Include="imgui\imgui-SFML.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -226,6 +227,7 @@
     <ClInclude Include="Framework\Singleton.h" />
     <ClInclude Include="Framework\SpriteGo.h" />
     <ClInclude Include="Framework\Scene.h" />
+    <ClInclude Include="Framework\tinyfiledialogs.h" />
     <ClInclude Include="imgui\imconfig-SFML.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui-SFML.h" />

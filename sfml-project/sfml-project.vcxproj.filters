@@ -48,6 +48,7 @@
     <ClCompile Include="SceneModeSelect.cpp" />
     <ClCompile Include="RoundPlatform.cpp" />
     <ClCompile Include="Blinker.cpp" />
+    <ClCompile Include="Framework\tinyfiledialogs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="SceneModeSelect.h" />
     <ClInclude Include="RoundPlatform.h" />
     <ClInclude Include="Blinker.h" />
+    <ClInclude Include="Framework\tinyfiledialogs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

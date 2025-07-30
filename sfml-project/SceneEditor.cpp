@@ -3,6 +3,7 @@
 #include "JsonSerializer.hpp"
 #include "PrefabMgr.h"
 #include "SceneGame.h"
+#include "tinyfiledialogs.h"
 
 SceneEditor::SceneEditor()
 	: Scene(SceneIds::Editor) 
@@ -574,6 +575,63 @@ void SceneEditor::Draw(sf::RenderWindow& w) {
         std::string file = "levels/" + std::string(lvlName) + ".json";
         SaveAsLevel(file);                       
     }
+    if (ImGui::Button("Load"))
+    {
+        const char* filters[] = { "*.json" };
+        const char* file = tinyfd_openFileDialog(
+            "Open level", "levels", 1, filters, "Level json", 0);
+        if (file) {
+            LoadLevelFromJson(file);
+        }
+    }
+
+
     ImGui::End();
     palette.DrawImGui(*this);
+}
+
+void SceneEditor::LoadLevelFromJson(const std::string& path)
+{
+    std::string nameOnly = fs::path(path).stem().string();   // "stage_01"
+
+    nlohmann::json j;  std::ifstream(path) >> j;
+
+    if (!has(j, "gridWidth") || !has(j, "gridHeight") || !has(j, "layers"))
+    {
+        tinyfd_messageBox("Load error",
+            "This file is not a valid level json.", "ok", "error", 1);
+        return;
+    }
+
+    //author = "";  desc = "";
+    std::snprintf(lvlName, sizeof(lvlName), "%s", nameOnly.c_str());
+    std::snprintf(author, sizeof(author), "%s", j.value("author", "").c_str());
+    std::snprintf(desc, sizeof(desc), "%s", j.value("description", "").c_str());
+
+    ResizeGrid(j["gridWidth"], j["gridHeight"]);
+    grid.tileSize = j["tileSize"];
+
+    grid.tiles = j["layers"][0]["data"].get<std::vector<int>>();
+
+    grid.entities.assign(grid.width * grid.height, 0);
+    grid.entitiesType.assign(grid.width * grid.height, "");
+    grid.entitiesScale.assign(grid.width * grid.height, { 0.f,0.f });
+    grid.entitiesProps.assign(grid.width * grid.height, nlohmann::json::object());
+
+    for (auto& e : j["entities"])
+    {
+        int x = e["x"].get<int>() / grid.tileSize;
+        int y = e["y"].get<int>() / grid.tileSize;
+        int idx = y * grid.width + x;
+
+        std::string type = e["type"];
+        int texId = std::find(prefabNames.begin(), prefabNames.end(), type)
+            - prefabNames.begin();
+        grid.entities[idx] = texId + 100;
+        grid.entitiesType[idx] = type;
+        grid.entitiesProps[idx] = e.value("properties", nlohmann::json::object());
+
+        auto scArr = e.value("scale", std::vector<float>{1.f, 1.f});
+        grid.entitiesScale[idx] = { scArr[0], scArr[1] };
+    }
 }

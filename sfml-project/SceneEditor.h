@@ -15,6 +15,11 @@ public:
     void Draw(sf::RenderWindow&) override;
     void SaveAsLevel(const std::string& path);
     void ResizeGrid(int w, int h);
+    void LoadLevelFromJson(const std::string& path);
+    bool has(const nlohmann::json& j, const std::string& k)
+    {
+        return j.contains(k) && !j[k].is_null();
+    }
     std::unordered_map<std::string, nlohmann::json> prefabOverrides;
     std::vector<std::string> prefabNames;
     nlohmann::json pendingProps;
