@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Gimmick.h"
 class RoundPlatform :
     public Gimmick
@@ -9,6 +9,9 @@ class RoundPlatform :
     bool isOne = false;
 
     float randFall = 100.f;
+
+    int channel;
+    bool active = false;
 
 public:
     RoundPlatform(nlohmann::json j);

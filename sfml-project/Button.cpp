@@ -46,6 +46,8 @@ void Button::Reset()
 
 void Button::Update(float dt)
 {
+	sf::FloatRect box = hitBox.rect.getGlobalBounds();
+
 	bool wasPressed = pressed;
 	pressed = false;
 
@@ -79,7 +81,7 @@ void Button::Update(float dt)
 				}
 				return s * absScale;
 			};
-		//sf::Vector2f prvPos = p->GetPosition();
+		sf::Vector2f prvPos = p->GetPosition();
 
 		//if (overlapY < overlapX && p->GetHitBox().GetTop() < hitBox.GetTop())
 		if (overlapY < overlapX && contacY <= hitBox.GetTop() + 1.0f)
@@ -99,7 +101,7 @@ void Button::Update(float dt)
 			}
 
 			//스케일 설정 버튼일경우
-			std::cout << "before : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+			
 			if (scalePlus && !scaleMinus)
 			{
 				scl.x *= (1.f + dt);
@@ -127,11 +129,14 @@ void Button::Update(float dt)
 			scl.y = clampSigned(scl.y);
 
 			p->SetScale(scl);
-			//p->SetPosition(prvPos);
+			p->SetPosition(prvPos);
 			p->GetHitBox().UpdateTransform(p->body, p->body.getLocalBounds());
-			std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+			
 			break;
 		}
+
+		std::cout << "before : " << prvPos.x << " / " << prvPos.y << std::endl;
+		std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
 	}
 
 	if (latch)

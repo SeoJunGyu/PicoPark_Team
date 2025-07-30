@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "RoundPlatform.h"
 #include "Player.h"
 
@@ -24,6 +24,7 @@ void RoundPlatform::Reset()
 	player = nullptr;
 
 	randFall = properties.value("RandFall", 100.f);
+	channel = properties.value("channel", 0);
 
 	collidable = true;
 	isOne = false;
@@ -41,6 +42,22 @@ void RoundPlatform::Reset()
 
 void RoundPlatform::Update(float dt)
 {
+	if(channel > 0)
+	{
+		active = Button::IsActive(channel);
+	}
+	if (channel > 0 && !active)
+	{
+		body.setColor(sf::Color(255, 255, 255, 0));
+		collidable = false;
+	}
+	else if (channel > 0 && active)
+	{
+		body.setColor(sf::Color(255, 255, 255, 255));
+		collidable = true;
+	}
+
+
 	sf::FloatRect platBox = hitBox.rect.getGlobalBounds();
 
 	if (collidable)
@@ -57,7 +74,7 @@ void RoundPlatform::Update(float dt)
 				continue;
 			}
 
-			// ¿·¸é Ãæµ¹
+			// ì˜†ë©´ ì¶©ëŒ
 			if (std::abs(info.normal.x) > 0.5f)
 			{
 				float separationX = info.normal.x * info.depth;
@@ -66,7 +83,7 @@ void RoundPlatform::Update(float dt)
 				continue;
 			}
 
-			// ¾Æ·§¸é Ãæµ¹
+			// ì•„ëž«ë©´ ì¶©ëŒ
 			if (info.normal.y > 0.5f && p->velocity.y < 0.f)
 			{
 				float separationY = info.normal.y * info.depth;
@@ -77,13 +94,13 @@ void RoundPlatform::Update(float dt)
 				continue;
 			}
 
-			// À­¸é Ãæµ¹
-			if (info.normal.y < -0.5f)
+			// ìœ—ë©´ ì¶©ëŒ
+			if (info.normal.y < -0.5f && p->velocity.y > 0.f)
 			{
 				float separationY = info.normal.y * info.depth;
 				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 
-				// ÂøÁö Ã³¸®
+				// ì°©ì§€ ì²˜ë¦¬
 				p->velocity.y = 0.f;
 				p->isGrounded = true;
 
