@@ -6,6 +6,7 @@
   "properties": {
     "RandFall": 0.0,
     "channel": 0,
+    "transparency": false,
     "playerKill": false
   }
 }
