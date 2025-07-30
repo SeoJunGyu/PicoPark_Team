@@ -26,6 +26,7 @@ void RoundPlatform::Reset()
 	randFall = properties.value("RandFall", 100.f);
 	channel = properties.value("channel", 0);
 	playerKill = properties.value("playerKill", false);
+	transparency = properties.value("transparency", false);
 
 	collidable = true;
 	isOne = false;
@@ -46,17 +47,9 @@ void RoundPlatform::Update(float dt)
 	//신호 받을때 처리
 	UpdateChannel();
 
-	if (playerKill)
+	if (transparency) //투명처리
 	{
 		body.setColor(sf::Color(255, 255, 255, 0));
-		float length = hitBox.GetLeft() + hitBox.GetWidth();
-		thickLine.setSize({ length, 0.2f });
-		thickLine.setFillColor(sf::Color::Red);
-
-		sf::Vector2f start(hitBox.GetLeft(), hitBox.GetTop());
-		sf::Vector2f end(hitBox.GetLeft() + hitBox.GetWidth(), hitBox.GetTop());
-		sf::Vector2f direction = end - start;
-		
 	}
 
 	sf::FloatRect platBox = hitBox.rect.getGlobalBounds();
@@ -132,19 +125,23 @@ void RoundPlatform::Update(float dt)
 
 		hitBox.UpdateTransform(body, body.getLocalBounds());
 	}
-	else
-	{
-		
-	}
 
 	Gimmick::Update(dt);
 }
 
-void RoundPlatform::Draw(sf::RenderWindow window)
+void RoundPlatform::Draw(sf::RenderWindow& window)
 {
 	Gimmick::Draw(window);
 
+	/*
+	thickLine.setPosition(GetPosition());
+	thickLine.setFillColor(sf::Color(0, 0, 0, 0));
+	thickLine.setOutlineColor(sf::Color::Red);
+	thickLine.setOutlineThickness(2.f);
+
 	window.draw(thickLine);
+	*/
+	
 }
 
 void RoundPlatform::UpdateChannel()

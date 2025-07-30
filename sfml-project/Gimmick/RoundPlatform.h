@@ -16,12 +16,14 @@ class RoundPlatform :
     bool playerKill = false;
     sf::RectangleShape thickLine;
 
+    bool transparency = false;
+
 public:
     RoundPlatform(nlohmann::json j);
 
     void Reset() override;
     void Update(float dt) override;
-    void Draw(sf::RenderWindow window);
+    void Draw(sf::RenderWindow& window);
 
     void UpdateChannel();
 };
