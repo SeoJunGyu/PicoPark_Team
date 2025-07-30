@@ -25,6 +25,7 @@ void RoundPlatform::Reset()
 
 	randFall = properties.value("RandFall", 100.f);
 	channel = properties.value("channel", 0);
+	playerKill = properties.value("playerKill", false);
 
 	collidable = true;
 	isOne = false;
@@ -42,21 +43,21 @@ void RoundPlatform::Reset()
 
 void RoundPlatform::Update(float dt)
 {
-	if(channel > 0)
-	{
-		active = Button::IsActive(channel);
-	}
-	if (channel > 0 && !active)
+	//신호 받을때 처리
+	UpdateChannel();
+
+	if (playerKill)
 	{
 		body.setColor(sf::Color(255, 255, 255, 0));
-		collidable = false;
-	}
-	else if (channel > 0 && active)
-	{
-		body.setColor(sf::Color(255, 255, 255, 255));
-		collidable = true;
-	}
+		float length = hitBox.GetLeft() + hitBox.GetWidth();
+		thickLine.setSize({ length, 0.2f });
+		thickLine.setFillColor(sf::Color::Red);
 
+		sf::Vector2f start(hitBox.GetLeft(), hitBox.GetTop());
+		sf::Vector2f end(hitBox.GetLeft() + hitBox.GetWidth(), hitBox.GetTop());
+		sf::Vector2f direction = end - start;
+		
+	}
 
 	sf::FloatRect platBox = hitBox.rect.getGlobalBounds();
 
@@ -88,8 +89,6 @@ void RoundPlatform::Update(float dt)
 			{
 				float separationY = info.normal.y * info.depth;
 				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
-
-				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 				p->velocity.y = 0.f;
 				continue;
 			}
@@ -97,6 +96,20 @@ void RoundPlatform::Update(float dt)
 			// 윗면 충돌
 			if (info.normal.y < -0.5f && p->velocity.y > 0.f)
 			{
+				if (playerKill)
+				{
+					for (Player* player : Variables::players)
+					{
+						if (player->isDead)
+						{
+							continue;
+						}
+
+						player->OnDie();
+					}
+					collidable = false;
+				}
+
 				float separationY = info.normal.y * info.depth;
 				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 
@@ -125,4 +138,29 @@ void RoundPlatform::Update(float dt)
 	}
 
 	Gimmick::Update(dt);
+}
+
+void RoundPlatform::Draw(sf::RenderWindow window)
+{
+	Gimmick::Draw(window);
+
+	window.draw(thickLine);
+}
+
+void RoundPlatform::UpdateChannel()
+{
+	if (channel > 0)
+	{
+		active = Button::IsActive(channel);
+	}
+	if (channel > 0 && !active)
+	{
+		body.setColor(sf::Color(255, 255, 255, 0));
+		collidable = false;
+	}
+	else if (channel > 0 && active)
+	{
+		body.setColor(sf::Color(255, 255, 255, 255));
+		collidable = true;
+	}
 }

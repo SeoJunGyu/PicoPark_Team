@@ -3,101 +3,29 @@
   "description": "desc",
   "entities": [
     {
-      "id": 10,
+      "id": 0,
       "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 16,
-      "y": 16
+      "x": 32,
+      "y": 64
     },
     {
-      "id": 11,
+      "id": 1,
       "properties": {
-        "channel": 1,
-        "loop": false,
-        "path": [
-          [
-            16,
-            32
-          ],
-          [
-            16,
-            32
-          ]
-        ],
-        "requireCount": 0,
-        "speed": 30
+        "playerIndex": 0
       },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "MovingPlatform",
-      "x": 16,
-      "y": 32
-    },
-    {
-      "id": 12,
-      "properties": {
-        "RandFall": 0.0,
-        "channel": 1
-      },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
-      "x": 48,
-      "y": 32
-    },
-    {
-      "id": 13,
-      "properties": {
-        "RandFall": 0.0,
-        "channel": 1
-      },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
+      "type": "PlayerSpawn",
       "x": 64,
-      "y": 32
+      "y": 64
     },
     {
-      "id": 14,
+      "id": 2,
       "properties": {
         "RandFall": 0.0,
-        "channel": 1
-      },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
-      "x": 80,
-      "y": 32
-    },
-    {
-      "id": 15,
-      "properties": {
-        "RandFall": 0.0,
-        "channel": 1
-      },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
-      "x": 96,
-      "y": 32
-    },
-    {
-      "id": 16,
-      "properties": {
-        "RandFall": 0.0,
-        "channel": 1
+        "channel": 0,
+        "playerKill": true
       },
       "scale": [
         0.30000001192092896,
@@ -105,46 +33,6 @@
       ],
       "type": "RoundPlatform",
       "x": 112,
-      "y": 32
-    },
-    {
-      "id": 17,
-      "properties": {
-        "RandFall": 0.0,
-        "channel": 1
-      },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
-      "x": 128,
-      "y": 32
-    },
-    {
-      "id": 18,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 16,
-      "y": 64
-    },
-    {
-      "id": 19,
-      "properties": {
-        "channel": 1,
-        "dontPush": false,
-        "latch": false,
-        "scaleMinus": false,
-        "scalePlus": false
-      },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "Button",
-      "x": 32,
       "y": 64
     }
   ],

@@ -5,6 +5,7 @@
   "scale":       0.3,
   "properties": {
     "RandFall": 0.0,
-    "channel":  0
+    "channel": 0,
+    "playerKill": false
   }
 }
