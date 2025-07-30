@@ -44,6 +44,13 @@ public:
 
 	bool hasKey = false;
 
+	sf::Vector2f lastPushingPosition;	
+	bool isPushingSide;
+
+	bool shouldPlayPushwalk = false;
+	bool shouldPlayWalk = false;
+	bool shouldPlayIdle = false;
+
 protected:
 	sf::Sprite body;
 	Animator animator;
@@ -71,6 +78,9 @@ protected:
 	float jumpBuffer = 0.12f; //120ms
 
 	sf::Vector2f mapSize;
+
+	float prevAxis = 0.f;
+
 
 public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");
@@ -113,6 +123,10 @@ public:
 	void OutWindow();
 
 	void playeraniinit();
+	void playeraniwalk();
+	void playeranipushwalk();
+	
+
 
 	sf::Vector2f GetDeltaPos() const { return deltaPos; }
 };

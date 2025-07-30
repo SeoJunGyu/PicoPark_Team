@@ -1,5 +1,5 @@
 ID,FPS,"LoopType (0: Single, 1: Loop)		",,,
-Idle,3,"0	",,,
+Jump,3,"0	",,,
 "				",,,,,
 TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT,"FLIPX (0:Fale, 1:True)"
 graphics/Characters/Pico_Player3_Jump_Final.png,99,0,99,127,0
