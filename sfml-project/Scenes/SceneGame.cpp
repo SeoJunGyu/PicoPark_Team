@@ -118,7 +118,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 
         Player* p = new Player(idx, col, "Player" + std::to_string(idx));              // Player 클래스 생성자 (index)
         p->SetPosition(pos);
-        p->SetScale({ 0.1f, 0.1f });
+        p->SetScale({ 0.1f, 0.09f });
         p->Init();   
         p->Reset();
         p->SetTileMap(tileMap);
