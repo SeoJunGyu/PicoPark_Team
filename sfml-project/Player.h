@@ -35,6 +35,7 @@ class Player :
     public GameObject
 {
 public:
+	sf::Sprite body;
 	sf::Vector2f velocity = { 0.f, 0.f };
 	bool isGrounded = true;
 	bool hasRider = false; //내 머리 위에 누가 올라탔음
@@ -47,7 +48,6 @@ public:
 	bool isDead = false;
 
 protected:
-	sf::Sprite body;
 	Animator animator;
 
 

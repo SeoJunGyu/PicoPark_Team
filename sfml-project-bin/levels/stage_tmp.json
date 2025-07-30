@@ -7,106 +7,56 @@
       "properties": {
         "channel": 1,
         "dontPush": false,
-        "latch": false
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": true
       },
       "scale": [
         0.20000000298023224,
         0.20000000298023224
       ],
       "type": "Button",
-      "x": 16,
+      "x": 48,
       "y": 64
     },
     {
       "id": 1,
       "properties": {
         "channel": 1,
-        "loop": false,
-        "path": [
-          [
-            32,
-            64
-          ],
-          [
-            32,
-            14
-          ]
-        ],
-        "requireCount": 0,
-        "speed": 30
+        "dontPush": false,
+        "latch": false,
+        "scaleMinus": true,
+        "scalePlus": false
       },
       "scale": [
         0.20000000298023224,
         0.20000000298023224
       ],
-      "type": "MovingPlatform",
-      "x": 32,
+      "type": "Button",
+      "x": 208,
       "y": 64
     },
     {
       "id": 2,
       "properties": {
-        "channel": 1,
-        "loop": false,
-        "path": [
-          [
-            64,
-            64
-          ],
-          [
-            64,
-            14
-          ]
-        ],
-        "requireCount": 1,
-        "speed": 30
+        "playerIndex": 0
       },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "MovingPlatform",
-      "x": 64,
+      "type": "PlayerSpawn",
+      "x": 256,
       "y": 64
     },
     {
       "id": 3,
       "properties": {
-        "channel": 0,
-        "loop": true,
-        "path": [
-          [
-            96,
-            64
-          ],
-          [
-            96,
-            14
-          ]
-        ],
-        "requireCount": 0,
-        "speed": 30
-      },
-      "scale": [
-        0.20000000298023224,
-        0.20000000298023224
-      ],
-      "type": "MovingPlatform",
-      "x": 96,
-      "y": 64
-    },
-    {
-      "id": 4,
-      "properties": {
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 128,
+      "x": 272,
       "y": 64
     }
   ],
   "gridHeight": 6,
-  "gridWidth": 10,
+  "gridWidth": 20,
   "layers": [
     {
       "data": [
@@ -160,6 +110,66 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         1,
         1,
         1,
