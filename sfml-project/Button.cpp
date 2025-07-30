@@ -84,7 +84,7 @@ void Button::Update(float dt)
 		sf::Vector2f prvPos = p->GetPosition();
 
 		//if (overlapY < overlapX && p->GetHitBox().GetTop() < hitBox.GetTop())
-		if (overlapY < overlapX && contacY <= hitBox.GetTop() + 1.0f)
+		if (overlapY < overlapX && contacY <= hitBox.GetTop() + 3.0f)
 		{
 			detect = true;
 
@@ -107,6 +107,11 @@ void Button::Update(float dt)
 				scl.x *= (1.f + dt);
 				scl.y *= (1.f + dt);
 
+				scl.x = clampSigned(scl.x);
+				scl.y = clampSigned(scl.y);
+
+				p->pendingScale = scl;
+
 				//scl.x += 0.02f * dt;
 				//scl.y += 0.02f * dt;
 
@@ -118,6 +123,11 @@ void Button::Update(float dt)
 				scl.x *= (1.f - dt);
 				scl.y *= (1.f - dt);
 
+				scl.x = clampSigned(scl.x);
+				scl.y = clampSigned(scl.y);
+
+				p->SetScale(scl);
+
 				//scl.x -= 0.02f * dt;
 				//scl.y -= 0.02f * dt;
 
@@ -125,13 +135,15 @@ void Button::Update(float dt)
 				//scl.y = Utils::Clamp(scl.y, 0.01f, 1.0f);
 			}
 
-			scl.x = clampSigned(scl.x);
-			scl.y = clampSigned(scl.y);
+			//scl.x = clampSigned(scl.x);
+			//scl.y = clampSigned(scl.y);
 
-			p->SetScale(scl);
-			p->SetPosition(prvPos);
-			p->GetHitBox().UpdateTransform(p->body, p->body.getLocalBounds());
-			
+			//p->pendingScale = scl;
+			//p->SetScale(scl);
+            //p->SetPosition(p->getPrvPos());
+			//p->GetHitBox().UpdateTransform(p->body, p->body.getLocalBounds());
+			//std::cout << "sc : " << scl.x << " / " << scl.y << std::endl;
+			//std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
 			break;
 		}
 

@@ -5,10 +5,18 @@
     {
       "id": 0,
       "properties": {
-        "playerIndex": 0
+        "channel": 1,
+        "dontPush": false,
+        "latch": false,
+        "scaleMinus": true,
+        "scalePlus": false
       },
-      "type": "PlayerSpawn",
-      "x": 32,
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 16,
       "y": 64
     },
     {
@@ -23,15 +31,17 @@
     {
       "id": 2,
       "properties": {
-        "RandFall": 0.0,
-        "channel": 0,
-        "playerKill": true
+        "channel": 1,
+        "dontPush": false,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": true
       },
       "scale": [
-        0.30000001192092896,
-        0.30000001192092896
+        0.20000000298023224,
+        0.20000000298023224
       ],
-      "type": "RoundPlatform",
+      "type": "Button",
       "x": 112,
       "y": 64
     }
@@ -50,6 +60,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -59,6 +70,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -68,6 +80,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -77,6 +90,7 @@
         0,
         0,
         0,
+        1,
         0,
         0,
         0,
@@ -86,11 +100,7 @@
         0,
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        1,
         1,
         1,
         1,

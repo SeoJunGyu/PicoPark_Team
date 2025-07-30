@@ -7,6 +7,26 @@ Player::Player(int idx, const sf::Color& c, const std::string& name)
 {
 }
 
+void Player::ApplyPendingScale()
+{
+	if (pendingScale.x < 0.f) return;   
+
+
+	float oldBottom = hitBox.GetBottom();   // or position.y + (HitBoxHeight/2)
+
+	SetScale(pendingScale);
+	pendingScale = { -1.f, -1.f };
+
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+	float newBottom = hitBox.GetBottom();
+	position.y -= (newBottom - oldBottom);  
+	SetPosition(position);
+
+
+	prvPos = position;
+	prevRect = hitBox.rect.getGlobalBounds();
+}
+
 void Player::SetPosition(const sf::Vector2f& pos)
 {
 	GameObject::SetPosition(pos);
@@ -105,6 +125,7 @@ void Player::Reset()
 
 void Player::Update(float dt)
 {
+	ApplyPendingScale();
 	if (isDead)
 	{
 		deathTimer += dt;
