@@ -13,7 +13,6 @@ SceneTitle::SceneTitle()
 
 void SceneTitle::Init()
 {
-	
 
 	texIds.push_back("graphics/titlebackground.PNG");
 	texIds.push_back("graphics/startbut.png");
