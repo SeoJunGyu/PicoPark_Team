@@ -45,6 +45,13 @@ public:
 
 	bool hasKey = false;
 
+	sf::Vector2f lastPushingPosition;	
+	bool isPushingSide;
+
+	bool shouldPlayPushwalk = false;
+	bool shouldPlayWalk = false;
+	bool shouldPlayIdle = false;
+
 	bool isDead = false;
 
 	sf::FloatRect prevRect{};
@@ -74,6 +81,8 @@ protected:
 	float jumpBuffer = 0.12f; //120ms
 
 	sf::Vector2f mapSize;
+
+	float prevAxis = 0.f;
 
 	//사망 관련 변수
 	float deathTimer = 0.f;
@@ -119,6 +128,12 @@ public:
 	void ScanHeadStack();
 
 	void OutWindow();
+
+	void playeraniinit();
+	void playeraniwalk();
+	void playeranipushwalk();
+	
+
 
 	sf::Vector2f GetDeltaPos() const { return deltaPos; }
 

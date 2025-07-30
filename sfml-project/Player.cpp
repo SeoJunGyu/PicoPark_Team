@@ -93,16 +93,20 @@ void Player::Reset()
 	switch (index)
 	{
 	case 0:
-		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player0.png"));		
+		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player0.png"));
+		animator.Play("animations/Pico_Player_Idle_Final.csv");
 		break;
 	case 1:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player1.png"));
+		animator.Play("animations/Pico_Player1_Idle_Final.csv");
 		break;
 	case 2:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player2.png"));
+		animator.Play("animations/Pico_Player2_Idle_Final.csv");
 		break;
 	case 3:
 		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Icon/Player3.png"));
+		animator.Play("animations/Pico_Player3_Idle_Final.csv");
 		break;
 	}
 
@@ -153,14 +157,13 @@ void Player::Update(float dt)
 
 	if (InputMgr::GetJump(index))
 	{
-		jumpBufferCounter = jumpBuffer; //점프 입력 기록
-		//animator.Play("animations/Pico_Player_Jump_Final.csv");
+		jumpBufferCounter = jumpBuffer; //점프 입력 기록	
 	}
 
 	//코요테 타임 갱신
 	if (isGrounded)
 	{
-		coyoteCounter = coyoteTime; //지면에 붙어 있으면 리필
+		coyoteCounter = coyoteTime;//지면에 붙어 있으면 리필
 	}
 	else
 	{
@@ -179,12 +182,14 @@ void Player::Update(float dt)
 		//standingPlatform = nullptr; //딛고 선 플랫폼 초기화
 		standing.clear();
 	}
-	
+
+
 	sf::FloatRect prevRect = hitBox.rect.getGlobalBounds();
 	prvPos = position;
 
 	//position += velocity * dt;
 	position.x += velocity.x * dt;
+
 
 	//Collision
 	// 타일 가로
@@ -198,7 +203,7 @@ void Player::Update(float dt)
 
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitLeft = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(leftTx, botTy);
-	
+	isPushingSide = false;
 	for (int tx : { leftTx, rightTx })
 	{
 		if (!tilemap->isSolid(tx, topTy) && !tilemap->isSolid(tx, botTy))
@@ -213,15 +218,57 @@ void Player::Update(float dt)
 
 		if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
 		{
-			position.x += info.normal.x * info.depth; // 최소 깊이만큼 밀어냄
-			velocity.x = 0.f;
+			position.x += info.normal.x * info.depth; // 최소 깊이만큼 밀어냄  //              타일충돌			
 
+
+
+			lastPushingPosition = position;
+			isPushingSide = true;
 			//겹침이 해소됐으니 더 볼 필요 없음
-			break;
+
+		}
+		if (isPushingSide)
+		{
+			velocity.x = 0.f;
+			SetPosition(lastPushingPosition);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+
+			if (std::abs(h) > 0.1f && isGrounded)
+			{
+				if (index == 0) // 플레이어 2만 확인
+				{
+					std::cout << isGrounded << std::endl;
+				}
+				if (index == 1) // 플레이어 2만 확인
+				{
+					std::cout << isGrounded << std::endl;
+				}
+				switch (index)
+				{
+				case 0:
+					animator.Play("animations/player_pushwalk.csv");
+					break;
+				case 1:
+					animator.Play("animations/player1_pushwalk.csv");
+					break;
+				case 2:
+					animator.Play("animations/player2_pushwalk.csv");
+					break;
+				case 3:
+					animator.Play("animations/player3_pushwalk.csv");
+					break;
+				}
+			}
+			else if (h * info.normal.x < -0.5f)
+			{
+				velocity.x = h * speed;
+			}
+
+
 		}
 	}
 
-	// 플랫폼 가로
+	// 플랫폼 가로       
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	for (auto* plat : Variables::platforms)
@@ -250,14 +297,43 @@ void Player::Update(float dt)
 		//진짜 옆면만 처리
 		CollisionInfo info = Utils::GetAABBCollision(playerRect, platRect);
 
-		if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
+		if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f) ////////////////////////////////옆으로 밀때
 		{
 			position.x += info.normal.x * info.depth;
-			velocity.x = 0.f;
-			SetPosition(position);
-			hitBox.UpdateTransform(body, body.getLocalBounds());
-			break;
+
+			lastPushingPosition = position;
+			isPushingSide = true;
 		}
+		if (isPushingSide)
+		{
+			velocity.x = 0.f;
+			SetPosition(lastPushingPosition);
+			hitBox.UpdateTransform(body, body.getLocalBounds());
+			if (std::abs(h) > 0.1f && isGrounded)
+			{
+				switch (index)
+				{
+				case 0:
+					animator.Play("animations/player_pushwalk.csv");
+					break;
+				case 1:
+					animator.Play("animations/player1_pushwalk.csv");
+					break;
+				case 2:
+					animator.Play("animations/player2_pushwalk.csv");
+					break;
+				case 3:
+					animator.Play("animations/player3_pushwalk.csv");
+					break;
+				}
+
+			}
+			else if (h * info.normal.x < -0.5f)
+			{
+				velocity.x = h * speed;
+			}
+		}
+
 	}
 
 	//수직 이동 갱신
@@ -267,7 +343,7 @@ void Player::Update(float dt)
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	leftTx = int(hitBox.GetLeft() -0.2f / ts);
+	leftTx = int(hitBox.GetLeft() - 0.2f / ts);
 	rightTx = int((hitBox.GetRight() - 0.2f) / ts);
 	topTy = int((hitBox.GetTop() - 0.2f) / ts);
 	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
@@ -290,6 +366,11 @@ void Player::Update(float dt)
 			velocity.y = 0.f;
 			isGrounded = true;  // 착지
 			//isFallen = false;
+
+			if (std::abs(velocity.x) < 0.01f)
+			{
+				playeraniinit();
+			}
 		}
 		else
 		{
@@ -307,6 +388,7 @@ void Player::Update(float dt)
 		velocity.y = 0.f;
 		//isGrounded = true;
 	}
+
 
 	//플랫폼 세로 충돌
 	SetPosition(position);
@@ -340,15 +422,20 @@ void Player::Update(float dt)
 				standing.type = StandType::Platform;
 				standing.ptr = plat;
 				velocity.y = 0.f;
+
+				if (std::abs(velocity.x) < 0.01f)
+				{
+					playeraniinit();
+				}
 			}
-			else if(info.normal.y > 0.f) //플랫폼 하단 충돌
+			else if (info.normal.y > 0.f) //플랫폼 하단 충돌
 			{
 				//velocity.y = std::min(velocity.y, 0.f);
 				velocity.y = 0.f;
 			}
 			break;
 		}
-		
+
 	}
 
 	// 플레이어 세로 충돌
@@ -385,19 +472,23 @@ void Player::Update(float dt)
 
 			other->hasRider = true; //너 머리에 플레이어 있다고 알림
 			//standingPlatform = other;
+			if (std::abs(velocity.x) < 0.01f)
+			{
+				shouldPlayIdle = true;
+			}
 		}
 		else if (info.normal.y > 0.5f) //내가 아래
 		{
 			hasRider = true;
 			velocity.y = 50.f;
 		}
-		
+
 	}
-	
+
 	// 플레이어 가로 충돌
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
-	
+
 	for (auto* other : Variables::players)
 	{
 		if (other == this)
@@ -416,7 +507,7 @@ void Player::Update(float dt)
 			continue;
 		}
 		*/
-		
+
 
 		//내가 다른 플레이어 위에 올라탄 경우
 		if (standing.type == StandType::Player && standing.ptr == other)
@@ -437,12 +528,41 @@ void Player::Update(float dt)
 		}
 
 		//x축만 확인
-		if (std::abs(info.normal.x) > 0.5f) //normal.x가 -1(왼) 또는 1(오른)
+		if (std::abs(info.normal.x) > 0.5f) //normal.x가 -1(왼) 또는 1(오른) ///////////////////플레이어 가로충돌
 		{
 			position.x += info.normal.x * info.depth;
 			velocity.x = 0.f;
 			SetPosition(position);
 			hitBox.UpdateTransform(body, body.getLocalBounds());
+
+			isPushingSide = true;
+		}
+		if (isPushingSide)
+		{
+			if (std::abs(h) > 0.1f && isGrounded)
+			{
+				switch (index)
+				{
+				case 0:
+					animator.Play("animations/player_pushwalk.csv");
+					break;
+				case 1:
+					animator.Play("animations/player1_pushwalk.csv");
+					break;
+				case 2:
+					animator.Play("animations/player2_pushwalk.csv");
+					break;
+				case 3:
+					animator.Play("animations/player3_pushwalk.csv");
+					break;
+				}
+			}
+			else if (h * info.normal.x < -0.1f)
+			{
+				isPushingSide = false;
+				velocity.x = h * speed;
+			}
+
 			break;
 		}
 	}
@@ -488,7 +608,28 @@ void Player::Update(float dt)
 		velocity.y = -jumpPower;
 		coyoteCounter = 0.f; //소모
 		jumpBufferCounter = 0.f;
+				
+			switch (index)
+			{
+			case 0:
+				animator.Play("animations/Pico_Player_Jump_Final.csv");
+				break;
+			case 1:
+				animator.Play("animations/Pico_Player1_Jump_Final.csv");
+				break;
+			case 2:
+				animator.Play("animations/Pico_Player2_Jump_Final.csv");
+				break;
+			case 3:
+				animator.Play("animations/Pico_Player3_Jump_Final.csv");
+				break;
+			}
+		
+		
 	}
+	
+
+
 
 	if (h != 0.f)
 	{
@@ -510,9 +651,73 @@ void Player::Update(float dt)
 
 	sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
 	deltaPos = after - before; //실제 이동한 차이만 저장된다.
-	
+
 	//std::cout << hitBottom << " / " << hitTop << " / " << velocity.y << " / " << isGrounded << std::endl;
 	// Ani
+
+
+	if (isGrounded && velocity.x == 0 && !animator.IsPlaying())
+	{
+		playeraniinit();
+	}
+
+	
+	
+	float prevH = prevAxis;
+	prevAxis = h;
+
+	bool isDirect = (prevH != 0.f && h != 0.f && prevH != h);
+	
+
+
+	std::string clipId = animator.GetCurrentClipId();
+
+	if (isGrounded && clipId.find("Jump") != std::string::npos)
+	{
+		if (std::abs(h) < 0.1f)
+		{
+			playeraniinit();
+		}
+		else
+		{
+			playeraniwalk();
+		}		
+	}
+
+	if (clipId.find("PushWalk") != std::string::npos && std::abs(h) < 0.1f&&isGrounded)
+	{		
+		//if (isDirect)
+		//{
+		//	playeraniwalk(); // push에서 걷기로		
+		//}
+		/*else if (std::abs(h) < 0.1 && isGrounded)
+		{*/
+			playeraniinit();
+		/*}*/
+
+
+	}
+
+	if (clipId.find("Idle") != std::string::npos && isGrounded && std::abs(h) > 0.1f)
+	{
+		switch (index)
+		{
+		case 0:
+			animator.Play("animations/Pico_Player_walk_right_final.csv");
+			break;
+		case 1:
+			animator.Play("animations/Pico_Player1_walk_right_final.csv");
+			break;
+		case 2:
+			animator.Play("animations/Pico_Player2_walk_right_final.csv");
+			break;
+		case 3:
+			animator.Play("animations/Pico_Player3_walk_right_final.csv");
+			break;
+		}
+	}
+
+
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -523,24 +728,24 @@ void Player::Draw(sf::RenderWindow& window)
 	{
 		hitBox.Draw(window);
 	}
-	
+
 }
 
 sf::Vector2f Player::GetSupportDelta()
 {
 	switch (standing.type)
 	{
-		case StandType::None:
-			return { 0.f, 0.f };
-		case StandType::Platform:
-			return standing.asPlatform()->GetDeltaPos();
-		case StandType::Player:
-		{
-			Player* base = standing.asPlayer();
-			return (base->position - base->prvPos) + base->GetSupportDelta();
-		}
-		case StandType::PushBlock:
-			return standing.asPushBlock()->GetDeltaPos();
+	case StandType::None:
+		return { 0.f, 0.f };
+	case StandType::Platform:
+		return standing.asPlatform()->GetDeltaPos();
+	case StandType::Player:
+	{
+		Player* base = standing.asPlayer();
+		return (base->position - base->prvPos) + base->GetSupportDelta();
+	}
+	case StandType::PushBlock:
+		return standing.asPushBlock()->GetDeltaPos();
 	}
 
 	return { 0.f, 0.f };
@@ -643,3 +848,61 @@ void Player::OnDie()
 	velocity = { 0.f, -100.f };
 
 }
+void Player::playeraniinit()
+{
+	switch (index)
+	{
+	case 0:
+		animator.Play("animations/Pico_Player_Idle_Final.csv");
+		break;
+	case 1:
+		animator.Play("animations/Pico_Player1_Idle_Final.csv");
+		break;
+	case 2:
+		animator.Play("animations/Pico_Player2_Idle_Final.csv");
+		break;
+	case 3:
+		animator.Play("animations/Pico_Player3_Idle_Final.csv");
+		break;
+	}
+
+}
+
+void Player::playeraniwalk()
+{
+	switch (index)
+	{
+	case 0:
+		animator.Play("animations/Pico_Player_walk_right_final.csv");
+		break;
+	case 1:
+		animator.Play("animations/Pico_Player1_walk_right_final.csv");
+		break;
+	case 2:
+		animator.Play("animations/Pico_Player2_walk_right_final.csv");
+		break;
+	case 3:
+		animator.Play("animations/Pico_Player3_walk_right_final.csv");
+		break;
+	}
+}
+
+void Player::playeranipushwalk()
+{
+	switch (index)
+	{
+	case 0:
+		animator.Play("animations/player_pushwalk.csv");
+		break;
+	case 1:
+		animator.Play("animations/player1_pushwalk.csv");
+		break;
+	case 2:
+		animator.Play("animations/player2_pushwalk.csv");
+		break;
+	case 3:
+		animator.Play("animations/player3_pushwalk.csv");
+		break;
+	}
+}
+
