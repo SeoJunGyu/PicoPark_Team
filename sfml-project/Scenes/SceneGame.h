@@ -15,6 +15,14 @@ protected:
 	static std::string pendingStage;
 	static bool isEditor;
 
+	bool  stageClear = false;
+	float clearTime = 0.f;
+
+	sf::Text  clearTxt;
+	sf::Font clearFont;
+	sf::Vector2f fromPos;   // (-Æø, y)
+	sf::Vector2f toPos;     // (¼¾ÅÍ, y)
+
 public:
 	SceneGame();
 	~SceneGame() override;
@@ -28,6 +36,7 @@ public:
 	void LoadStage(const std::string& jsonPath);
 	void ClearStage();
 	void updateCamera(float dt);
+	void StartStageClear();
 	static void SetPendingStage(const std::string& p) { pendingStage = p; }
 	static void applyLetterBox(sf::View& v, sf::Vector2u win);
 	static void SetEditor(const bool& b) { isEditor = b; }

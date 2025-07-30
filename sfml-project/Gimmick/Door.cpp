@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Door.h"
 #include "Player.h"
+#include "SceneGame.h"
 
 Door::Door(nlohmann::json j)
 	: Gimmick(
@@ -65,7 +66,10 @@ void Door::Update(float dt)
 		}
 		else if (opened)
 		{
-			SCENE_MGR.ChangeScene(SceneIds::Select);
+			//SCENE_MGR.ChangeScene(SceneIds::Select);
+			auto* gScene = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
+			if (gScene) gScene->StartStageClear();  
+			return;
 		}
 	}
 	else if (!canOpen)
