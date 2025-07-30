@@ -47,9 +47,10 @@ public:
 
 	bool isDead = false;
 
+	sf::FloatRect prevRect{};
+	sf::Vector2f pendingScale{ -1.f, -1.f };
 protected:
 	Animator animator;
-
 
 	sf::Vector2f prvPos;
 	sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
@@ -82,6 +83,7 @@ public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;
 
+	void ApplyPendingScale();
 	const sf::Vector2f& getPrvPos() const { return prvPos; }
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
