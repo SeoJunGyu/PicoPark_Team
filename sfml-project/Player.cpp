@@ -616,6 +616,8 @@ void Player::Update(float dt)
 
 	std::string clipId = animator.GetCurrentClipId();
 
+	std::cout << isGrounded << std::endl;
+	
 	if (isGrounded && clipId.find("Jump") != std::string::npos)
 	{
 		if (std::abs(h) < 0.1f)

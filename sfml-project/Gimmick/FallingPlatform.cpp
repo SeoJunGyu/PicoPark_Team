@@ -88,6 +88,7 @@ void FallingPlatform::Update(float dt)
 				// 착지 처리
 				p->velocity.y = 0.f;
 				p->isGrounded = true;
+							
 
 				playerOnTop = true;
 				continue;

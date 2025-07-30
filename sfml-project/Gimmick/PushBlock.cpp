@@ -374,6 +374,8 @@ void PushBlock::Update(float dt)
             p->SetPosition({ p->GetPosition().x, p->GetPosition().y - separationY });
             p->velocity.y = 0.f;
             p->isGrounded = true;
+            p->standing.type = StandType::PushBlock;
+            p->standing.ptr = this;
 
             continue;
         }
@@ -415,7 +417,7 @@ sf::Vector2f PushBlock::GetSupportDelta()
     {
     case StandType::None:
         return { 0.f, 0.f };
-    case StandType::Platform:
+    case StandType::Platform: 
         return standing.asPlatform()->GetDeltaPos();
     case StandType::Player:
         return standing.asPlayer()->GetDeltaPos();
