@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gimmick\Ghost.cpp" />
     <ClCompile Include="Scenes\BackGround.cpp" />
     <ClCompile Include="Gimmick\Blinker.cpp" />
     <ClCompile Include="Gimmick\BouncePad.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Ui\YesNoPopupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gimmick\Ghost.h" />
     <ClInclude Include="Scenes\BackGround.h" />
     <ClInclude Include="Gimmick\Blinker.h" />
     <ClInclude Include="Gimmick\BouncePad.h" />

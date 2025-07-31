@@ -1,0 +1,7 @@
+﻿{
+  "name":        "Ghost",
+  "type":        "Ghost",
+  "sprite":      "graphics/Item/ghost.png",
+  "scale":       0.3,
+  "properties": {"shyGhost":  false}
+}

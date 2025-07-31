@@ -136,7 +136,7 @@ void Blinker::Update(float dt)
 		hitBox.UpdateTransform(body, body.getLocalBounds());
 	}
 
-	std::cout << totalTime << currentTime << std::endl;
+	//std::cout << totalTime << currentTime << std::endl;
 
 	Gimmick::Update(dt);
 }

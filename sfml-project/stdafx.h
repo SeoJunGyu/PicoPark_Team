@@ -47,4 +47,5 @@
 #include "RoundPlatform.h"
 #include "PushBlock.h"
 #include "Blinker.h"
+#include "Ghost.h"
 

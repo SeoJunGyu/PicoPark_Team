@@ -25,6 +25,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new PushBlock(j);
 	case GimmickType::Blinker:
 		return new Blinker(j);
+	case GimmickType::Ghost:
+		return new Ghost(j);
 	}
 
 	return nullptr;

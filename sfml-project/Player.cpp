@@ -212,9 +212,9 @@ void Player::Update(float dt)
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	int ts = tilemap->GetTileSize();
 	int leftTx = int(hitBox.GetLeft() / ts);
-	int rightTx = int((hitBox.GetRight() + 0.2f) / ts);
-	int topTy = int((hitBox.GetTop() + 0.2f) / ts);
-	int botTy = int((hitBox.GetBottom() + 0.2f) / ts);
+	int rightTx = int((hitBox.GetRight()) / ts);
+	int topTy = int((hitBox.GetTop()) / ts);
+	int botTy = int((hitBox.GetBottom()) / ts);
 
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitLeft = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(leftTx, botTy);
@@ -289,9 +289,9 @@ void Player::Update(float dt)
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	leftTx = int(hitBox.GetLeft() / ts);
-	rightTx = int((hitBox.GetRight() - 0.2f) / ts);
-	topTy = int((hitBox.GetTop() - 0.2f) / ts);
-	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
+	rightTx = int((hitBox.GetRight()) / ts);
+	topTy = int((hitBox.GetTop()) / ts);
+	botTy = int((hitBox.GetBottom()) / ts);
 
 	float footMargin = 0.5f; //벽타일 제외용 여유
 	int footLeftTx = int((hitBox.GetLeft() + footMargin) / ts);

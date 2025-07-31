@@ -67,6 +67,7 @@ enum class GimmickType
 	PushBlock,
 	ColorPushBlock,
 	Rope,
+	Ghost,
 	//플레이어 관련
 	PlayerSpawn,
 	Count,
