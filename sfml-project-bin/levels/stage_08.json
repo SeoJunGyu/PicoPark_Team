@@ -1,0 +1,2075 @@
+{
+  "author": "GHY",
+  "description": "JUMP MAP BY 1P",
+  "entities": [
+    {
+      "id": 1933,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 208,
+      "y": 272
+    },
+    {
+      "id": 1934,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 272
+    },
+    {
+      "id": 1935,
+      "properties": {
+        "channel": 1,
+        "dontPush": false,
+        "latch": true,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 0,
+      "y": 352
+    },
+    {
+      "id": 1936,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 16,
+      "y": 352
+    },
+    {
+      "id": 1937,
+      "properties": {
+        "channel": 1,
+        "loop": false,
+        "path": [
+          [
+            288,
+            352
+          ],
+          [
+            283,
+            282
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.4699998199939728,
+        0.7099996209144592
+      ],
+      "type": "MovingPlatform",
+      "x": 288,
+      "y": 352
+    },
+    {
+      "id": 1938,
+      "properties": {
+        "Bounce": 300.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 304,
+      "y": 352
+    },
+    {
+      "id": 1939,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 0,
+      "y": 368
+    },
+    {
+      "id": 1940,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 16,
+      "y": 368
+    },
+    {
+      "id": 1941,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 32,
+      "y": 368
+    },
+    {
+      "id": 1942,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 48,
+      "y": 368
+    },
+    {
+      "id": 1943,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 64,
+      "y": 368
+    },
+    {
+      "id": 1944,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 80,
+      "y": 368
+    },
+    {
+      "id": 1945,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 96,
+      "y": 368
+    },
+    {
+      "id": 1946,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 112,
+      "y": 368
+    },
+    {
+      "id": 1947,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 368
+    },
+    {
+      "id": 1948,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 144,
+      "y": 368
+    },
+    {
+      "id": 1949,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 160,
+      "y": 368
+    },
+    {
+      "id": 1950,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 176,
+      "y": 368
+    },
+    {
+      "id": 1951,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 192,
+      "y": 368
+    },
+    {
+      "id": 1952,
+      "properties": {
+        "RandFall": 100.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.3699999451637268,
+        0.3699999451637268
+      ],
+      "type": "RoundPlatform",
+      "x": 208,
+      "y": 368
+    },
+    {
+      "id": 1953,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 368
+    },
+    {
+      "id": 1954,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 256,
+      "y": 368
+    },
+    {
+      "id": 1955,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 272,
+      "y": 368
+    },
+    {
+      "id": 1956,
+      "scale": [
+        0.10000000149011612,
+        0.12999999523162842
+      ],
+      "type": "Key",
+      "x": 288,
+      "y": 368
+    },
+    {
+      "id": 1957,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 304,
+      "y": 368
+    },
+    {
+      "id": 1958,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 272,
+      "y": 384
+    },
+    {
+      "id": 1959,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 288,
+      "y": 384
+    },
+    {
+      "id": 1960,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 304,
+      "y": 384
+    },
+    {
+      "id": 1961,
+      "properties": {
+        "Bounce": 300.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 240,
+      "y": 448
+    },
+    {
+      "id": 1962,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 240,
+      "y": 464
+    },
+    {
+      "id": 1963,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 480
+    },
+    {
+      "id": 1964,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 176,
+      "y": 480
+    },
+    {
+      "id": 1965,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 480
+    },
+    {
+      "id": 1966,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 240,
+      "y": 480
+    },
+    {
+      "id": 1967,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 48,
+      "y": 496
+    },
+    {
+      "id": 1968,
+      "properties": {
+        "fallDelay": 0.10000000149011612,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.3299999535083771,
+        0.3299999535083771
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 496
+    },
+    {
+      "id": 1969,
+      "properties": {
+        "fallDelay": 0.10000000149011612,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.3299999535083771,
+        0.3299999535083771
+      ],
+      "type": "FallingPlatform",
+      "x": 80,
+      "y": 496
+    },
+    {
+      "id": 1970,
+      "properties": {
+        "fallDelay": 0.10000000149011612,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.3299999535083771,
+        0.3299999535083771
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 496
+    },
+    {
+      "id": 1971,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 112,
+      "y": 496
+    },
+    {
+      "id": 1972,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 496
+    },
+    {
+      "id": 1973,
+      "properties": {
+        "Bounce": 300.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 32,
+      "y": 576
+    },
+    {
+      "id": 1974,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 0,
+      "y": 592
+    },
+    {
+      "id": 1975,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 16,
+      "y": 592
+    },
+    {
+      "id": 1976,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 32,
+      "y": 592
+    },
+    {
+      "id": 1977,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 0,
+      "y": 608
+    },
+    {
+      "id": 1978,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 16,
+      "y": 608
+    },
+    {
+      "id": 1979,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 32,
+      "y": 608
+    },
+    {
+      "id": 1980,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 0,
+      "y": 784
+    },
+    {
+      "id": 1981,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 16,
+      "y": 784
+    },
+    {
+      "id": 1982,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 32,
+      "y": 784
+    },
+    {
+      "id": 1983,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 48,
+      "y": 784
+    },
+    {
+      "id": 1984,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 64,
+      "y": 784
+    },
+    {
+      "id": 1985,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 80,
+      "y": 784
+    },
+    {
+      "id": 1986,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 96,
+      "y": 784
+    },
+    {
+      "id": 1987,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 112,
+      "y": 784
+    },
+    {
+      "id": 1988,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 784
+    },
+    {
+      "id": 1989,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 144,
+      "y": 784
+    },
+    {
+      "id": 1990,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 160,
+      "y": 784
+    },
+    {
+      "id": 1991,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 176,
+      "y": 784
+    },
+    {
+      "id": 1992,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 192,
+      "y": 784
+    },
+    {
+      "id": 1993,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 208,
+      "y": 784
+    },
+    {
+      "id": 1994,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 784
+    },
+    {
+      "id": 1995,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 240,
+      "y": 784
+    },
+    {
+      "id": 1996,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 256,
+      "y": 784
+    },
+    {
+      "id": 1997,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 272,
+      "y": 784
+    },
+    {
+      "id": 1998,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 288,
+      "y": 784
+    },
+    {
+      "id": 1999,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.40999990701675415,
+        0.40999990701675415
+      ],
+      "type": "RoundPlatform",
+      "x": 304,
+      "y": 784
+    }
+  ],
+  "gridHeight": 50,
+  "gridWidth": 20,
+  "layers": [
+    {
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}
