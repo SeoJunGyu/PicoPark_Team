@@ -23,6 +23,8 @@ protected:
 	sf::Vector2f fromPos;   // (-Æø, y)
 	sf::Vector2f toPos;     // (¼¾ÅÍ, y)
 
+	bool gameClearPlayed = false;
+
 public:
 	SceneGame();
 	~SceneGame() override;

@@ -345,9 +345,12 @@ void SceneGame::Init()
 
     SOUNDBUFFER_MGR.Load("audio/03Doremi.mp3");
     SOUNDBUFFER_MGR.Load("audio/key.mp3");
-    SOUNDBUFFER_MGR.Load("audio/lockDoor.mp3");
-    SOUNDBUFFER_MGR.Load("audio/button.mp3");
+    SOUNDBUFFER_MGR.Load("audio/opendoor.mp3");
+    SOUNDBUFFER_MGR.Load("audio/buttonclick.mp3");
     SOUNDBUFFER_MGR.Load("audio/jump.mp3");
+    SOUNDBUFFER_MGR.Load("audio/gameclear.mp3");
+    SOUNDBUFFER_MGR.Load("audio/enterdoor.mp3");
+
 
     level = new Level();
     tileMap = new TileMap();
@@ -370,6 +373,7 @@ void SceneGame::StartStageClear()
     if (stageClear) return;              
     stageClear = true;
     clearTime = 0.f;
+    gameClearPlayed = true;
 
     sf::Vector2u winSize = FRAMEWORK.GetWindow().getSize();
     sf::FloatRect vp = worldView.getViewport();
@@ -382,10 +386,10 @@ void SceneGame::StartStageClear()
         vp.top * winSize.y + vpSize.y * 0.5f };
     fromPos = { toPos.x - worldView.getSize().x * 2.f,
                toPos.y };
-
+  
     clearTxt.setPosition(fromPos);
-
-    for (auto* p : Variables::players) p->SetActive(false);
+  
+  /*  for (auto* p : Variables::players) p->SetActive(false);*/
 }
 
 void SceneGame::Enter()
@@ -393,7 +397,7 @@ void SceneGame::Enter()
     Scene::Enter();   
 
     SOUND_MGR.PlayBgm("audio/03Doremi.mp3", true);
-    SOUND_MGR.SetBgmVolume(60);
+    SOUND_MGR.SetBgmVolume(50);
 
     std::string path = pendingStage.empty()
         ? "levels/stage_tmp.json"
@@ -430,6 +434,8 @@ void SceneGame::Enter()
 //worldView.setViewport(vp);
 
 //FRAMEWORK.GetWindow().setView(worldView);
+
+    
 }
 
 void SceneGame::Update(float dt)
@@ -438,6 +444,11 @@ void SceneGame::Update(float dt)
 
     if (stageClear)            
     {
+        if (gameClearPlayed)
+        {
+            SOUND_MGR.PlaySfx("audio/gameclear.mp3", false);
+            gameClearPlayed = false;
+        }
         constexpr float SLIDE_DUR = 1.0f;   // 텍스트 이동 1초
         constexpr float HOLD_DUR = 1.0f;   // 중앙에서 1초 정지
         clearTime += dt;
