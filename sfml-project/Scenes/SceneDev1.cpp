@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "SceneDev1.h"
 #include "TextGo.h"
 #include "Framework.h"

@@ -64,20 +64,6 @@ void Player::Init()
 {
 	animator.SetTarget(&body);
 
-	animator.AddEvent("Idle", 0,
-		[]()
-		{
-			std::cout << "!!" << std::endl;
-		}
-	);
-
-	animator.AddEvent("Idle", 0,
-		[]()
-		{
-			std::cout << "??" << std::endl;
-		}
-	);
-
 	isGrounded = false;
 }
 
@@ -562,21 +548,25 @@ void Player::Update(float dt)
 		coyoteCounter = 0.f; //소모
 		jumpBufferCounter = 0.f;
 
-		switch (index)
+		if (!isDead)
 		{
-		case 0:
-			animator.Play("animations/Pico_Player_Jump_Final.csv");
-			break;
-		case 1:
-			animator.Play("animations/Pico_Player1_Jump_Final.csv");
-			break;
-		case 2:
-			animator.Play("animations/Pico_Player2_Jump_Final.csv");
-			break;
-		case 3:
-			animator.Play("animations/Pico_Player3_Jump_Final.csv");
-			break;
+			switch (index)
+			{
+			case 0:
+				animator.Play("animations/Pico_Player_Jump_Final.csv");
+				break;
+			case 1:
+				animator.Play("animations/Pico_Player1_Jump_Final.csv");
+				break;
+			case 2:
+				animator.Play("animations/Pico_Player2_Jump_Final.csv");
+				break;
+			case 3:
+				animator.Play("animations/Pico_Player3_Jump_Final.csv");
+				break;
+			}
 		}
+		
 	}
 
 	if (h != 0.f)
@@ -754,6 +744,9 @@ void Player::OnDie()
 {
 	isDead = true;
 	deathTimer = 0.f;
+
+	animator.Stop();
+
 	switch (index)
 	{
 	case 0:
@@ -770,6 +763,7 @@ void Player::OnDie()
 		break;
 	}
 	velocity = { 0.f, -100.f };
+
 
 }
 void Player::playeraniinit()
