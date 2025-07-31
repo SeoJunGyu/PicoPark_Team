@@ -343,6 +343,8 @@ void SceneGame::Init()
     ANI_CLIP_MGR.Load("animations/Pico_Player3_walk_right_final.csv");
     ANI_CLIP_MGR.Load("animations/player3_pushwalk.csv");
 
+    SOUNDBUFFER_MGR.Load("audio/03Doremi.mp3");
+
     level = new Level();
     tileMap = new TileMap();
 
@@ -385,6 +387,10 @@ void SceneGame::StartStageClear()
 void SceneGame::Enter()
 {
     Scene::Enter();   
+
+    SOUND_MGR.PlayBgm("audio/03Doremi.mp3", true);
+    SOUND_MGR.SetBgmVolume(60);
+
     std::string path = pendingStage.empty()
         ? "levels/stage_tmp.json"
         : std::move(pendingStage);
