@@ -609,6 +609,10 @@ void SceneEditor::LoadLevelFromJson(const std::string& path)
     std::snprintf(desc, sizeof(desc), "%s", j.value("description", "").c_str());
 
     ResizeGrid(j["gridWidth"], j["gridHeight"]);
+
+    pendingW = j["gridWidth"];
+    pendingH = j["gridHeight"];
+
     grid.tileSize = j["tileSize"];
 
     grid.tiles = j["layers"][0]["data"].get<std::vector<int>>();

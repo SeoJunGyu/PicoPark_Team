@@ -61,6 +61,15 @@ void Player::SetOrigin(Origins preset)
 	}
 }
 
+void Player::PlayLandAnim()
+{
+	//std::cout << "대기 상태 호출" << std::endl;
+	if (std::abs(velocity.x) < 0.01f)
+		playeraniinit();
+	else
+		playeraniwalk();
+}
+
 void Player::Init()
 {
 	animator.SetTarget(&body);
@@ -116,6 +125,7 @@ void Player::Reset()
 
 void Player::Update(float dt)
 {
+	bool wasGrounded = isGrounded;
 	ApplyPendingScale();
 	if (isDead)
 	{
@@ -294,7 +304,7 @@ void Player::Update(float dt)
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	leftTx = int(hitBox.GetLeft() - 0.2f / ts);
+	leftTx = int(hitBox.GetLeft() / ts);
 	rightTx = int((hitBox.GetRight() - 0.2f) / ts);
 	topTy = int((hitBox.GetTop() - 0.2f) / ts);
 	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
@@ -304,6 +314,7 @@ void Player::Update(float dt)
 	int footRightTx = int((hitBox.GetRight() - footMargin) / ts);
 
 	bool hitBottom = tilemap->isSolid(footLeftTx, botTy) || tilemap->isSolid(footRightTx, botTy);
+
 	bool hitTop = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(rightTx, topTy);
 
 	bool wasGround = isGrounded;
@@ -317,11 +328,6 @@ void Player::Update(float dt)
 			velocity.y = 0.f;
 			isGrounded = true;  // 착지
 			//isFallen = false;
-
-			if (std::abs(velocity.x) < 0.01f)
-			{
-				playeraniinit();
-			}
 		}
 		else
 		{
@@ -334,6 +340,7 @@ void Player::Update(float dt)
 	}
 	else if (velocity.y < 0.f && hitTop)
 	{
+		//std::cout << "머리 충돌 확인" << std::endl;
 		position.y = prvPos.y;
 		//position.y = std::floor((topTy + 1) * ts);
 		velocity.y = 0.f;
@@ -373,11 +380,6 @@ void Player::Update(float dt)
 				standing.type = StandType::Platform;
 				standing.ptr = plat;
 				velocity.y = 0.f;
-
-				if (std::abs(velocity.x) < 0.01f)
-				{
-					playeraniinit();
-				}
 			}
 			else if (info.normal.y > 0.f) //플랫폼 하단 충돌
 			{
@@ -596,11 +598,6 @@ void Player::Update(float dt)
 	// Ani
 
 
-	if (isGrounded && std::abs(velocity.x) < 0.01f && !animator.IsPlaying())
-	{
-		playeraniinit();
-	}
-
 	float prevH = prevAxis;
 	prevAxis = h;
 
@@ -608,32 +605,8 @@ void Player::Update(float dt)
 
 	std::string clipId = animator.GetCurrentClipId();
 
-	if (isGrounded && clipId.find("Jump") != std::string::npos)
-	{
-		if (std::abs(h) < 0.1f)
-		{
-			playeraniinit();
-		}
-		else
-		{
-			playeraniwalk();
-		}
-	}
-	if (clipId.find("Walk") != std::string::npos && std::abs(h) < 0.1f && isGrounded)
-	{
-		playeraniinit();
-	}
-
-	if (clipId.find("PushWalk") != std::string::npos && std::abs(h) < 0.1f && isGrounded)
-	{		
-		playeraniinit();		
-	}
-
-	if (clipId.find("Idle") != std::string::npos && isGrounded && std::abs(h) > 0.1f)
-	{
-		playeraniwalk();
-	}
-
+	if (!wasGrounded && isGrounded)          
+		PlayLandAnim();
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -764,6 +737,9 @@ void Player::OnDie()
 		body.setTexture(TEXTURE_MGR.Get("graphics/Characters/Player3_Death.png"));
 		break;
 	}
+
+	body.setTextureRect(sf::IntRect(0, 0, 100, 124));   
+
 	velocity = { 0.f, -100.f };
 
 
