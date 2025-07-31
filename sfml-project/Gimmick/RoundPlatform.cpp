@@ -44,7 +44,7 @@ void RoundPlatform::Reset()
 
 void RoundPlatform::Update(float dt)
 {
-	if (randFall != 0.f)
+	if (randFall != 0.f || playerKill)
 	{
 		hitBox.rect.setFillColor(sf::Color::Red);
 	}
