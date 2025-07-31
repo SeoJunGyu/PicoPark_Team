@@ -122,6 +122,10 @@ bool TileMap::load(const Level& lvl, int solidStart)
 //벽 또는 바닥 확인
 bool TileMap::isSolid(int tx, int ty) const
 {
+	if (tx < 0 || tx >= width ||
+		ty < 0 || ty >= height)
+		return false;          // <- 바깥은 비어있다고 처리
+
 	int id = getTile(tx, ty);
 
 	return id >= firstSolid && id != 0; //타일 ID가 1(충돌)보다 크거나 0이 아닐 경우 true
@@ -140,11 +144,8 @@ int TileMap::getTile(int tx, int ty) const
 
 void TileMap::setTile(int tx, int ty, int id)
 {
-	if (tx < 0 || tx >= width || ty <= 0 || ty >= height)
-	{
+	if (tx < 0 || tx >= width || ty < 0 || ty >= height)   // ty<=0 → ty<0
 		return;
-	}
 
 	tiles[ty * width + tx] = id;
-	//load({ width, height, tileSize, tiles }, firstSolid); //전체 타일맵 재빌드
 }

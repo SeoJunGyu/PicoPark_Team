@@ -65,6 +65,8 @@ void RoundPlatform::Update(float dt)
 
 		for (Player* p : Variables::players)
 		{
+			if (p->isDead)          
+				continue;
 			sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
 
 			CollisionInfo info = Utils::GetAABBCollision(pBox, platBox);
@@ -94,6 +96,7 @@ void RoundPlatform::Update(float dt)
 			// 윗면 충돌
 			if (info.normal.y < -0.5f && p->velocity.y > 0.f)
 			{
+				bool prevGround = p->isGrounded;
 				if (playerKill)
 				{
 					for (Player* player : Variables::players)
@@ -114,6 +117,9 @@ void RoundPlatform::Update(float dt)
 				// 착지 처리
 				p->velocity.y = 0.f;
 				p->isGrounded = true;
+
+				if (!prevGround)                   
+					p->PlayLandAnim();
 
 				playerOnTop = true;
 				continue;
