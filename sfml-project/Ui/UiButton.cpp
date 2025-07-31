@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UiButton.h"
 #include "Scene.h"
-
+UiButton* UiButton::lastHovered = nullptr;
 UiButton::UiButton(const std::string& name)
 	: GameObject(name)
 {
@@ -137,18 +137,20 @@ void UiButton::Release()
 
 void UiButton::Reset()
 {
+	enterLock = false;
 }
 
 void UiButton::Update(float dt)
 {
-	effectdrawon = false;
-
+	
 	if (enterLock)
 	{
-		if (!InputMgr::GetMouseButtonUp(sf::Mouse::Left))
+		if (!InputMgr::GetMouseButton(sf::Mouse::Left))
+		{
 			enterLock = false;
-		/*yesnolock = false;*/
-		return;
+			return;
+		}
+		
 	}
 
 	bool hovered = sprite.getGlobalBounds().contains((sf::Vector2f)InputMgr::GetMousePosition()) ||
@@ -158,6 +160,12 @@ void UiButton::Update(float dt)
 
 	if (hovered)
 	{
+		if (lastHovered != this && lastHovered != nullptr)
+		{
+			lastHovered->effectdrawon = false;  // 이전 버튼 효과 끄기
+		}
+
+		lastHovered = this;
 		effectdrawon = true;
 				
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
@@ -168,14 +176,7 @@ void UiButton::Update(float dt)
 			enterLock = true;
 		}
 	}
-	//else if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
-	//{
-	//	//if (event)
-	//		//event();
-	//	enterLock = true;
-	//	/*yesnolock = true;*/
-	//}
-	
+		
 
 	if (useeffect && effectdrawon)
 	{

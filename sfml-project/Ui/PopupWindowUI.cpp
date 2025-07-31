@@ -86,7 +86,7 @@ void PopupWindowUI::Init()
 			}
 			startbut[currentPage]->SetActive(true);
 		});
-	closebut->SetCallBack([this]() {this->SetActive(false);	enterLock = true; });
+	closebut->SetCallBack([this]() {this->SetActive(false);	});
 
 
 }
@@ -205,7 +205,7 @@ void PopupWindowUI::Reset()
 	Exit->SetCallBack([this]() {
 		yesno->SetText("    EXIT GAME", "fonts/Pixelownfont-Regular.ttf", 50);
 		yesno->Reset();
-		yesno->SetActive(true);
+		yesno->SetActive(true);		
 		drawon = false;
 		yesno->yesbut->SetCallBack([]() {
 			SOUND_MGR.StartFadeOut();			
@@ -228,21 +228,21 @@ void PopupWindowUI::Reset()
 void PopupWindowUI::Update(float dt)
 {	
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Right)||
-		InputMgr::GetKeyDown(sf::Keyboard::D))
+	if (!yesno->GetActive()&& (InputMgr::GetKeyDown(sf::Keyboard::Right) ||
+		InputMgr::GetKeyDown(sf::Keyboard::D)))
 	{
 		Rightbut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Left)||
-		InputMgr::GetKeyDown(sf::Keyboard::A))
+	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Left)||
+		InputMgr::GetKeyDown(sf::Keyboard::A)))
 	{
 		Leftbut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Escape)))
 	{
 		closebut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Enter)))
 	{
 		if (Exit->GetActive()) {
 			Exit->Trigger();
@@ -295,7 +295,12 @@ void PopupWindowUI::Update(float dt)
 			}
 			isSceneChanging = false;			
 		}				
-	}	
+	}
+
+	if (!yesno->GetActive() && !drawon)
+	{
+		drawon = true;  // YesNo 창이 꺼졌고, 메인 팝업도 안 보이면 다시 활성화
+	}
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)

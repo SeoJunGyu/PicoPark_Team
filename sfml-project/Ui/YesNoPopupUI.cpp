@@ -61,6 +61,9 @@ void YesNoPopupUI::Init()
 	yesbut = new UiButton("Yes");
 	nobut = new UiButton("No");
 	closebut = new UiButton("Close");
+
+	yesnobut.push_back(yesbut);
+	yesnobut.push_back(nobut);
 	
 
 	/*this->SetActive(false);*/
@@ -96,7 +99,6 @@ void YesNoPopupUI::Reset()
 	yesbut->SetPosition({ sprpos.x -200.f,sprpos.y + 100.f });
 	yesbut->useeffect = true;
 
-
 	nobut->SetText("NO", "fonts/Pixelownfont-Regular.ttf", 50);
 	nobut->SetColor(sf::Color::Black);
 	nobut->GetGlobalBounds();
@@ -104,9 +106,8 @@ void YesNoPopupUI::Reset()
 	nobut->useeffect = true;
 	nobut->SetCallBack([this]()
 		{
+			this->Reset();
 			this->SetActive(false);
-			this->Reset();			
-
 		});
 
 	closebut->SetText("X", "fonts/PixelOperator8.ttf", 25);
@@ -115,10 +116,14 @@ void YesNoPopupUI::Reset()
 	closebut->SetPosition({ sprpos.x + spr.width*0.5f-40.f ,spr.top+10.f });	
 	closebut->SetCallBack([this]()
 		{
-			this->SetActive(false);
 			this->Reset();
+			this->SetActive(false);			
 		});
-
+	for (auto btn : yesnobut)
+		btn->effectdrawon = false;
+	yesnobutindex = 1;
+	yesnobut[1]->effectdrawon = true;
+	enterLock = true;
 }
 
 void YesNoPopupUI::Update(float dt)
@@ -127,16 +132,41 @@ void YesNoPopupUI::Update(float dt)
 	nobut->Update(dt);
 	closebut->Update(dt);
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num1)) {
-		yesbut->Trigger();
+	if (enterLock)
+	{
+		if (!InputMgr::GetKey(sf::Keyboard::Enter)) // 키가 올라간 뒤
+			enterLock = false;
+		return; // 잠금 중이면 키 입력 안 받음
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Num2)) {
-		nobut->Trigger();
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left)||
+		InputMgr::GetKeyDown(sf::Keyboard::A))
+	{
+		for (auto btn : yesnobut)
+			btn->effectdrawon = false;
+
+		yesnobutindex = (yesnobutindex + yesnobut.size() + 1) % yesnobut.size();
+		yesnobut[yesnobutindex]->effectdrawon=true;
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right) ||
+		InputMgr::GetKeyDown(sf::Keyboard::D))
+	{
+		for (auto btn : yesnobut)
+			btn->effectdrawon = false;
+
+		yesnobutindex = (yesnobutindex + yesnobut.size() - 1) % yesnobut.size();
+		yesnobut[yesnobutindex]->effectdrawon = true;
+	}	
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		yesnobut[yesnobutindex]->Trigger();
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
 		closebut->Trigger();
 	}
+	
+
 }
 
 void YesNoPopupUI::Draw(sf::RenderWindow& window)

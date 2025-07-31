@@ -389,7 +389,7 @@ void SceneGame::StartStageClear()
   
     clearTxt.setPosition(fromPos);
   
-  /*  for (auto* p : Variables::players) p->SetActive(false);*/
+    for (auto* p : Variables::players) p->SetActive(false);
 }
 
 void SceneGame::Enter()

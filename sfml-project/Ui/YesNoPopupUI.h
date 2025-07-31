@@ -14,7 +14,8 @@ protected:
     
     UiButton* nobut;
     UiButton* closebut;
-        
+    std::vector<UiButton*> yesnobut;
+
     sf::FloatRect spr;
 
     sf::RectangleShape outline;
@@ -22,6 +23,9 @@ protected:
     float speed = 5.f;       
     float amplitude = 0.05f; 
 
+    int yesnobutindex = 0;
+
+    bool enterLock = false;
 
 public:
     UiButton* yesbut;
