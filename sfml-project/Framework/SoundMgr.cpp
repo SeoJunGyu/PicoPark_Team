@@ -27,6 +27,18 @@ void SoundMgr::Release()
 
 void SoundMgr::Update(float dt)
 {
+	if (isFadingout)
+	{
+		bgmVolume -= fadeSpeed * dt;
+		if (bgmVolume <= 0.f)
+		{
+			bgmVolume = 0.f;
+			isFadingout = false;
+			bgm.stop();
+		}
+		bgm.setVolume(bgmVolume);
+	}
+
 	auto it = playing.begin();
 	while (it != playing.end())
 	{

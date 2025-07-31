@@ -23,8 +23,8 @@ void SceneTitle::Init()
 	fontIds.push_back("fonts/PixelOperator.ttf");	;
 	fontIds.push_back("fonts/PixelOperator8.ttf");//X¹öÆ°
 	fontIds.push_back("fonts/Pixelownfont-Regular.ttf");
-
 	
+	SOUNDBUFFER_MGR.Load("audio/01Spring.mp3");
 
 
 	titlebackground = new BackGround("Startbackground");
@@ -45,7 +45,9 @@ void SceneTitle::Init()
 void SceneTitle::Enter()
 {
 	Scene::Enter();
-	
+	SOUND_MGR.PlayBgm("audio/01Spring.mp3", true);
+	SOUND_MGR.SetBgmVolume(50);
+
 	auto size = FRAMEWORK.GetWindowSizeF();
 
 	worldView.setSize(size);
@@ -62,7 +64,7 @@ void SceneTitle::Enter()
 	startButton->GetGlobalBounds();
 	startButton->SetActive(true);
 
-
+	popup->SetBackground(titlebackground);
 	popup->SetActive(false);
 }
 void SceneTitle::Update(float dt)

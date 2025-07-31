@@ -143,5 +143,6 @@ public:
 	sf::Vector2f GetDeltaPos() const { return deltaPos; }
 
 	void OnDie();
+ std::string Getanimator() { return animator.GetCurrentClipId(); }
 };
 

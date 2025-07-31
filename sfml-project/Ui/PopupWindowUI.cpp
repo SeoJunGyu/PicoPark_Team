@@ -5,6 +5,7 @@
 #include "YesNoPopupUI.h"
 #include "SceneGame.h"
 #include "Framework.h"
+#include "BackGround.h"
 
 //bool UiButton::yesnolock = false;
 
@@ -114,11 +115,11 @@ void PopupWindowUI::Reset()
 	sprite.setTexture(TEXTURE_MGR.Get("graphics/startbut.png"));
 	sprite.setScale(1.5f, 1.5f);
 	Utils::SetOrigin(sprite, Origins::MC);
-	
-	
+
+
 
 	spr = sprite.getLocalBounds();
-	
+
 	float sprlocalx = (spr.width * sprite.getScale().x) * 0.5f;
 	float sprlocaly = (spr.height * sprite.getScale().y) * 0.5f;
 
@@ -138,50 +139,26 @@ void PopupWindowUI::Reset()
 		startbut[i]->SetTextstyle(button[i]);
 		startbut[i]->GetGlobalBounds();
 		startbut[i]->SetColor(sf::Color::Black);
-		startbut[i]->SetPosition({ sprlocalx +425.f, sprite.getPosition().y+70.f });
+		startbut[i]->SetPosition({ sprlocalx + 425.f, sprite.getPosition().y + 70.f });
 		startbut[i]->SetOrigin(Origins::MC);
 		startbut[i]->SetActive(false);
-		/*switch (i)
-		{
-		case 0:
-			startbut[i]->SetCallBack([this]()
-				{
-					SceneGame::SetPendingStage("levels/stage_01.json");
-					SCENE_MGR.ChangeScene(SceneIds::Game);
-				});
-			break;
-		case 1:
-			startbut[i]->SetCallBack([this]()
-				{
-					SCENE_MGR.ChangeScene(SceneIds::Editor);
-				});
-			break;
-		case 2:
-			startbut[i]->SetCallBack([this]()
-				{
-					FRAMEWORK.GetWindow().close();
-				});
-			break;
-		default:
-			break;
-		}*/
 
 	}
 
 	Rightbut->SetSprit("graphics/rightbut.png");
 	Rightbut->GetGlobalBounds();
 	Rightbut->SetScale({ 2.f,2.f });
-	Rightbut->SetPosition({ sprite.getPosition().x+sprlocalx-120.f ,sprite.getPosition().y + 50.f });
+	Rightbut->SetPosition({ sprite.getPosition().x + sprlocalx - 120.f ,sprite.getPosition().y + 50.f });
 
 	Leftbut->SetSprit("graphics/rightbut.png");
 	Leftbut->SetScale({ -2.f, 2.f });
 	Leftbut->GetGlobalBounds();
-	Leftbut->SetPosition({ sprite.getPosition().x-sprlocalx+120.f,sprite.getPosition().y + 50.f });
+	Leftbut->SetPosition({ sprite.getPosition().x - sprlocalx + 120.f,sprite.getPosition().y + 50.f });
 
 	closebut->SetText("X", "fonts/PixelOperator8.ttf", 20);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprite.getPosition().x + sprlocalx -30.f,sprite.getPosition().y-sprlocaly+30.f });
+	closebut->SetPosition({ sprite.getPosition().x + sprlocalx - 30.f,sprite.getPosition().y - sprlocaly + 30.f });
 
 	startbut[currentPage]->SetActive(true);
 
@@ -192,7 +169,17 @@ void PopupWindowUI::Reset()
 			yesno->Reset();
 			yesno->SetActive(true);
 			drawon = false;
-			yesno->yesbut->SetCallBack([=]() {SCENE_MGR.ChangeScene(SceneIds::Select); });
+			yesno->yesbut->SetCallBack([=]() {
+				if (background)
+				{
+					background->StartFadeOut();					
+				}
+				SOUND_MGR.StartFadeOut();		
+				isSceneChanging = true;
+				onSceneChange = [this]() {
+					SCENE_MGR.ChangeScene(SceneIds::Select);
+					};				
+				});
 
 		});
 	Editor->SetCallBack([this]()
@@ -201,7 +188,18 @@ void PopupWindowUI::Reset()
 			yesno->Reset();
 			yesno->SetActive(true);
 			drawon = false;
-			yesno->yesbut->SetCallBack([]() {SCENE_MGR.ChangeScene(SceneIds::Editor); });
+			yesno->yesbut->SetCallBack([=]() {
+				if (background)
+				{
+					background->StartFadeOut();
+				}
+				SOUND_MGR.StartFadeOut();	
+				isSceneChanging = true;
+				onSceneChange = [this]()
+					{
+						SCENE_MGR.ChangeScene(SceneIds::Editor);
+					};				
+				});
 
 		});
 	Exit->SetCallBack([this]() {
@@ -209,19 +207,29 @@ void PopupWindowUI::Reset()
 		yesno->Reset();
 		yesno->SetActive(true);
 		drawon = false;
-		yesno->yesbut->SetCallBack([]() {FRAMEWORK.GetWindow().close();	});
+		yesno->yesbut->SetCallBack([]() {
+			SOUND_MGR.StartFadeOut();			
+			FRAMEWORK.GetWindow().close();	
+			});
 
 		});
+
+
 
 	if (yesno != nullptr)
 		yesno->Reset();
 	yesno->SetActive(false);
 
+
+
+	isSceneChanging = false;
+	onSceneChange = nullptr;
 }
 
 
 void PopupWindowUI::Update(float dt)
-{
+{	
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
 	{
 		Rightbut->Trigger();
@@ -273,17 +281,28 @@ void PopupWindowUI::Update(float dt)
 		Leftbut->SetSprit("graphics/rightbut.png");
 	}
 	if (yesno->GetActive())
+	{
+		yesno->Update(dt);
+	}
 
-		
-			yesno->Update(dt);
-		
+	if (isSceneChanging)
+	{
+		if (background->IsFadeOutComplete())
+		{		
+			if (onSceneChange)
+			{
+				onSceneChange();  // fade 완료 후 씬 전환
+			}
+			isSceneChanging = false;			
+		}				
+	}
+	
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)
 {
 	if (drawon)
-	{
-		std::cout << "그려지는중" << std::endl;
+	{		
 		window.draw(sprite);
 
 		if (startbut[currentPage]->GetActive())
@@ -296,6 +315,10 @@ void PopupWindowUI::Draw(sf::RenderWindow& window)
 	if (yesno->GetActive())
 	{
 		yesno->Draw(window);
+	}
+	if (background && background->isFadingout)  // 또는 fade 중 조건
+	{
+		window.draw(background->whiteOverlay);
 	}
 
 

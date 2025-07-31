@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "BackGround.h"
 
 Scene::Scene(SceneIds id)
 	: Id(id)
@@ -36,6 +37,8 @@ void Scene::Enter()
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);
+
+	BackGround::isFadingout = false;
 
 	for (auto obj : gameObjects)
 	{

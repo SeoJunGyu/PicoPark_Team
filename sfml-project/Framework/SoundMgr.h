@@ -18,6 +18,8 @@ protected:
 
 	float sfxVolume = 100.f;
 	float bgmVolume = 100.f;
+	float fadeSpeed = 100.f;
+	bool isFadingout = false;
 
 public:
 
@@ -39,6 +41,8 @@ public:
 
 	void PlaySfx(std::string id, bool loop = false);
 	void PlaySfx(sf::SoundBuffer& buffer, bool loop = false);
+
+	void StartFadeOut() { isFadingout = true; }
 
 	void StopAllSfx();
 };
