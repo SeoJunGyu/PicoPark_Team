@@ -125,6 +125,10 @@ void UiButton::Init()
 	sortingOrder = 1;
 
 	SetOrigin(Origins::MC);
+
+	SOUNDBUFFER_MGR.Load("audio/click.mp3");
+	SOUND_MGR.SetBgmVolume(50);
+
 }
 
 void UiButton::Release()
@@ -159,6 +163,7 @@ void UiButton::Update(float dt)
 		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
 		{
 			if (event)
+				SOUND_MGR.PlaySfx("audio/click.mp3",false);
 				event();
 			enterLock = true;
 		}

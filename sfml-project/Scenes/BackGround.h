@@ -5,9 +5,18 @@ class BackGround :
 {
 protected:
     sf::Sprite sprite;
+    
 
+    
+    float fadeAlpha = 0.f;
+    float fadeSpeed = 255.f;
+    bool fadeComplete = false;
 
 public:
+    sf::RectangleShape whiteOverlay;    
+
+    static bool isFadingout;
+
     BackGround(const std::string& name ="");
     virtual ~BackGround() = default;
 
@@ -18,5 +27,8 @@ public:
     void Reset() override;
     void Update(float dt) override;
     void Draw(sf::RenderWindow& window) override;
+
+    void StartFadeOut();
+    bool IsFadeOutComplete() const;
 };
 

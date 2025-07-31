@@ -26,8 +26,12 @@ protected:
 		std::string desc;
 	};
 
+	bool isSceneChanging = false;
+
 	std::vector<StageEntry> stages;   
 	const fs::path LEVEL_DIR = "levels";
+
+	std::function<void()> onSceneChange;
 
 
 

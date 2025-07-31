@@ -15,6 +15,9 @@ void SceneModeSelect::Init()
     texIds.push_back("graphics/anibox.png");
     fontIds.push_back("fonts/BACKTO1982.TTF");
         
+    SOUNDBUFFER_MGR.Load("audio/02Bounds.mp3");
+    SOUND_MGR.SetBgmVolume(50);  
+
     back = new BackGround("back");
     AddGameObject(back);    
 
@@ -30,8 +33,11 @@ void SceneModeSelect::Init()
 }
 void SceneModeSelect::Enter()
 {
-    Scene::Enter();
+    Scene::Enter();    
     stages.clear();
+    SOUND_MGR.PlayBgm("audio/02Bounds.mp3");
+    SOUND_MGR.SetBgmVolume(50);
+
     auto size = FRAMEWORK.GetWindowSizeF();
 
     worldView.setSize(size);
@@ -101,10 +107,18 @@ void SceneModeSelect::Enter()
         int col = static_cast<int>(i) % COLS;
         b->SetPosition(startPos + sf::Vector2f(col * GAP, row * GAP));
 
-        b->SetCallBack([file = stages[i].file]()
+        b->SetCallBack([file = stages[i].file, back = this->back, this]()
             {
                 SceneGame::SetPendingStage(file);
-                SCENE_MGR.ChangeScene(SceneIds::Game);
+                if (back)
+                {
+                    back->StartFadeOut();
+                }
+                SOUND_MGR.StartFadeOut();
+                isSceneChanging = true;
+                onSceneChange = [this]() {
+                    SCENE_MGR.ChangeScene(SceneIds::Game);
+                    };              
             });
     }
 }
@@ -112,6 +126,18 @@ void SceneModeSelect::Enter()
 void SceneModeSelect::Update(float dt)
 {
     Scene::Update(dt);
+
+    if (isSceneChanging)
+    {
+        if (back->IsFadeOutComplete())
+        {
+            if (onSceneChange)
+            {
+                onSceneChange();  // fade 완료 후 씬 전환
+            }
+            isSceneChanging = false;
+        }
+    }
 
     if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
         SCENE_MGR.ChangeScene(SceneIds::Title);
@@ -122,6 +148,10 @@ void SceneModeSelect::Draw(sf::RenderWindow& window)
 {
     Scene::Draw(window);   
     window.draw(text);
+    if (back && back->isFadingout)  // 또는 fade 중 조건
+    {
+        window.draw(back->whiteOverlay);
+    }
     //window.draw(stagetext);
  
     // ── Hover‑tooltip -------------------------------------------------

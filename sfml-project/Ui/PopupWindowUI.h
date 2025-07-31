@@ -3,6 +3,7 @@
 
 class UiButton;
 class YesNoPopupUI;
+class BackGround;
 
 class PopupWindowUI :
 	public GameObject
@@ -11,6 +12,10 @@ protected:
 	sf::Sprite sprite;	
 	
 	std::vector<UiButton*> startbut;	
+	std::function<void()> onSceneChange;
+
+	BackGround* background;
+	bool isSceneChanging = false;
 
 	int currentPage = 0;
 
@@ -52,6 +57,8 @@ public:
 	void Update(float dt) override;
 
 	void Draw(sf::RenderWindow& window) override;
+
+	void SetBackground(BackGround* bg) { background = bg; }
 
 };
 
