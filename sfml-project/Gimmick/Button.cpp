@@ -180,6 +180,7 @@ void Button::Update(float dt)
 	{
 		if (pressed)
 		{
+			SOUND_MGR.PlaySfx("audio/button.mp3",false);
 			body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button_Pressed.png"));
 		}
 		else

@@ -9,6 +9,7 @@ class Key :
 protected:
     Player* player = nullptr;
     Player* newPlayer = nullptr;
+    bool firstkey = true;
 
 public:
     Key(nlohmann::json j);

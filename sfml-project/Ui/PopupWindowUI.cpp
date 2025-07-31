@@ -214,13 +214,11 @@ void PopupWindowUI::Reset()
 
 		});
 
-
-
 	if (yesno != nullptr)
+	{
 		yesno->Reset();
-	yesno->SetActive(false);
-
-
+		yesno->SetActive(false);
+	}
 
 	isSceneChanging = false;
 	onSceneChange = nullptr;
@@ -230,11 +228,13 @@ void PopupWindowUI::Reset()
 void PopupWindowUI::Update(float dt)
 {	
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Right))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Right)||
+		InputMgr::GetKeyDown(sf::Keyboard::D))
 	{
 		Rightbut->Trigger();
 	}
-	if (InputMgr::GetKeyDown(sf::Keyboard::Left))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Left)||
+		InputMgr::GetKeyDown(sf::Keyboard::A))
 	{
 		Leftbut->Trigger();
 	}
@@ -295,8 +295,7 @@ void PopupWindowUI::Update(float dt)
 			}
 			isSceneChanging = false;			
 		}				
-	}
-	
+	}	
 }
 
 void PopupWindowUI::Draw(sf::RenderWindow& window)

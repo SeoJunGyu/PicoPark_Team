@@ -141,6 +141,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="PauseUI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Scenes\BackGround.cpp" />
     <ClCompile Include="Gimmick\Blinker.cpp" />
     <ClCompile Include="Gimmick\BouncePad.cpp" />
@@ -207,6 +210,9 @@
     <ClCompile Include="Ui\YesNoPopupUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PauseUI.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Scenes\BackGround.h" />
     <ClInclude Include="Gimmick\Blinker.h" />
     <ClInclude Include="Gimmick\BouncePad.h" />

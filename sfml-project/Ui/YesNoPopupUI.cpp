@@ -2,6 +2,7 @@
 #include "YesNoPopupUI.h"
 #include "UiButton.h"
 #include "Scene.h"
+#include "PopupWindowUI.h"
 
 YesNoPopupUI::YesNoPopupUI(const std::string name)
 	: GameObject(name)
@@ -60,19 +61,9 @@ void YesNoPopupUI::Init()
 	yesbut = new UiButton("Yes");
 	nobut = new UiButton("No");
 	closebut = new UiButton("Close");
+	
 
-	nobut->SetCallBack([this]()
-		{
-			this->SetActive(false);
-			this->Reset();
-		});
-	closebut->SetCallBack([this]()
-		{
-			this->SetActive(false);
-			this->Reset();
-		});
-
-	this->SetActive(false);
+	/*this->SetActive(false);*/
 }
 
 void YesNoPopupUI::Release()
@@ -111,11 +102,22 @@ void YesNoPopupUI::Reset()
 	nobut->GetGlobalBounds();
 	nobut->SetPosition({ sprpos.x +200.f,sprpos.y + 100.f });
 	nobut->useeffect = true;
+	nobut->SetCallBack([this]()
+		{
+			this->SetActive(false);
+			this->Reset();			
+
+		});
 
 	closebut->SetText("X", "fonts/PixelOperator8.ttf", 25);
 	closebut->SetColor(sf::Color::Black);
 	closebut->GetGlobalBounds();
-	closebut->SetPosition({ sprpos.x + spr.width*0.5f-40.f ,spr.top+10.f });
+	closebut->SetPosition({ sprpos.x + spr.width*0.5f-40.f ,spr.top+10.f });	
+	closebut->SetCallBack([this]()
+		{
+			this->SetActive(false);
+			this->Reset();
+		});
 
 }
 
@@ -130,6 +132,10 @@ void YesNoPopupUI::Update(float dt)
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Num2)) {
 		nobut->Trigger();
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
+		closebut->Trigger();
 	}
 }
 

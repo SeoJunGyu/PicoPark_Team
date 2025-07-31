@@ -344,6 +344,10 @@ void SceneGame::Init()
     ANI_CLIP_MGR.Load("animations/player3_pushwalk.csv");
 
     SOUNDBUFFER_MGR.Load("audio/03Doremi.mp3");
+    SOUNDBUFFER_MGR.Load("audio/key.mp3");
+    SOUNDBUFFER_MGR.Load("audio/lockDoor.mp3");
+    SOUNDBUFFER_MGR.Load("audio/button.mp3");
+    SOUNDBUFFER_MGR.Load("audio/jump.mp3");
 
     level = new Level();
     tileMap = new TileMap();
