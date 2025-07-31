@@ -44,7 +44,7 @@
     {
       "id": 355,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [
@@ -84,7 +84,7 @@
     {
       "id": 357,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [
@@ -98,7 +98,7 @@
     {
       "id": 358,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [
@@ -112,7 +112,7 @@
     {
       "id": 359,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [
@@ -126,7 +126,7 @@
     {
       "id": 360,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [
@@ -150,7 +150,7 @@
     {
       "id": 362,
       "properties": {
-        "fallDelay": 0.5,
+        "fallDelay": 0.1,
         "respawnDelay": 2.0
       },
       "scale": [

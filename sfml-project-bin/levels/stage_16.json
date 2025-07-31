@@ -1,0 +1,984 @@
+﻿{
+  "author": "SJG",
+  "description": "2P Invisible Block Map",
+  "entities": [
+    {
+      "id": 388,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 560,
+      "y": 32
+    },
+    {
+      "id": 389,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 64,
+      "y": 96
+    },
+    {
+      "id": 390,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 96
+    },
+    {
+      "id": 391,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 240,
+      "y": 96
+    },
+    {
+      "id": 392,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 336,
+      "y": 96
+    },
+    {
+      "id": 393,
+      "properties": {
+        "channel": 1,
+        "dontPush": false,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 368,
+      "y": 96
+    },
+    {
+      "id": 394,
+      "properties": {
+        "channel": 0,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 432,
+      "y": 96
+    },
+    {
+      "id": 395,
+      "properties": {
+        "channel": 2,
+        "dontPush": false,
+        "latch": true,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 464,
+      "y": 96
+    },
+    {
+      "id": 396,
+      "properties": {
+        "channel": 3,
+        "dontPush": false,
+        "latch": true,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 496,
+      "y": 96
+    },
+    {
+      "id": 397,
+      "properties": {
+        "channel": 0,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 528,
+      "y": 96
+    },
+    {
+      "id": 398,
+      "properties": {
+        "channel": 4,
+        "dontPush": false,
+        "latch": true,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Button",
+      "x": 560,
+      "y": 96
+    },
+    {
+      "id": 399,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 608,
+      "y": 96
+    },
+    {
+      "id": 400,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 16,
+      "y": 112
+    },
+    {
+      "id": 401,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 32,
+      "y": 112
+    },
+    {
+      "id": 402,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 48,
+      "y": 112
+    },
+    {
+      "id": 403,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 208,
+      "y": 112
+    },
+    {
+      "id": 404,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 160,
+      "y": 128
+    },
+    {
+      "id": 405,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 192,
+      "y": 128
+    },
+    {
+      "id": 406,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 272,
+      "y": 128
+    },
+    {
+      "id": 407,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": false,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 288,
+      "y": 128
+    },
+    {
+      "id": 408,
+      "properties": {
+        "channel": 2,
+        "loop": false,
+        "path": [
+          [
+            416,
+            128
+          ],
+          [
+            416,
+            28
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 416,
+      "y": 128
+    },
+    {
+      "id": 409,
+      "properties": {
+        "channel": 3,
+        "loop": false,
+        "path": [
+          [
+            464,
+            128
+          ],
+          [
+            464,
+            28
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 464,
+      "y": 128
+    },
+    {
+      "id": 410,
+      "properties": {
+        "channel": 4,
+        "loop": false,
+        "path": [
+          [
+            512,
+            128
+          ],
+          [
+            512,
+            28
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 512,
+      "y": 128
+    },
+    {
+      "id": 411,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 64,
+      "y": 144
+    },
+    {
+      "id": 412,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 80,
+      "y": 144
+    },
+    {
+      "id": 413,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 144,
+      "y": 144
+    },
+    {
+      "id": 414,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 160,
+      "y": 144
+    },
+    {
+      "id": 415,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 176,
+      "y": 144
+    },
+    {
+      "id": 416,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 192,
+      "y": 144
+    },
+    {
+      "id": 417,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 208,
+      "y": 144
+    },
+    {
+      "id": 418,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 224,
+      "y": 144
+    },
+    {
+      "id": 419,
+      "properties": {
+        "Bounce": 300.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 256,
+      "y": 144
+    },
+    {
+      "id": 420,
+      "properties": {
+        "channel": 1,
+        "loop": false,
+        "path": [
+          [
+            320,
+            144
+          ],
+          [
+            320,
+            94
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 320,
+      "y": 144
+    },
+    {
+      "id": 421,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 336,
+      "y": 144
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 40,
+  "layers": [
+    {
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}
