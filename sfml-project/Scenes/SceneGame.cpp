@@ -301,7 +301,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/BlinkerRed.png");
     texIds.push_back("graphics/Item/BlinkerOrange.png");
     texIds.push_back("graphics/Item/Blinkergreen.png");
-    texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
+    //texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Idle_Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Jump_Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_walk_right_final.png");

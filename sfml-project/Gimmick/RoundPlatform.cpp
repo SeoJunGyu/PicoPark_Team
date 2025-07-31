@@ -44,6 +44,11 @@ void RoundPlatform::Reset()
 
 void RoundPlatform::Update(float dt)
 {
+	if (randFall != 0.f)
+	{
+		hitBox.rect.setFillColor(sf::Color::Red);
+	}
+
 	//신호 받을때 처리
 	UpdateChannel();
 

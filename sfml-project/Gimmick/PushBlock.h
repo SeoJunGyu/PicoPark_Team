@@ -33,6 +33,10 @@ protected:
 
     sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
 
+    bool collidedX;
+
+    bool canMove = true;
+
 public:
     PushBlock(nlohmann::json j);
 
@@ -43,4 +47,3 @@ public:
     void ApplySupport();
     sf::Vector2f GetDeltaPos() const { return deltaPos; }
 };
-

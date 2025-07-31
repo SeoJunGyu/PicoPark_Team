@@ -16,14 +16,14 @@ static sf::Color makeColor(int tileId)
 }
 
 PushBlock::PushBlock(nlohmann::json j)
-	: Gimmick(
-		j.value("id", 0),
-		StrToType(j.at("type").get<std::string>()),
-		{ j.at("x").get<float>() , j.at("y").get<float>() },
-		Variables::CalScl(j),
-		j.value("rotation", 0.f),
-		j.value("properties", nlohmann::json::object())
-	)
+    : Gimmick(
+        j.value("id", 0),
+        StrToType(j.at("type").get<std::string>()),
+        { j.at("x").get<float>() , j.at("y").get<float>() },
+        Variables::CalScl(j),
+        j.value("rotation", 0.f),
+        j.value("properties", nlohmann::json::object())
+    )
 {
 }
 
@@ -78,7 +78,7 @@ void PushBlock::Update(float dt)
 
     //미는 인원 확인
     int leftPushers = 0, rightPushers = 0;
-    for (Player* p : Variables::players) 
+    for (Player* p : Variables::players)
     {
         sf::FloatRect pBox = p->GetHitBox().rect.getGlobalBounds();
         CollisionInfo info = Utils::GetAABBCollision(pBox, bBox);
@@ -111,23 +111,23 @@ void PushBlock::Update(float dt)
         {
             ++rightPushers;
         }
-
-        
     }
 
     const float pushSpeed = 80.f;
-    if (leftPushers >= requireCount && rightPushers < requireCount) 
+    if (leftPushers >= requireCount && rightPushers < requireCount)
     {
         velocity.x = +pushSpeed; // 오른쪽으로 이동
     }
-    else if (rightPushers >= requireCount && leftPushers < requireCount) 
+    else if (rightPushers >= requireCount && leftPushers < requireCount)
     {
         velocity.x = -pushSpeed; // 왼쪽으로 이동
     }
-    else 
+    else
     {
         velocity.x = 0.f; // 그 외에는 정지
     }
+
+    hitBox.UpdateTransform(body, body.getGlobalBounds());
 
     ApplySupport();
 
@@ -144,8 +144,31 @@ void PushBlock::Update(float dt)
     SetPosition(position);
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
+    //측면 충돌 검사
+    bool blockedSide = false;
+    for (Player* p : Variables::players)
+    {
+        if (!Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+        {
+            continue;
+        }
+
+        CollisionInfo info = Utils::GetAABBCollision(hitBox.rect.getGlobalBounds(), p->GetHitBox().rect.getGlobalBounds());
+        if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
+        {
+            blockedSide = true;
+            break;
+        }
+    }
+    if (blockedSide)
+    {
+        SetPosition(before);
+        hitBox.UpdateTransform(body, body.getLocalBounds());
+        velocity.x = 0.f;
+    }
+    
     //수평 충돌
-    bool collidedX = false;
+    collidedX = false;
 
     //블럭 수평 충돌
     SetPosition(position);
@@ -352,8 +375,39 @@ void PushBlock::Update(float dt)
     }
 
     //플레이어 충돌
-    sf::FloatRect blockBox = hitBox.rect.getGlobalBounds();
     hitBox.UpdateTransform(body, body.getLocalBounds());
+    sf::FloatRect blockBox = hitBox.rect.getGlobalBounds();
+
+    if (!collidedX && velocity.x != 0.f)
+    {
+        for (auto* p : Variables::players)
+        {
+            if (!Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+                continue;
+
+            auto blockRect = hitBox.rect.getGlobalBounds();
+            auto playerRect = p->GetHitBox().rect.getGlobalBounds();
+            CollisionInfo info = Utils::GetAABBCollision(blockRect, playerRect);
+
+            // 가로 충돌이라면…
+            if (info.depth > 0.f && std::abs(info.normal.x) > 0.5f)
+            {
+                //블럭 분리
+                position.x += info.normal.x * info.depth;
+                SetPosition(position);
+                hitBox.UpdateTransform(body, body.getLocalBounds());
+                velocity.x = 0.f;
+
+                //플레이어 분리 — 블럭 쪽으로 파고들지 않게
+                float sepX = info.normal.x * info.depth;
+                p->SetPosition({ p->GetPosition().x - sepX, p->GetPosition().y });
+                p->velocity.x = 0.f;
+
+                collidedX = true;
+                break;
+            }
+        }
+    }
 
     for (Player* p : Variables::players)
     {
@@ -398,15 +452,15 @@ void PushBlock::Update(float dt)
     SetPosition(position);
     hitBox.UpdateTransform(body, body.getLocalBounds());
 
-	if (isGrounded)
-	{
-		velocity.y = 0.f;
-	}
+    if (isGrounded)
+    {
+        velocity.y = 0.f;
+    }
 
     sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
     deltaPos = after - before; //실제 이동한 차이만 저장된다.
 
-	Gimmick::Update(dt);
+    Gimmick::Update(dt);
 }
 
 sf::Vector2f PushBlock::GetSupportDelta()
