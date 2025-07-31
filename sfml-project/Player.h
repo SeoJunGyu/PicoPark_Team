@@ -55,6 +55,9 @@ public:
 
 	sf::FloatRect prevRect{};
 	sf::Vector2f pendingScale{ -1.f, -1.f };
+
+	int ghostDirection = 1;
+
 protected:
 	Animator animator;
 	std::string currentStage;
