@@ -70,6 +70,23 @@ void Player::PlayLandAnim()
 		playeraniwalk();
 }
 
+void Player::UpdateGroundAnim(bool sideBlocked)
+{
+	if (!isGrounded) return;
+
+	if (sideBlocked && std::abs(velocity.x) > 0.1f)
+	{
+		if (!isPushingSide)
+			playeranipushwalk();
+		isPushingSide = true;
+	}
+	else
+	{
+		isPushingSide = false;
+		PlayLandAnim();  
+	}
+}
+
 void Player::Init()
 {
 	animator.SetTarget(&body);
@@ -201,7 +218,8 @@ void Player::Update(float dt)
 
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitLeft = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(leftTx, botTy);
-	
+	sideBlocked = false;
+
 	for (int tx : { leftTx, rightTx })
 	{
 		if (!tilemap->isSolid(tx, topTy) && !tilemap->isSolid(tx, botTy))
@@ -219,31 +237,15 @@ void Player::Update(float dt)
 			position.x += info.normal.x * info.depth; // 최소 깊이만큼 밀어냄  //              타일충돌			
 			
 			hitBox.UpdateTransform(body, body.getLocalBounds());
-
-			if (std::abs(h) > 0.1f && isGrounded)
-			{
-				switch (index)
-				{
-				case 0:
-					animator.Play("animations/player_pushwalk.csv");
-					break;
-				case 1:
-					animator.Play("animations/player1_pushwalk.csv");
-					break;
-				case 2:
-					animator.Play("animations/player2_pushwalk.csv");
-					break;
-				case 3:
-					animator.Play("animations/player3_pushwalk.csv");
-					break;
-				}
-			}			
+		   
+			sideBlocked = true;
 		}		
 	}
 
 	// 플랫폼 가로       
 	SetPosition(position);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
+
 	for (auto* plat : Variables::platforms)
 	{
 		if (!Utils::CheckCollision(hitBox.rect, plat->GetHitBox().rect))
@@ -274,25 +276,7 @@ void Player::Update(float dt)
 		{
 			position.x += info.normal.x * info.depth;
 			hitBox.UpdateTransform(body, body.getLocalBounds());
-			if (std::abs(h) > 0.1f && isGrounded)
-			{
-				switch (index)
-				{
-				case 0:
-					animator.Play("animations/player_pushwalk.csv");
-					break;
-				case 1:
-					animator.Play("animations/player1_pushwalk.csv");
-					break;
-				case 2:
-					animator.Play("animations/player2_pushwalk.csv");
-					break;
-				case 3:
-					animator.Play("animations/player3_pushwalk.csv");
-					break;
-				}
-			}
-						
+			sideBlocked = true;
 		}
 		
 	}
@@ -489,21 +473,7 @@ void Player::Update(float dt)
 			hitBox.UpdateTransform(body, body.getLocalBounds());
 			if (std::abs(h) > 0.1f && isGrounded)
 			{
-				switch (index)
-				{
-				case 0:
-					animator.Play("animations/player_pushwalk.csv");
-					break;
-				case 1:
-					animator.Play("animations/player1_pushwalk.csv");
-					break;
-				case 2:
-					animator.Play("animations/player2_pushwalk.csv");
-					break;
-				case 3:
-					animator.Play("animations/player3_pushwalk.csv");
-					break;
-				}
+				sideBlocked = true;
 			}
 			
 		}
@@ -605,8 +575,11 @@ void Player::Update(float dt)
 
 	std::string clipId = animator.GetCurrentClipId();
 
-	if (!wasGrounded && isGrounded)          
-		PlayLandAnim();
+	UpdateGroundAnim(sideBlocked);
+
+	//if (!wasGrounded && isGrounded)
+	//	UpdateGroundAnim(sideBlocked);
+	//	//PlayLandAnim();
 }
 
 void Player::Draw(sf::RenderWindow& window)

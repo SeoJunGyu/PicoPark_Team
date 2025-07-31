@@ -46,7 +46,6 @@ public:
 	bool hasKey = false;
 
 	sf::Vector2f lastPushingPosition;	
-	bool isPushingSide;
 
 	bool shouldPlayPushwalk = false;
 	bool shouldPlayWalk = false;
@@ -63,6 +62,9 @@ protected:
 	sf::Vector2f prvPos;
 	sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
 	sf::Vector2f gravity = { 0.f, 500.f };
+
+	bool sideBlocked = false;
+	bool isPushingSide = false;
 	
 	bool isFallen = false; //낙하 테스트 변수
 	float speed = 50.f;
@@ -101,6 +103,7 @@ public:
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
 	void PlayLandAnim();
+	void UpdateGroundAnim(bool sideBlocked);
 
 	const std::string& getStage() const { return currentStage; }
 	void setStage(const std::string& b) { currentStage = b; }
