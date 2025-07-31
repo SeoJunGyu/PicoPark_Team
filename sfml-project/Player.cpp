@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Player.h"
 #include "TileMap.h"
+#include "SceneGame.h"
 
 Player::Player(int idx, const sf::Color& c, const std::string& name)
 	: GameObject(name), index(idx), tint(c)
@@ -127,6 +128,7 @@ void Player::Update(float dt)
 
 		if (deathTimer >= deathDuration)
 		{
+			SceneGame::SetPendingStage(getStage());
 			SCENE_MGR.ChangeScene(SceneIds::Game); //재시작
 		}
 		return; //충돌로직 스킵

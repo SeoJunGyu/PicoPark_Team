@@ -117,6 +117,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         sf::Color col = makeColor(idx);
 
         Player* p = new Player(idx, col, "Player" + std::to_string(idx));              // Player 클래스 생성자 (index)
+        p->setStage(jsonPath);
         p->SetPosition(pos);
         p->SetScale({ 0.1f, 0.09f });
         p->Init();   

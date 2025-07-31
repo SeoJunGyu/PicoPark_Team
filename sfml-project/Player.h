@@ -58,6 +58,7 @@ public:
 	sf::Vector2f pendingScale{ -1.f, -1.f };
 protected:
 	Animator animator;
+	std::string currentStage;
 
 	sf::Vector2f prvPos;
 	sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
@@ -99,6 +100,9 @@ public:
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+
+	const std::string& getStage() const { return currentStage; }
+	void setStage(const std::string& b) { currentStage = b; }
 
 	void Init() override;
 	void Release() override;
