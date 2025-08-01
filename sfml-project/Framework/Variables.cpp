@@ -8,7 +8,7 @@ std::vector<Player*> Variables::players{};
 std::vector<Gimmick*> Variables::gimmicks{};
 std::vector<MovingPlatform*> Variables::platforms{};
 std::vector<PushBlock*> Variables::blocks{};
-std::vector<Portal*> Variables::portals{};
+std::unordered_map<int, Portal*> Variables::portals{};
 
 TileMap* Variables::tilemap = nullptr;
 

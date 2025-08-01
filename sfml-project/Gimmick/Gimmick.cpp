@@ -27,6 +27,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new Blinker(j);
 	case GimmickType::Ghost:
 		return new Ghost(j);
+	case GimmickType::Portal:
+		return new Portal(j);
 	}
 
 	return nullptr;

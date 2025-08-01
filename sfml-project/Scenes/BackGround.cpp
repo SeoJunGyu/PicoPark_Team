@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "BackGround.h"
 
 bool BackGround::isFadingout = false;
@@ -40,7 +40,7 @@ void BackGround::Update(float dt)
 	if (isFadingout)
 	{
 		fadeAlpha += fadeSpeed * dt;
-		std::cout << fadeAlpha << std::endl;
+		//std::cout << fadeAlpha << std::endl;
 		if (fadeAlpha >= 255)
 		{
 			fadeAlpha = 255;			

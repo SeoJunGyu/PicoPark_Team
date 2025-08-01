@@ -96,9 +96,29 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             }
             else if (tstr == "Portal")
             {
-                Variables::portals.push_back(dynamic_cast<Portal*>(g));
+                Portal* portal = dynamic_cast<Portal*>(g);
+                Variables::portals[portal->channel] = portal;
             }
         }
+
+        for (std::unordered_map<int, Portal*>::iterator it = Variables::portals.begin();
+            it != Variables::portals.end(); ++it)
+        {
+            Portal* portal = it->second; // 현재 포탈
+            if (portal->destChannel < 0) // 목적 채널이 없으면 skip
+                continue;
+
+            //목적 채널을 가진 포탈 찾기
+            std::unordered_map<int, Portal*>::iterator dst =
+                Variables::portals.find(portal->destChannel);
+
+            if (dst != Variables::portals.end())
+                portal->dest = dst->second; // 연결 성공
+            else
+                std::cerr << "[Portal] destChannel "
+                << portal->destChannel << " not found\n";
+        }
+
         /*float ox = level->tileSize * 0.5f;
         float oy = level->tileSize * 0.5f;
 

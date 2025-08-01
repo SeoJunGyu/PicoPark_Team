@@ -17,7 +17,7 @@ public:
 	static std::vector<Gimmick*> gimmicks;
 	static std::vector<MovingPlatform*> platforms;
 	static std::vector<PushBlock*> blocks;
-	static std::vector<Portal*> portals;
+	static std::unordered_map<int, Portal*> portals;
 
 	static TileMap* tilemap;
 

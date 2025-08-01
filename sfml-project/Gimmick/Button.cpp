@@ -147,8 +147,8 @@ void Button::Update(float dt)
 			break;
 		}
 
-		std::cout << "before : " << prvPos.x << " / " << prvPos.y << std::endl;
-		std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
+		//std::cout << "before : " << prvPos.x << " / " << prvPos.y << std::endl;
+		//std::cout << "after : " << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
 	}
 
 	if (latch)

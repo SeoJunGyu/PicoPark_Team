@@ -20,9 +20,8 @@ void Portal::Reset()
 
 	body.setTexture(TEXTURE_MGR.Get("graphics/Item/portal.png"));
 
-	targetId = properties.value("targetId", 0);
-	
-	
+	channel = properties.value("channel", 0);
+	destChannel = properties.value("destChannel", -1);
 
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
@@ -36,5 +35,21 @@ void Portal::Reset()
 
 void Portal::Update(float dt)
 {
+	hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	for (Player* p : Variables::players)
+	{
+		if (!dest || !Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+		{
+			continue;
+		}
+
+		if ()
+		{
+			p->SetPosition(dest->GetPosition());
+		}
+		break;
+	}
+
 	Gimmick::Update(dt);
 }

@@ -58,6 +58,8 @@ public:
 
 	HitBox GetHitBox() const { return hitBox; }
 
+	int GetId() const { return id; }
+
 	//Gimmick function
 
 };
