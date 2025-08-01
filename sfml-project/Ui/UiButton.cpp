@@ -126,8 +126,8 @@ void UiButton::Init()
 
 	SetOrigin(Origins::MC);
 
-	SOUNDBUFFER_MGR.Load("audio/click.mp3");
-	SOUND_MGR.SetBgmVolume(50);
+	/*SOUNDBUFFER_MGR.Load("audio/click.mp3");
+	SOUND_MGR.SetBgmVolume(50);*/
 
 }
 

@@ -560,7 +560,7 @@ void Player::Update(float dt)
 
 		if (!isDead)
 		{
-			SOUND_MGR.PlaySfx("audio/jump.mp3",false);
+			SOUND_MGR.PlaySfx("audio/jump.mp3", false);			
 			switch (index)
 			{
 			case 0:
@@ -578,7 +578,8 @@ void Player::Update(float dt)
 			}
 		}
 		
-	}
+	}	
+	
 
 	if (h != 0.f)
 	{

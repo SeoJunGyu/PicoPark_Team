@@ -25,6 +25,7 @@ void SceneTitle::Init()
 	fontIds.push_back("fonts/Pixelownfont-Regular.ttf");
 	
 	SOUNDBUFFER_MGR.Load("audio/01Spring.mp3");
+	SOUNDBUFFER_MGR.Load("audio/click.mp3");
 
 
 	titlebackground = new BackGround("Startbackground");
@@ -78,6 +79,7 @@ void SceneTitle::Update(float dt)
 		cooltime = 0;
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) && !popup->GetActive()) {
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		popup->SetActive(true); 
 		YesNoPopupUI* y = popup->GetYesNoPopup();
 		y->SetActive(false);

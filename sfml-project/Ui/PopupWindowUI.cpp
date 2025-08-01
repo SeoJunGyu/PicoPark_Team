@@ -231,19 +231,23 @@ void PopupWindowUI::Update(float dt)
 	if (!yesno->GetActive()&& (InputMgr::GetKeyDown(sf::Keyboard::Right) ||
 		InputMgr::GetKeyDown(sf::Keyboard::D)))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		Rightbut->Trigger();
 	}
 	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Left)||
 		InputMgr::GetKeyDown(sf::Keyboard::A)))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		Leftbut->Trigger();
 	}
 	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Escape)))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		closebut->Trigger();
 	}
 	if (!yesno->GetActive() && (InputMgr::GetKeyDown(sf::Keyboard::Enter)))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		if (Exit->GetActive()) {
 			Exit->Trigger();
 		}

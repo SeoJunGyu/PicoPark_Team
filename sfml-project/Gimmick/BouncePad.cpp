@@ -78,6 +78,7 @@ void BouncePad::Update(float dt)
 			SetScale({ GetScale().x, GetScale().y * 0.5f});
 			isPressed = true;
 			pressTimer = 0.f;
+			SOUND_MGR.PlaySfx("audio/jumpSound.mp3",false);
 		}
 	}
 

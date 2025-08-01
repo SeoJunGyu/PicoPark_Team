@@ -166,10 +166,12 @@ void YesNoPopupUI::Update(float dt)
 	}	
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		yesnobut[yesnobutindex]->Trigger();
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
+		SOUND_MGR.PlaySfx("audio/click.mp3", false);
 		closebut->Trigger();
 	}
 	

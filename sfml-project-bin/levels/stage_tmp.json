@@ -5,26 +5,23 @@
     {
       "id": 0,
       "properties": {
-        "playerIndex": 0
+        "Bounce": 200.0
       },
-      "type": "PlayerSpawn",
-      "x": 48,
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 32,
       "y": 64
     },
     {
       "id": 1,
       "properties": {
-        "RandFall": 0.0,
-        "channel": 0,
-        "playerKill": true,
-        "transparency": false
+        "playerIndex": 0
       },
-      "scale": [
-        0.30000001192092896,
-        0.30000001192092896
-      ],
-      "type": "RoundPlatform",
-      "x": 80,
+      "type": "PlayerSpawn",
+      "x": 64,
       "y": 64
     }
   ],

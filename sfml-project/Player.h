@@ -53,7 +53,7 @@ public:
 
 	bool sideBlocked = false;
 	bool isDead = false;
-	bool isPushingBlock = false;
+	bool isPushingBlock = false;	
 
 	sf::FloatRect prevRect{};
 	sf::Vector2f pendingScale{ -1.f, -1.f };
