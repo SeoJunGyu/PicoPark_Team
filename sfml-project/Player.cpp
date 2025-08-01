@@ -76,7 +76,7 @@ void Player::UpdateGroundAnim(bool sideBlocked)
 
 	//bool playingPush = (animator.GetCurrentClipId().find("PushWalk") != std::string::npos);
 
-	if (sideBlocked && std::abs(velocity.x) > 0.1f)
+	if (sideBlocked)
 	{
 		if (!isPushingSide)
 			playeranipushwalk();
@@ -144,6 +144,7 @@ void Player::Reset()
 
 void Player::Update(float dt)
 {
+	isPushingBlock = false;
 	bool wasGrounded = isGrounded;
 	ApplyPendingScale();
 	if (isDead)
@@ -537,6 +538,8 @@ void Player::Update(float dt)
 	//		// 애니메이션용 플래그
 	//		sideBlocked = true;
 
+	//		block->Update(dt);
+
 	//		// 실제 블럭을 미는 로직이 있다면 여기서 호출
 	//		// block->Push(info.normal.x);
 	//	}
@@ -606,10 +609,11 @@ void Player::Update(float dt)
 
 	std::string clipId = animator.GetCurrentClipId();
 
-	bool pushing = sideBlocked || isPushingBlock;
+	pushGraceTimer = std::max(0.f, pushGraceTimer - dt);
+	//bool pushing = sideBlocked || isPushingBlock;
+	bool pushing = sideBlocked || (pushGraceTimer > 0.f);
 	UpdateGroundAnim(pushing);
-	if (!sideBlocked)            
-		isPushingBlock = false;
+	
 	
 	//UpdateGroundAnim(sideBlocked);
 
@@ -778,10 +782,11 @@ void Player::StartPushing()
 	if (!isGrounded) return;          
 	if (isPushingBlock) return;
 
-	isPushingBlock = true;               
+	isPushingBlock = true;          
+	pushGraceTimer = PushGrace;
 
 	if (animator.GetCurrentClipId().find("PushWalk") == std::string::npos)
-		playeranipushwalk();
+	 playeranipushwalk();
 }
 
 void Player::playeraniwalk()
