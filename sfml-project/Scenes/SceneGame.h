@@ -23,6 +23,8 @@ protected:
 	sf::Vector2f fromPos;   // (-Æø, y)
 	sf::Vector2f toPos;     // (¼¾ÅÍ, y)
 
+
+	bool enterdoor = false;
 	bool gameClearPlayed = false;
 
 public:

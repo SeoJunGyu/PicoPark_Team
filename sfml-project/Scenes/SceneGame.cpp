@@ -376,7 +376,8 @@ void SceneGame::StartStageClear()
     if (stageClear) return;              
     stageClear = true;
     clearTime = 0.f;
-    gameClearPlayed = true;
+    enterdoor = false;
+    gameClearPlayed = true;    
 
     sf::Vector2u winSize = FRAMEWORK.GetWindow().getSize();
     sf::FloatRect vp = worldView.getViewport();
@@ -438,7 +439,8 @@ void SceneGame::Enter()
 
 //FRAMEWORK.GetWindow().setView(worldView);
 
-    
+    enterdoor = false;
+    gameClearPlayed = false;
 }
 
 void SceneGame::Update(float dt)
@@ -447,9 +449,15 @@ void SceneGame::Update(float dt)
 
     if (stageClear)            
     {
+        if (!enterdoor)
+        {
+            SOUND_MGR.PlaySfx("audio/enterdoor.mp3", false); 
+            enterdoor = true;
+        }
+
         if (gameClearPlayed)
         {
-            SOUND_MGR.PlaySfx("audio/gameclear.mp3", false);
+            SOUND_MGR.PlayBgm("audio/gameclear.mp3", false);
             gameClearPlayed = false;
         }
         constexpr float SLIDE_DUR = 1.0f;   // 텍스트 이동 1초
