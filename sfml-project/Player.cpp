@@ -619,6 +619,12 @@ void Player::Update(float dt)
 	//bool pushing = sideBlocked || isPushingBlock;
 	bool pushing = sideBlocked || (pushGraceTimer > 0.f);
 	UpdateGroundAnim(pushing);
+
+	//포탈 쿨타임
+	if (portalTimer > 0.f)
+	{
+		portalTimer -= dt;
+	}
 	
 	
 	//UpdateGroundAnim(sideBlocked);

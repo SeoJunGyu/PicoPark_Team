@@ -2,6 +2,11 @@
   "name": "Portal",
   "type": "Portal",
   "sprite": "graphics/Item/portal.png",
-  "scale": 0.4,
-  "properties": { "channel": 0, "destChannel":  -1 }
+  "scale": 0.3,
+  "properties": {
+    "channel": 0,
+    "destChannel": -1,
+    "cooldownSec": 1.0,
+    "loop": false
+  }
 }
