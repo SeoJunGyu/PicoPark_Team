@@ -94,7 +94,6 @@ void PushBlock::Update(float dt)
         p->SetPosition({ p->GetPosition().x + sepX, p->GetPosition().y });
         p->velocity.x = 0.f;
         //std::cout << "미는중" << std::endl;
-        p->StartPushing();
 
         if (colorPush)
         {
@@ -464,6 +463,23 @@ void PushBlock::Update(float dt)
     sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
     deltaPos = after - before; //실제 이동한 차이만 저장된다.
 
+    for (Player* p : Variables::players)
+    {
+        float dx = std::abs(p->GetHitBox().GetRight() - hitBox.GetLeft());
+        dx = std::min(dx, std::abs(hitBox.GetRight() - p->GetHitBox().GetLeft()));
+        if (dx >= 0.5f)              
+            continue;                
+
+        float h = InputMgr::GetAxis(p->GetIndex(), Axis::Horizontal);
+        if (h == 0.f)                
+            continue;
+
+        if ((dx == std::abs(p->GetHitBox().GetRight() - hitBox.GetLeft()) && h < 0) ||
+            (dx != std::abs(p->GetHitBox().GetRight() - hitBox.GetLeft()) && h > 0))
+            continue;              
+
+        p->StartPushing();
+    }
 
     Gimmick::Update(dt);
 }

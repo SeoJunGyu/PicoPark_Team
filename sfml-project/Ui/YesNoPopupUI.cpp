@@ -132,6 +132,11 @@ void YesNoPopupUI::Update(float dt)
 	nobut->Update(dt);
 	closebut->Update(dt);
 
+	if (yesnobut[0]->effectdrawon)
+		yesnobut[1]->effectdrawon = false;
+	if (yesnobut[1]->effectdrawon)
+		yesnobut[0]->effectdrawon = false;
+
 	if (enterLock)
 	{
 		if (!InputMgr::GetKey(sf::Keyboard::Enter)) // 키가 올라간 뒤
@@ -147,6 +152,7 @@ void YesNoPopupUI::Update(float dt)
 
 		yesnobutindex = (yesnobutindex + yesnobut.size() + 1) % yesnobut.size();
 		yesnobut[yesnobutindex]->effectdrawon=true;
+		UiButton::lastHovered = yesnobut[yesnobutindex];
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Right) ||
 		InputMgr::GetKeyDown(sf::Keyboard::D))
@@ -156,6 +162,7 @@ void YesNoPopupUI::Update(float dt)
 
 		yesnobutindex = (yesnobutindex + yesnobut.size() - 1) % yesnobut.size();
 		yesnobut[yesnobutindex]->effectdrawon = true;
+		UiButton::lastHovered = yesnobut[yesnobutindex];
 	}	
 	if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{

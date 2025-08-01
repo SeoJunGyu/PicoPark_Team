@@ -74,6 +74,9 @@ protected:
 	float speed = 50.f;
 	float jumpPower = 150.f;
 
+	float pushGraceTimer = 0.f;         
+	static constexpr float PushGrace = 0.01f;   
+
 	HitBox hitBox;
 	TileMap* tilemap;
 	MovingPlatform* standingPlatform = nullptr;
