@@ -29,6 +29,8 @@ Gimmick* Gimmick::CreateFromJson(const nlohmann::json& j)
 		return new Ghost(j);
 	case GimmickType::Portal:
 		return new Portal(j);
+	case GimmickType::Rope:
+		return new Rope(j);
 	}
 
 	return nullptr;
@@ -196,7 +198,11 @@ void Gimmick::Draw(sf::RenderWindow& window)
 	{
 		return;
 	}
-	window.draw(body);
+
+	if (type == GimmickType::Rope) {
+		this->Draw(window);
+	}
+	else window.draw(body);
 
 	if (Variables::isDrawHitBox)
 	{

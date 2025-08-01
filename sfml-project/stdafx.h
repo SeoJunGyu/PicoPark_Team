@@ -49,4 +49,5 @@
 #include "Blinker.h"
 #include "Ghost.h"
 #include "Portal.h"
+#include "Rope.h"
 

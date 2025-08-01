@@ -146,6 +146,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Gimmick\Rope.cpp" />
     <ClCompile Include="Scenes\BackGround.cpp" />
     <ClCompile Include="Gimmick\Blinker.cpp" />
     <ClCompile Include="Gimmick\BouncePad.cpp" />
@@ -217,6 +218,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="Gimmick\Rope.h" />
     <ClInclude Include="Scenes\BackGround.h" />
     <ClInclude Include="Gimmick\Blinker.h" />
     <ClInclude Include="Gimmick\BouncePad.h" />

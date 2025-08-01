@@ -44,10 +44,10 @@ void Portal::Update(float dt)
 			continue;
 		}
 
-		if ()
+		/*if ()
 		{
 			p->SetPosition(dest->GetPosition());
-		}
+		}*/
 		break;
 	}
 
