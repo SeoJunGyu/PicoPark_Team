@@ -353,7 +353,7 @@ void SceneGame::Init()
     SOUNDBUFFER_MGR.Load("audio/jump.mp3");
     SOUNDBUFFER_MGR.Load("audio/gameclear.mp3");
     SOUNDBUFFER_MGR.Load("audio/enterdoor.mp3");
-
+    SOUNDBUFFER_MGR.Load("audio/death.mp3");
 
     level = new Level();
     tileMap = new TileMap();
