@@ -95,6 +95,8 @@ protected:
 	float deathTimer = 0.f;
 	float deathDuration = 2.f; //2초 후 장면전환
 
+	bool isDeadsound = false;
+
 public:
 	Player(int idx, const sf::Color& c, const std::string& name = "Player");
 	virtual ~Player() = default;

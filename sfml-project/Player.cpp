@@ -148,6 +148,11 @@ void Player::Update(float dt)
 	ApplyPendingScale();
 	if (isDead)
 	{
+		if (isDeadsound)
+		{
+			SOUND_MGR.PlaySfx("audio/death.mp3", false);
+			isDeadsound = false;
+		}
 		deathTimer += dt;
 
 		velocity.y += gravity.y * dt;
@@ -727,6 +732,7 @@ void Player::OutWindow()
 void Player::OnDie()
 {
 	isDead = true;
+	isDeadsound = true;
 	deathTimer = 0.f;
 
 	animator.Stop();
