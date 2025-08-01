@@ -3,14 +3,17 @@
 #include "TileMap.h"
 
 class Level;
+class BackGround;
 
 class SceneGame : public Scene
 {
 protected:
 	Level* level = nullptr;
 	TileMap* tileMap;
-	sf::Texture bgTex;
-	sf::Sprite bgSpr;
+	/*sf::Texture bgTex;
+	sf::Sprite bgSpr;*/
+	BackGround* background;
+
 
 	static std::string pendingStage;
 	static bool isEditor;
@@ -23,9 +26,11 @@ protected:
 	sf::Vector2f fromPos;   // (-Æø, y)
 	sf::Vector2f toPos;     // (¼¾ÅÍ, y)
 
-
+	
 	bool enterdoor = false;
 	bool gameClearPlayed = false;
+	bool isSceneChanging = false;
+	std::function<void()> onSceneChange;
 
 public:
 	SceneGame();
