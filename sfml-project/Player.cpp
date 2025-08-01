@@ -74,6 +74,8 @@ void Player::UpdateGroundAnim(bool sideBlocked)
 {
 	if (!isGrounded) return;
 
+	//bool playingPush = (animator.GetCurrentClipId().find("PushWalk") != std::string::npos);
+
 	if (sideBlocked && std::abs(velocity.x) > 0.1f)
 	{
 		if (!isPushingSide)
@@ -83,7 +85,7 @@ void Player::UpdateGroundAnim(bool sideBlocked)
 	else
 	{
 		isPushingSide = false;
-		PlayLandAnim();  
+		PlayLandAnim();
 	}
 }
 
@@ -212,13 +214,14 @@ void Player::Update(float dt)
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 	int ts = tilemap->GetTileSize();
 	int leftTx = int(hitBox.GetLeft() / ts);
-	int rightTx = int((hitBox.GetRight() + 0.2f) / ts);
-	int topTy = int((hitBox.GetTop() + 0.2f) / ts);
-	int botTy = int((hitBox.GetBottom() + 0.2f) / ts);
+	int rightTx = int((hitBox.GetRight()) / ts);
+	int topTy = int((hitBox.GetTop()) / ts);
+	int botTy = int((hitBox.GetBottom()) / ts);
 
 	bool hitRight = tilemap->isSolid(rightTx, topTy) || tilemap->isSolid(rightTx, botTy);
 	bool hitLeft = tilemap->isSolid(leftTx, topTy) || tilemap->isSolid(leftTx, botTy);
 	sideBlocked = false;
+	//isPushingBlock = false;
 
 	for (int tx : { leftTx, rightTx })
 	{
@@ -289,9 +292,9 @@ void Player::Update(float dt)
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	leftTx = int(hitBox.GetLeft() / ts);
-	rightTx = int((hitBox.GetRight() - 0.2f) / ts);
-	topTy = int((hitBox.GetTop() - 0.2f) / ts);
-	botTy = int((hitBox.GetBottom() + 0.2f) / ts);
+	rightTx = int((hitBox.GetRight()) / ts);
+	topTy = int((hitBox.GetTop()) / ts);
+	botTy = int((hitBox.GetBottom()) / ts);
 
 	float footMargin = 0.5f; //벽타일 제외용 여유
 	int footLeftTx = int((hitBox.GetLeft() + footMargin) / ts);
@@ -514,6 +517,31 @@ void Player::Update(float dt)
 		}
 	}
 
+	//// ── PushBlock 가로 충돌 ──────────────────────────────
+	//for (auto* block : Variables::blocks)
+	//{
+	//	sf::FloatRect bRect = block->GetHitBox().rect.getGlobalBounds();
+	//	CollisionInfo info = Utils::GetAABBCollision(hitBox.rect.getGlobalBounds(),
+	//		bRect);
+	//	if (info.depth <= 0.f)       // 안 겹쳤으면 skip
+	//		continue;
+
+	//	// 옆면?
+	//	if (std::abs(info.normal.x) > 0.5f)
+	//	{
+	//		// 플레이어를 최소 깊이만큼 밀어냄
+	//		position.x += info.normal.x * info.depth;
+	//		SetPosition(position);
+	//		hitBox.UpdateTransform(body, body.getLocalBounds());
+
+	//		// 애니메이션용 플래그
+	//		sideBlocked = true;
+
+	//		// 실제 블럭을 미는 로직이 있다면 여기서 호출
+	//		// block->Push(info.normal.x);
+	//	}
+	//}
+
 	//점프 수행 조건
 	if (coyoteCounter > 0.f && jumpBufferCounter > 0.f && !hasRider)
 	{
@@ -575,7 +603,12 @@ void Player::Update(float dt)
 
 	std::string clipId = animator.GetCurrentClipId();
 
-	UpdateGroundAnim(sideBlocked);
+	bool pushing = sideBlocked || isPushingBlock;
+	UpdateGroundAnim(pushing);
+	if (!sideBlocked)            
+		isPushingBlock = false;
+	
+	//UpdateGroundAnim(sideBlocked);
 
 	//if (!wasGrounded && isGrounded)
 	//	UpdateGroundAnim(sideBlocked);
@@ -735,6 +768,17 @@ void Player::playeraniinit()
 		break;
 	}
 
+}
+
+void Player::StartPushing()
+{
+	if (!isGrounded) return;          
+	if (isPushingBlock) return;
+
+	isPushingBlock = true;               
+
+	if (animator.GetCurrentClipId().find("PushWalk") == std::string::npos)
+		playeranipushwalk();
 }
 
 void Player::playeraniwalk()

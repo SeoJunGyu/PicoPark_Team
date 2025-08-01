@@ -51,7 +51,9 @@ public:
 	bool shouldPlayWalk = false;
 	bool shouldPlayIdle = false;
 
+	bool sideBlocked = false;
 	bool isDead = false;
+	bool isPushingBlock = false;
 
 	sf::FloatRect prevRect{};
 	sf::Vector2f pendingScale{ -1.f, -1.f };
@@ -63,7 +65,6 @@ protected:
 	sf::Vector2f deltaPos; //외부에서 현재 오브젝트 움직임을 파악해야할때
 	sf::Vector2f gravity = { 0.f, 500.f };
 
-	bool sideBlocked = false;
 	bool isPushingSide = false;
 	
 	bool isFallen = false; //낙하 테스트 변수
@@ -104,6 +105,7 @@ public:
 	void SetOrigin(Origins preset) override;
 	void PlayLandAnim();
 	void UpdateGroundAnim(bool sideBlocked);
+	void StartPushing();
 
 	const std::string& getStage() const { return currentStage; }
 	void setStage(const std::string& b) { currentStage = b; }

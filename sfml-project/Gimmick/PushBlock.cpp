@@ -93,6 +93,8 @@ void PushBlock::Update(float dt)
         float sepX = info.normal.x * info.depth;
         p->SetPosition({ p->GetPosition().x + sepX, p->GetPosition().y });
         p->velocity.x = 0.f;
+        //std::cout << "미는중" << std::endl;
+        p->StartPushing();
 
         if (colorPush)
         {
@@ -461,6 +463,7 @@ void PushBlock::Update(float dt)
 
     sf::Vector2f after = GetPosition(); //프레임간 위치를 파악하기위해 최종 프레임 좌표 저장
     deltaPos = after - before; //실제 이동한 차이만 저장된다.
+
 
     Gimmick::Update(dt);
 }
