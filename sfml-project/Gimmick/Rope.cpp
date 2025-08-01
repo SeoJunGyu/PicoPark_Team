@@ -94,6 +94,7 @@ void Rope::Draw(sf::RenderWindow& w)
         strip[i * 2].color = ropeCol;
         strip[i * 2 + 1].color = ropeCol;
     }
-
-    w.draw(strip);
+    
+    if(Variables::players[0]->GetActive())
+      w.draw(strip);
 }
