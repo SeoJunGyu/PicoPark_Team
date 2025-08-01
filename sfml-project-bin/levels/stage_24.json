@@ -1,0 +1,439 @@
+{
+  "author": "SJG",
+  "description": "2P Ghost and Portal",
+  "entities": [
+    {
+      "id": 154,
+      "properties": {
+        "channel": 0,
+        "cooldownSec": 1.0,
+        "destChannel": 1,
+        "loop": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "Portal",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": 155,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 144,
+      "y": 0
+    },
+    {
+      "id": 156,
+      "properties": {
+        "detectSecondPhase": 0.3,
+        "detectThreshold": 0.7,
+        "meterDecayRate": 0.1,
+        "meterIncreaseRate": 1.0,
+        "shyGhost": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "Ghost",
+      "x": 176,
+      "y": 0
+    },
+    {
+      "id": 157,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 304,
+      "y": 0
+    },
+    {
+      "id": 158,
+      "properties": {
+        "Bounce": 250.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 0,
+      "y": 32
+    },
+    {
+      "id": 159,
+      "properties": {
+        "Bounce": 250.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 32,
+      "y": 48
+    },
+    {
+      "id": 160,
+      "properties": {
+        "Bounce": 250.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 64,
+      "y": 48
+    },
+    {
+      "id": 161,
+      "properties": {
+        "channel": 0,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 240,
+      "y": 64
+    },
+    {
+      "id": 162,
+      "properties": {
+        "channel": 0,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 272,
+      "y": 64
+    },
+    {
+      "id": 163,
+      "properties": {
+        "channel": 1,
+        "loop": false,
+        "path": [
+          [
+            208,
+            80
+          ],
+          [
+            208,
+            30
+          ]
+        ],
+        "requireCount": 1,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 208,
+      "y": 80
+    },
+    {
+      "id": 164,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 32,
+      "y": 112
+    },
+    {
+      "id": 165,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 0,
+      "y": 128
+    },
+    {
+      "id": 166,
+      "properties": {
+        "channel": 0,
+        "dontPush": false,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 80,
+      "y": 128
+    },
+    {
+      "id": 167,
+      "properties": {
+        "channel": 1,
+        "cooldownSec": 1.0,
+        "destChannel": 0,
+        "loop": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "Portal",
+      "x": 176,
+      "y": 128
+    },
+    {
+      "id": 168,
+      "properties": {
+        "Bounce": 250.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 304,
+      "y": 128
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 20,
+  "layers": [
+    {
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}
