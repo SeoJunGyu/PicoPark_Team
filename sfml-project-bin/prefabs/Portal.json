@@ -1,0 +1,7 @@
+﻿{
+  "name": "Portal",
+  "type": "Portal",
+  "sprite": "graphics/Item/portal.png",
+  "scale": 0.4,
+  "properties": {"targetId":  2}
+}

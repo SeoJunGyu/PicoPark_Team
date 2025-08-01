@@ -80,7 +80,7 @@ void Ghost::Update(float dt)
 		}
 	}
 
-	hitBox.UpdateTransform(body, body.getGlobalBounds());
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	if (!shyGhost)
 	{
@@ -104,7 +104,7 @@ void Ghost::Update(float dt)
 	//플레이어 충돌 및 사망처리
 	CollisionPlayer();
 
-	hitBox.UpdateTransform(body, body.getGlobalBounds());
+	hitBox.UpdateTransform(body, body.getLocalBounds());
 
 	Gimmick::Update(dt);
 }
@@ -128,7 +128,7 @@ void Ghost::UpdateDetectionMeter(float dt)
 void Ghost::DetectionMeterUpDown(float dt)
 {
 	float norm = Utils::Clamp(highestSpeed / maxPlayerSpeed, 0.f, 1.f);
-	detectionMeter += norm * dt;
+	detectionMeter += norm * meterIncreaseRate * dt;
 	detectionMeter -= meterDecayRate * dt;
 	detectionMeter = Utils::Clamp(detectionMeter, 0.f, 1.f);
 }

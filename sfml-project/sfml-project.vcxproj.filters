@@ -51,6 +51,7 @@
     <ClCompile Include="Ui\YesNoPopupUI.cpp" />
     <ClCompile Include="PauseUI.cpp" />
     <ClCompile Include="Gimmick\Ghost.cpp" />
+    <ClCompile Include="Portal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\AnimationClip.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Ui\YesNoPopupUI.h" />
     <ClInclude Include="PauseUI.h" />
     <ClInclude Include="Gimmick\Ghost.h" />
+    <ClInclude Include="Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Level-Format Draft (v0.1).md" />

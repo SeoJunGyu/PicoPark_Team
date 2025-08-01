@@ -3,5 +3,11 @@
   "type":        "Ghost",
   "sprite":      "graphics/Item/ghost.png",
   "scale":       0.3,
-  "properties": {"shyGhost":  false}
+  "properties": {
+    "meterIncreaseRate": 1.0,
+    "meterDecayRate": 0.1,
+    "detectThreshold": 0.7,
+    "detectSecondPhase": 0.3,
+    "shyGhost": false
+  }
 }

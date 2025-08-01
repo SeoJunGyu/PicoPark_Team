@@ -94,6 +94,10 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             {
                 Variables::blocks.push_back(dynamic_cast<PushBlock*>(g));
             }
+            else if (tstr == "Portal")
+            {
+                Variables::portals.push_back(dynamic_cast<Portal*>(g));
+            }
         }
         /*float ox = level->tileSize * 0.5f;
         float oy = level->tileSize * 0.5f;
@@ -141,6 +145,7 @@ void SceneGame::ClearStage()
     Variables::gimmicks.clear();
     Variables::platforms.clear();
     Variables::blocks.clear();
+    Variables::portals.clear();
 }
 
 void SceneGame::updateCamera(float dt)
@@ -305,6 +310,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/ghost.png");
     texIds.push_back("graphics/Item/ghost2.png");
     texIds.push_back("graphics/Item/ghost3.png");
+    texIds.push_back("graphics/Item/portal.png");
     //texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Idle_Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Jump_Final.png");

@@ -109,6 +109,7 @@ void RoundPlatform::Update(float dt)
 						player->OnDie();
 					}
 					collidable = false;
+					return;
 				}
 
 				float separationY = info.normal.y * info.depth;

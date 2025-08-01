@@ -4,6 +4,7 @@ class Player;
 class Gimmick;
 class MovingPlatform;
 class PushBlock;
+class Portal;
 class TileMap;
 
 class Variables
@@ -16,6 +17,7 @@ public:
 	static std::vector<Gimmick*> gimmicks;
 	static std::vector<MovingPlatform*> platforms;
 	static std::vector<PushBlock*> blocks;
+	static std::vector<Portal*> portals;
 
 	static TileMap* tilemap;
 
