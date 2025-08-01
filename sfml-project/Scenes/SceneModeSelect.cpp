@@ -140,7 +140,15 @@ void SceneModeSelect::Update(float dt)
     }
 
     if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
-        SCENE_MGR.ChangeScene(SceneIds::Title);
+        if (back)
+        {
+            back->StartFadeOut();
+        }
+        SOUND_MGR.StartFadeOut();
+        isSceneChanging = true;
+        onSceneChange = [this]() {
+            SCENE_MGR.ChangeScene(SceneIds::Title);
+            };        
     }
 
 }

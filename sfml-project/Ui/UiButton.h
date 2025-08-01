@@ -20,7 +20,6 @@ protected:
 	sf::Color colorpull;
 
 	int Size;
-	bool effectdrawon = false;
 
 	sf::RectangleShape outline;
 
@@ -28,14 +27,17 @@ protected:
 	float speed = 5.f;
 	float amplitude = 0.05f;
 
-	bool enterLock = true;
 
+	bool enterLock = false;
 	sf::Text innerText;
 
 public:
 	bool isOn = false;
 	bool useeffect = false;
-	/*static bool yesnolock;*/
+	bool effectdrawon = false;
+	static UiButton* lastHovered;
+	
+
 
 	UiButton(const std::string& name = "");
 	virtual ~UiButton() = default;
@@ -44,6 +46,7 @@ public:
 	void Trigger()
 	{
 		flashTime = 0.12f;
+		enterLock = true;
 		if (event) event();
 	}
 

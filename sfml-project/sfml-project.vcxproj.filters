@@ -49,6 +49,7 @@
     <ClCompile Include="Framework\TilePalette.cpp" />
     <ClCompile Include="Ui\UiButton.cpp" />
     <ClCompile Include="Ui\YesNoPopupUI.cpp" />
+    <ClCompile Include="PauseUI.cpp" />
     <ClCompile Include="Gimmick\Ghost.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,7 @@
     <ClInclude Include="Framework\TilePalette.h" />
     <ClInclude Include="Ui\UiButton.h" />
     <ClInclude Include="Ui\YesNoPopupUI.h" />
+    <ClInclude Include="PauseUI.h" />
     <ClInclude Include="Gimmick\Ghost.h" />
   </ItemGroup>
   <ItemGroup>

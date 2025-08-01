@@ -23,7 +23,7 @@ void Key::Reset()
 
 	player = nullptr;
 	newPlayer = nullptr;
-
+	firstkey = true;
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
 	SetScale(GetScale());
@@ -45,6 +45,11 @@ void Key::Update(float dt)
 
 		if (Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
 		{
+			if (firstkey)
+			{
+				SOUND_MGR.PlaySfx("audio/key.mp3", false);
+				firstkey = false;
+			}
 			if (newPlayer && newPlayer->hasKey)
 			{
 				newPlayer->hasKey = false;

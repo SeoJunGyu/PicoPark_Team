@@ -177,9 +177,10 @@ void Button::Update(float dt)
 
 	//상태가 바뀌었을때만 텍스처 및 신호 업데이트
 	if (pressed != wasPressed)
-	{
+	{		
 		if (pressed)
-		{
+		{                       		
+			SOUND_MGR.PlaySfx("audio/buttonclick.mp3",false);			
 			body.setTexture(TEXTURE_MGR.Get("graphics/Item/Button_Pressed.png"));
 		}
 		else

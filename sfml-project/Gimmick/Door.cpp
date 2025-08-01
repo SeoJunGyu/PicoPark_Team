@@ -57,6 +57,8 @@ void Door::Update(float dt)
 	{
 		if (canOpen && !opened)
 		{
+			SOUND_MGR.PlaySfx("audio/lockDoor.mp3");
+			SOUND_MGR.SetSfxVolume(70);
 			opened = true;
 			locked = false;
 			body.setTexture(TEXTURE_MGR.Get("graphics/Item/doorOpen.png"));

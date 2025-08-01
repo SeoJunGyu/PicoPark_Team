@@ -135,7 +135,7 @@ void Player::Reset()
 	deltaPos = { 0.f, 0.f };
 	hasKey = false;
 	isDead = false;
-
+	
 	SetOrigin(Origins::BC);
 	hitBox.UpdateTransform(body, body.getLocalBounds());
 }
@@ -524,6 +524,7 @@ void Player::Update(float dt)
 
 		if (!isDead)
 		{
+			SOUND_MGR.PlaySfx("audio/jump.mp3",false);
 			switch (index)
 			{
 			case 0:
