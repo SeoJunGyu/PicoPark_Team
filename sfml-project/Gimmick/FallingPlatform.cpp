@@ -82,6 +82,7 @@ void FallingPlatform::Update(float dt)
 			// 윗면 충돌
 			if (info.normal.y < -0.5f && p->velocity.y > 0.f)
 			{
+				bool prevGround = p->isGrounded;
 				float separationY = info.normal.y * info.depth;
 				p->SetPosition({ p->GetPosition().x, p->GetPosition().y + separationY });
 
@@ -89,6 +90,8 @@ void FallingPlatform::Update(float dt)
 				p->velocity.y = 0.f;
 				p->isGrounded = true;
 							
+				if (!prevGround)
+					p->PlayLandAnim();
 
 				playerOnTop = true;
 				continue;

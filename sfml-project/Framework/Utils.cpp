@@ -10,6 +10,29 @@ void Utils::Init()
     gen.seed(rd());
 }
 
+void Utils::ApplyLetterBoxToView(sf::View& view, float leftLimit, float targetWidth, const sf::Vector2u& winSize)
+{
+    const float worldRatio = view.getSize().x / view.getSize().y;
+    const float screenRatio = (targetWidth * winSize.x) / float(winSize.y);
+
+    float vpX = leftLimit;          
+    float vpY = 0.f;
+    float vpW = targetWidth;
+    float vpH = 1.f;
+
+    if (screenRatio > worldRatio)   
+    {
+        vpW = worldRatio / screenRatio * targetWidth;
+        vpX += (targetWidth - vpW) * 0.5f;
+    }
+    else                            
+    {
+        vpH = screenRatio / worldRatio;
+        vpY = (1.f - vpH) * 0.5f;
+    }
+    view.setViewport({ vpX, vpY, vpW, vpH });
+}
+
 float Utils::RandomValue()
 {
     std::uniform_real_distribution<float> dist(0.f, 1.f);
