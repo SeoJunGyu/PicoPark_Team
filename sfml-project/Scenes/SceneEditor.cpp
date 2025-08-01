@@ -110,6 +110,8 @@ void SceneEditor::Enter()
         grid.height * grid.tileSize);
     worldView.setCenter(worldView.getSize() * 0.5f);
 
+    //Utils::ApplyLetterBoxToView(worldView, 0.f, 1.f - uiRatio, winSize);
+
     currentTile = 1;       // 첫 색 선택
     currentEntity = "";
 

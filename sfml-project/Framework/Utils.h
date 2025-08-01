@@ -17,6 +17,11 @@ private:
 public:
 	static void Init();
 
+	static void ApplyLetterBoxToView(sf::View& view,
+		float leftLimit,   // 0 ~ 1  (UI 때문에 왼쪽 경계가 0 아님)
+		float targetWidth, // 0 ~ 1  (UI 제외한 가용 폭 비율)
+		const sf::Vector2u& winSize);
+
 	// Random
 	static float RandomValue(); // 0.0f ~ 1.0f
 	static int RandomRange(int min, int maxExclude);
