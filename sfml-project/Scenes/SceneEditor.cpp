@@ -110,7 +110,7 @@ void SceneEditor::Enter()
         grid.height * grid.tileSize);
     worldView.setCenter(worldView.getSize() * 0.5f);
 
-    //Utils::ApplyLetterBoxToView(worldView, 0.f, 1.f - uiRatio, winSize);
+    Utils::ApplyLetterBoxToView(worldView, 0.f, 1.f - uiRatio, winSize);
 
     currentTile = 1;       // 첫 색 선택
     currentEntity = "";
@@ -412,6 +412,10 @@ void SceneEditor::ResizeGrid(int w, int h)
 
     worldView.setSize(w * grid.tileSize, h * grid.tileSize);
     worldView.setCenter(worldView.getSize() * 0.5f);
+    constexpr float UI_WIDTH = 500.f;               
+    const auto winSize = FRAMEWORK.GetWindow().getSize();
+    const float uiRatio = UI_WIDTH / winSize.x;
+    Utils::ApplyLetterBoxToView(worldView, 0.f, 1.f - uiRatio, winSize);
 }
 
 void SceneEditor::Draw(sf::RenderWindow& w) {
