@@ -41,6 +41,8 @@ void SceneGame::LoadStage(const std::string& jsonPath)
     Button::ClearStates(); //버튼 래치 및 누름상태 초기화
     Variables::ResetStage();
     std::vector<sf::Vector2f> spawnPoints;
+    bool UseRope = false;
+    GameObject* RopeObj = nullptr;
     std::ifstream fin(jsonPath);
     nlohmann::json j;
     fin >> j; //파일 파싱 : 필요한 데이터를 가져와서 사용하는 행위?
@@ -82,6 +84,12 @@ void SceneGame::LoadStage(const std::string& jsonPath)
             { entobj["x"], entobj["y"] }, scl,
             entobj.value("properties", nlohmann::json::object()));
         if (g) {
+            if (tstr == "Rope")
+            {
+                UseRope = true;
+                RopeObj = g;
+                continue;
+            }
             g->Init();
             g->Reset();
             Variables::gimmicks.push_back((Gimmick*)g);
@@ -151,6 +159,13 @@ void SceneGame::LoadStage(const std::string& jsonPath)
         //std::cout << p->GetPosition().x << " / " << p->GetPosition().y << std::endl;
         AddGameObject(p);
         ++idx;
+    }
+    if (UseRope && RopeObj) {
+        UseRope = false;
+        RopeObj->Init();
+        RopeObj->Reset();
+        Variables::gimmicks.push_back((Gimmick*)RopeObj);
+        AddGameObject(RopeObj);
     }
 }
 
@@ -331,6 +346,7 @@ void SceneGame::Init()
     texIds.push_back("graphics/Item/ghost2.png");
     texIds.push_back("graphics/Item/ghost3.png");
     texIds.push_back("graphics/Item/portal.png");
+    //texIds.push_back("graphics/Item/Rope.png");
     //texIds.push_back("graphics/Characters/Pico Player Jump Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Idle_Final.png");
     texIds.push_back("graphics/Characters/Pico_Player_Jump_Final.png");
