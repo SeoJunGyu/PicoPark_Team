@@ -12,6 +12,6 @@ public:
 private:
     std::vector<Player*> nodes;      
     float segLen = 36.f;      // 한 구간 최대 길이   
-    float springK = 20.f;     // 끌어당기는 힘 크기
+    //float springK = 20.f;     // 끌어당기는 힘 크기
 };
 

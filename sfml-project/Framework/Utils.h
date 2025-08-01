@@ -77,7 +77,6 @@ public:
 		const std::vector<sf::Vector2f>& polygonB, const sf::Transform& transformB);
 
 	static CollisionInfo GetAABBCollision(const sf::FloatRect& a, const sf::FloatRect& b);
+	static float Sign(float v);
 
 };
-
-

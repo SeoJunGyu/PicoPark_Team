@@ -412,3 +412,8 @@ CollisionInfo Utils::GetAABBCollision(const sf::FloatRect& a, const sf::FloatRec
         return { {0.f, dir}, h };
     }
 }
+
+float Utils::Sign(float v)
+{
+    return (v > 0.f) ? 1.f : (v < 0.f ? -1.f : 0.f);
+}

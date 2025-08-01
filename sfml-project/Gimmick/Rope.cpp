@@ -1,5 +1,6 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Rope.h"
+
 
 Rope::Rope(nlohmann::json j)
     : Gimmick(j.value("id", 0), StrToType("Rope"),
@@ -12,13 +13,14 @@ void Rope::Reset()
 {
     nodes = Variables::players;  
     segLen = properties.value("segLen", 36);
-    springK = properties.value("spring", 20.f);
     Gimmick::Reset();
 }
 
 void Rope::Update(float dt)
 {
     if (nodes.empty()) return;
+
+    if (nodes.size() < 2) return;
 
     for (size_t i = 1; i < nodes.size(); ++i)
     {
@@ -30,16 +32,20 @@ void Rope::Update(float dt)
 
         if (dist > segLen)
         {
-            // (dist - segLen) ¸¸Å­ µÚÂÊÀ» ²ø¾î´ç°Ü ÁØ´Ù
-            sf::Vector2f dir = delta / dist;          // Á¤±ÔÈ­
+            sf::Vector2f dir = delta / dist;          // ì •ê·œí™”
             float overShoot = dist - segLen;
 
-            // ´Ü¼ø À§Ä¡ ÀÌµ¿(teleport) º¸´Ü ¡®°¡¼Óµµ¡¯·Î ÈûÀ» ÁÖ¸é ÀÚ¿¬½º·´´Ù
-            //cur->velocity -= dir * springK * overShoot * dt;
-            prev->SetPosition(prev->GetPosition() + dir * overShoot * 0.5f);
-            cur->SetPosition(cur->GetPosition() - dir * overShoot * 0.5f);
+            if (prev->isGrounded && !cur->isGrounded)
+                cur->SetPosition(cur->GetPosition() - dir * overShoot);
+            else if (!prev->isGrounded && cur->isGrounded)
+                prev->SetPosition(prev->GetPosition() + dir * overShoot);
+            else
+            {   
+                prev->SetPosition(prev->GetPosition() + dir * overShoot * 0.5f);
+                cur->SetPosition(cur->GetPosition() - dir * overShoot * 0.5f);
+            }
 
-            // ¿øÇÑ´Ù¸é ¼±µÎ ÂÊ¿¡ ¹İ´ë Èû +dir µµ ÁÙ ¼ö ÀÖÀ½ (´ºÅÏ 3¹ıÄ¢)
+            // ì›í•œë‹¤ë©´ ì„ ë‘ ìª½ì— ë°˜ëŒ€ í˜ +dir ë„ ì¤„ ìˆ˜ ìˆìŒ (ë‰´í„´ 3ë²•ì¹™)
         }
     }
 

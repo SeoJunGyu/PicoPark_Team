@@ -4,7 +4,6 @@
   "sprite":      "graphics/Item/Rope.png",
   "scale":       0.5,
   "properties": {
-    "segLen": 36,
-    "spring": 20
+    "segLen": 36
   }
 }
