@@ -60,6 +60,8 @@ public:
 
 	int ghostDirection = 1;
 
+	float portalTimer = 0.f; //포탈용 변수
+
 protected:
 	Animator animator;
 	std::string currentStage;

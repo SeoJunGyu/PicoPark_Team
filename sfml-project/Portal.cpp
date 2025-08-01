@@ -22,6 +22,10 @@ void Portal::Reset()
 
 	channel = properties.value("channel", 0);
 	destChannel = properties.value("destChannel", -1);
+	cooldownSec = properties.value("cooldownSec", 1.0f);
+	loop = properties.value("loop", false);
+
+	entered.clear();
 
 	SetOrigin(Origins::MC);
 	SetPosition(GetPosition());
@@ -39,17 +43,63 @@ void Portal::Update(float dt)
 
 	for (Player* p : Variables::players)
 	{
-		if (!dest || !Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect))
+		if (!dest)
 		{
 			continue;
 		}
 
-		if ()
+		if (p->portalTimer > 0.f)
 		{
-			p->SetPosition(dest->GetPosition());
+			continue;
 		}
-		break;
+
+		bool colliding = Utils::CheckCollision(hitBox.rect, p->GetHitBox().rect);
+
+		if (loop)
+		{
+			if (colliding && p->portalTimer <= 0.f)
+			{
+				Teleport(p);
+			}
+			continue;
+		}
+		
+		if (colliding)
+		{
+			if (std::find(entered.begin(), entered.end(), p) == entered.end())
+			{
+				Teleport(p);
+				entered.push_back(p);
+			}
+		}
+		else
+		{
+			auto it = std::find(entered.begin(), entered.end(), p);
+			if (it != entered.end())
+			{
+				entered.erase(it);
+			}
+		}
+
 	}
 
 	Gimmick::Update(dt);
+}
+
+void Portal::Teleport(Player* p)
+{
+	//도착 포탈 중심으로 이동 & 약간 오프셋
+	sf::Vector2f targetPos = dest->GetPosition();
+	//targetPos.y -= p->GetHitBox().rect.getSize().y + (hitBox.GetTop() + hitBox.GetHeight()) * 0.5f; // 위쪽에 살짝 띄우기
+	p->SetPosition(targetPos);
+
+	//서로 쿨타임 부여
+	p->portalTimer = cooldownSec;
+
+	if (!dest->loop)
+	{
+		auto& list = dest->entered;
+		if (std::find(list.begin(), list.end(), p) == list.end())
+			list.push_back(p);
+	}
 }

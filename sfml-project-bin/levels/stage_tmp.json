@@ -6,11 +6,13 @@
       "id": 0,
       "properties": {
         "channel": 0,
-        "destChannel": 1
+        "cooldownSec": 1.0,
+        "destChannel": 1,
+        "loop": false
       },
       "scale": [
-        0.4000000059604645,
-        0.4000000059604645
+        0.30000001192092896,
+        0.30000001192092896
       ],
       "type": "Portal",
       "x": 16,
@@ -22,18 +24,20 @@
         "playerIndex": 0
       },
       "type": "PlayerSpawn",
-      "x": 80,
+      "x": 64,
       "y": 64
     },
     {
       "id": 2,
       "properties": {
         "channel": 1,
-        "destChannel": 0
+        "cooldownSec": 1.0,
+        "destChannel": 0,
+        "loop": false
       },
       "scale": [
-        0.4000000059604645,
-        0.4000000059604645
+        0.30000001192092896,
+        0.30000001192092896
       ],
       "type": "Portal",
       "x": 128,
