@@ -1,0 +1,296 @@
+{
+  "author": "SJG",
+  "description": "1P Blinker Map",
+  "entities": [
+    {
+      "id": 654,
+      "properties": {
+        "channel": 1,
+        "cooldownSec": 1.0,
+        "destChannel": 1,
+        "loop": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Portal",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": 655,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 32,
+      "y": 0
+    },
+    {
+      "id": 656,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": true
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 32
+    },
+    {
+      "id": 657,
+      "properties": {
+        "channel": 1,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 32,
+      "y": 48
+    },
+    {
+      "id": 658,
+      "properties": {
+        "channel": 1,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 64,
+      "y": 48
+    },
+    {
+      "id": 659,
+      "properties": {
+        "channel": 1,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 96,
+      "y": 48
+    },
+    {
+      "id": 660,
+      "properties": {
+        "maxTime": 20,
+        "minTime": 10,
+        "resetDuration": 3.0
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Blinker",
+      "x": 0,
+      "y": 112
+    },
+    {
+      "id": 661,
+      "properties": {
+        "color": 0,
+        "requireCount": 1
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "PushBlock",
+      "x": 96,
+      "y": 112
+    },
+    {
+      "id": 662,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": false
+      },
+      "scale": [
+        0.3700000047683716,
+        0.3700000047683716
+      ],
+      "type": "RoundPlatform",
+      "x": 128,
+      "y": 112
+    },
+    {
+      "id": 663,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 0,
+      "y": 128
+    },
+    {
+      "id": 664,
+      "properties": {
+        "channel": 0,
+        "cooldownSec": 1.0,
+        "destChannel": 1,
+        "loop": false
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "Portal",
+      "x": 16,
+      "y": 128
+    },
+    {
+      "id": 665,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 144,
+      "y": 128
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 10,
+  "layers": [
+    {
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}

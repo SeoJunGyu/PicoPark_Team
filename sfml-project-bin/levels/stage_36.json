@@ -1,0 +1,726 @@
+{
+  "author": "SJG",
+  "description": "1P Falling Map",
+  "entities": [
+    {
+      "id": 796,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 32,
+      "y": 0
+    },
+    {
+      "id": 797,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 0
+    },
+    {
+      "id": 798,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 80,
+      "y": 0
+    },
+    {
+      "id": 799,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 0
+    },
+    {
+      "id": 800,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 128,
+      "y": 0
+    },
+    {
+      "id": 801,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 16,
+      "y": 16
+    },
+    {
+      "id": 802,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 48,
+      "y": 16
+    },
+    {
+      "id": 803,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 80,
+      "y": 16
+    },
+    {
+      "id": 804,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 112,
+      "y": 16
+    },
+    {
+      "id": 805,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 144,
+      "y": 16
+    },
+    {
+      "id": 806,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 0,
+      "y": 32
+    },
+    {
+      "id": 807,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 32,
+      "y": 32
+    },
+    {
+      "id": 808,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 32
+    },
+    {
+      "id": 809,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 32
+    },
+    {
+      "id": 810,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 128,
+      "y": 32
+    },
+    {
+      "id": 811,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 16,
+      "y": 48
+    },
+    {
+      "id": 812,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 48,
+      "y": 48
+    },
+    {
+      "id": 813,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 80,
+      "y": 48
+    },
+    {
+      "id": 814,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 112,
+      "y": 48
+    },
+    {
+      "id": 815,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 144,
+      "y": 48
+    },
+    {
+      "id": 816,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 0,
+      "y": 64
+    },
+    {
+      "id": 817,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 32,
+      "y": 64
+    },
+    {
+      "id": 818,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 64
+    },
+    {
+      "id": 819,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 64
+    },
+    {
+      "id": 820,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 128,
+      "y": 64
+    },
+    {
+      "id": 821,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 16,
+      "y": 80
+    },
+    {
+      "id": 822,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 48,
+      "y": 80
+    },
+    {
+      "id": 823,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 80,
+      "y": 80
+    },
+    {
+      "id": 824,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 112,
+      "y": 80
+    },
+    {
+      "id": 825,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 144,
+      "y": 80
+    },
+    {
+      "id": 826,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 0,
+      "y": 96
+    },
+    {
+      "id": 827,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 32,
+      "y": 96
+    },
+    {
+      "id": 828,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 96
+    },
+    {
+      "id": 829,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 96
+    },
+    {
+      "id": 830,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 128,
+      "y": 96
+    },
+    {
+      "id": 831,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 16,
+      "y": 112
+    },
+    {
+      "id": 832,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 48,
+      "y": 112
+    },
+    {
+      "id": 833,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 80,
+      "y": 112
+    },
+    {
+      "id": 834,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 112,
+      "y": 112
+    },
+    {
+      "id": 835,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 32,
+      "y": 128
+    },
+    {
+      "id": 836,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 64,
+      "y": 128
+    },
+    {
+      "id": 837,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 80,
+      "y": 128
+    },
+    {
+      "id": 838,
+      "properties": {
+        "fallDelay": 0.019999999552965164,
+        "respawnDelay": 2.0
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "FallingPlatform",
+      "x": 96,
+      "y": 128
+    },
+    {
+      "id": 839,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 144,
+      "y": 128
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 10,
+  "layers": [
+    {
+      "data": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}
