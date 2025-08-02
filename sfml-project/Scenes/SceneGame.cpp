@@ -4,6 +4,7 @@
 #include "Gimmick.h"
 #include "PrefabMgr.h"
 #include "BackGround.h"
+#include "PauseUI.h"
 
 std::string SceneGame::pendingStage;
 bool SceneGame::isEditor = false;
@@ -39,6 +40,11 @@ static sf::Color makeColor(int tileId)
 void SceneGame::LoadStage(const std::string& jsonPath)
 {
 	ClearStage();
+
+	/*background = new BackGround("Background");*/
+	/*background->Settext("graphics/Backgroundptr.png");
+	AddGameObject(background);*/
+
 	Button::ClearStates(); //버튼 래치 및 누름상태 초기화
 	Variables::ResetStage();
 	std::vector<sf::Vector2f> spawnPoints;
@@ -115,6 +121,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 		//}
 
 	}
+		
 
 	int idx = 0;
 	for (auto& pos : spawnPoints)
@@ -330,6 +337,7 @@ void SceneGame::Init()
 	texIds.push_back("graphics/Characters/Pico_Player3_walk_right_final.png");
 	texIds.push_back("graphics/Characters/player3_pushwalk.png");
 	texIds.push_back("graphics/Backgroundptr.png");
+	texIds.push_back("graphics/puse.png");
 
 	/*bgTex.loadFromFile("graphics/Background.png");
 	bgSpr.setTexture(bgTex);
@@ -377,8 +385,11 @@ void SceneGame::Init()
 	clearTxt.setOutlineColor(sf::Color::White);
 	clearTxt.setOutlineThickness(2.f);
 
-	background = new BackGround("Background");
+	background = new BackGround("Background");	
 	AddGameObject(background);
+
+	pause =  new PauseUI("Pause");
+	AddGameObject(pause);
 
 	Scene::Init();
 }
@@ -408,6 +419,19 @@ void SceneGame::StartStageClear()
 	for (auto* p : Variables::players) p->SetActive(false);
 }
 
+void SceneGame::PauseMenu()
+{
+	background->whiteOverlay.setFillColor(sf::Color(255, 255, 255, 125));
+	pause->SetActive(true);
+
+
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
+		pause->SetActive(false);
+	}
+}
+
 void SceneGame::Enter()
 {
 	Scene::Enter();
@@ -417,6 +441,13 @@ void SceneGame::Enter()
 
 	background->Settext("graphics/Backgroundptr.png");
 	background->SetActive(true);
+
+	enterdoor = false;
+	gameClearPlayed = false;
+
+	onSceneChange = [this]() { SCENE_MGR.ChangeScene(SceneIds::Select); };
+
+	isSceneChanging = false;
 
 	std::string path = pendingStage.empty()
 		? "levels/stage_tmp.json"
@@ -454,12 +485,6 @@ void SceneGame::Enter()
 
 //FRAMEWORK.GetWindow().setView(worldView);
 
-	enterdoor = false;
-	gameClearPlayed = false;
-
-	onSceneChange = [this]() { SCENE_MGR.ChangeScene(SceneIds::Select); };
-
-	isSceneChanging = false;
 }
 
 void SceneGame::Update(float dt)
@@ -514,7 +539,8 @@ void SceneGame::Update(float dt)
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
-		SCENE_MGR.ChangeScene(SceneIds::Select);
+		PauseMenu();
+		/*SCENE_MGR.ChangeScene(SceneIds::Select);*/
 	}
 
 	if (!Variables::players.empty())        // 플레이어가 하나라도 있으면

@@ -48,7 +48,7 @@ void PopupWindowUI::Init()
 
 
 	sortingLayer = SortingLayers::UI;
-	sortingOrder = 1;
+	sortingOrder = 1;  
 	SetOrigin(Origins::MC);
 
 	Local = new UiButton("Local");

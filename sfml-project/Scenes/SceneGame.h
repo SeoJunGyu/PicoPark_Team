@@ -4,6 +4,7 @@
 
 class Level;
 class BackGround;
+class PauseUI;
 
 class SceneGame : public Scene
 {
@@ -13,6 +14,7 @@ protected:
 	/*sf::Texture bgTex;
 	sf::Sprite bgSpr;*/
 	BackGround* background;
+	PauseUI* pause;
 
 
 	static std::string pendingStage;
@@ -46,9 +48,13 @@ public:
 	void ClearStage();
 	void updateCamera(float dt);
 	void StartStageClear();
+
+	void PauseMenu();
+
 	static void SetPendingStage(const std::string& p) { pendingStage = p; }
 	static void applyLetterBox(sf::View& v, sf::Vector2u win);
 	static void SetEditor(const bool& b) { isEditor = b; }
 	static const bool& GetEditor() { return isEditor; }
+
 };
 

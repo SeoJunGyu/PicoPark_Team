@@ -163,7 +163,7 @@ void UiButton::Update(float dt)
 		if (lastHovered != this && lastHovered != nullptr)
 		{
 			lastHovered->effectdrawon = false;  // 이전 버튼 효과 끄기
-		}
+		}		
 
 		lastHovered = this;
 		effectdrawon = true;

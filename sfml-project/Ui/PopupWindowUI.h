@@ -11,7 +11,7 @@ class PopupWindowUI :
 protected:
 	sf::Sprite sprite;	
 	
-	std::vector<UiButton*> startbut;	
+	std::vector<UiButton*> startbut;
 	std::function<void()> onSceneChange;
 
 	BackGround* background;
