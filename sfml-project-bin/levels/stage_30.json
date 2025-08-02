@@ -1,0 +1,207 @@
+{
+  "author": "SJG",
+  "description": "4P PushBlock Map",
+  "entities": [
+    {
+      "id": 2553,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 16,
+      "y": 16
+    },
+    {
+      "id": 2554,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 96,
+      "y": 16
+    },
+    {
+      "id": 2555,
+      "properties": {
+        "color": -1,
+        "requireCount": 2
+      },
+      "scale": [
+        0.20000000298023224,
+        0.4000000059604645
+      ],
+      "type": "PushBlock",
+      "x": 64,
+      "y": 64
+    },
+    {
+      "id": 2556,
+      "properties": {
+        "color": -1,
+        "requireCount": 4
+      },
+      "scale": [
+        0.20000000298023224,
+        0.800000011920929
+      ],
+      "type": "PushBlock",
+      "x": 80,
+      "y": 112
+    },
+    {
+      "id": 2557,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 16,
+      "y": 128
+    },
+    {
+      "id": 2558,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 32,
+      "y": 128
+    },
+    {
+      "id": 2559,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 48,
+      "y": 128
+    },
+    {
+      "id": 2560,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 64,
+      "y": 128
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 10,
+  "layers": [
+    {
+      "data": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}

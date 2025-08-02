@@ -1,0 +1,255 @@
+{
+  "author": "SJG",
+  "description": "1P BasicMap",
+  "entities": [
+    {
+      "id": 129,
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Key",
+      "x": 16,
+      "y": 16
+    },
+    {
+      "id": 130,
+      "properties": {
+        "locked": true
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Door",
+      "x": 128,
+      "y": 16
+    },
+    {
+      "id": 131,
+      "properties": {
+        "Bounce": 200.0
+      },
+      "scale": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "type": "BouncePad",
+      "x": 16,
+      "y": 64
+    },
+    {
+      "id": 132,
+      "properties": {
+        "channel": 1,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 48,
+      "y": 64
+    },
+    {
+      "id": 133,
+      "properties": {
+        "channel": 1,
+        "dontPush": true,
+        "latch": false,
+        "scaleMinus": false,
+        "scalePlus": false
+      },
+      "scale": [
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "type": "Button",
+      "x": 80,
+      "y": 64
+    },
+    {
+      "id": 134,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 16,
+      "y": 112
+    },
+    {
+      "id": 135,
+      "properties": {
+        "color": 0,
+        "requireCount": 1
+      },
+      "scale": [
+        0.20000000298023224,
+        0.4000000059604645
+      ],
+      "type": "PushBlock",
+      "x": 32,
+      "y": 112
+    },
+    {
+      "id": 136,
+      "properties": {
+        "RandFall": 0.0,
+        "channel": 0,
+        "playerKill": true,
+        "transparency": false
+      },
+      "scale": [
+        0.30000001192092896,
+        0.30000001192092896
+      ],
+      "type": "RoundPlatform",
+      "x": 80,
+      "y": 128
+    },
+    {
+      "id": 137,
+      "properties": {
+        "channel": 1,
+        "loop": true,
+        "path": [
+          [
+            128,
+            128
+          ],
+          [
+            128,
+            78
+          ]
+        ],
+        "requireCount": 0,
+        "speed": 30
+      },
+      "scale": [
+        0.20000000298023224,
+        0.20000000298023224
+      ],
+      "type": "MovingPlatform",
+      "x": 128,
+      "y": 128
+    }
+  ],
+  "gridHeight": 10,
+  "gridWidth": 10,
+  "layers": [
+    {
+      "data": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "name": "Main",
+      "parallax": 1.0,
+      "type": "TILE",
+      "visible": true
+    }
+  ],
+  "tileSize": 16,
+  "version": 1
+}
