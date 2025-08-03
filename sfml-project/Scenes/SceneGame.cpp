@@ -367,7 +367,7 @@ void SceneGame::Init()
 
     bgTex.loadFromFile("graphics/Background.png");
     bgSpr.setTexture(bgTex);
-    bgSpr.setScale({ 1.3f, 1.3f });
+    bgSpr.setScale({ 1.3f, 2.3f });
 
     fontIds.push_back("fonts/DS-DIGIT.ttf");
 
