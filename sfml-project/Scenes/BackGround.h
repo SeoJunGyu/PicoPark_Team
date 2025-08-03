@@ -11,11 +11,13 @@ protected:
     float fadeAlpha = 0.f;
     float fadeSpeed = 255.f;
     bool fadeComplete = false;
+  
 
 public:
     sf::RectangleShape whiteOverlay;    
 
     static bool isFadingout;
+    bool puseon = false;
 
     BackGround(const std::string& name ="");
     virtual ~BackGround() = default;
@@ -30,5 +32,6 @@ public:
 
     void StartFadeOut();
     bool IsFadeOutComplete() const;
+    void puseonoff(bool puse);
 };
 

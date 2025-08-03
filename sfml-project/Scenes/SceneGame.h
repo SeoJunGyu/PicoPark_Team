@@ -34,6 +34,8 @@ protected:
 	bool isSceneChanging = false;
 	std::function<void()> onSceneChange;
 
+	bool pauseon = false;
+
 public:
 	SceneGame();
 	~SceneGame() override;

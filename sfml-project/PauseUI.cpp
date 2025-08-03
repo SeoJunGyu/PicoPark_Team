@@ -193,6 +193,10 @@ void PauseUI::Update(float dt)
 		}
 		pusebuts[currentPage]->effectdrawon = true;
 	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
+	{
+		this->SetActive(false);
+	}
 
 }
 

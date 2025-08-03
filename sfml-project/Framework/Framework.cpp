@@ -6,7 +6,6 @@
 
 
 
-
 void Framework::Init(int w, int h, const std::string& t)
 {
     //window.create(sf::VideoMode(w, h), t, sf::Style::Fullscreen);
@@ -97,4 +96,9 @@ void Framework::Release()
 	SOUNDBUFFER_MGR.Unload(soundIds);
 	FONT_MGR.Unload(fontIds);
 	TEXTURE_MGR.Unload(texIds);
+}
+
+void Framework::SetPause(bool puse)
+{
+    timeScale = pause ? 0 : 1.f;
 }

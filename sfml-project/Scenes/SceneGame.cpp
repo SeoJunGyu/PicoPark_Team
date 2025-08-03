@@ -40,13 +40,10 @@ static sf::Color makeColor(int tileId)
 void SceneGame::LoadStage(const std::string& jsonPath)
 {
 	ClearStage();
-
-	/*background = new BackGround("Background");*/
-	/*background->Settext("graphics/Backgroundptr.png");
-	AddGameObject(background);*/
-
+	
 	Button::ClearStates(); //버튼 래치 및 누름상태 초기화
 	Variables::ResetStage();
+
 	std::vector<sf::Vector2f> spawnPoints;
 	std::ifstream fin(jsonPath);
 	nlohmann::json j;
@@ -96,7 +93,7 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 			if (tstr == "MovingPlatform")
 			{
 				Variables::platforms.push_back(dynamic_cast<MovingPlatform*>(g));
-			}
+		}
 			else if (tstr == "PushBlock")
 			{
 				Variables::blocks.push_back(dynamic_cast<PushBlock*>(g));
@@ -121,7 +118,14 @@ void SceneGame::LoadStage(const std::string& jsonPath)
 		//}
 
 	}
-		
+	
+	
+	background = new BackGround("Background");
+	background->Settext("graphics/Backgroundptr.png");
+	AddGameObject(background);
+
+	pause = new PauseUI("Pause");
+	AddGameObject(pause);
 
 	int idx = 0;
 	for (auto& pos : spawnPoints)
@@ -385,11 +389,11 @@ void SceneGame::Init()
 	clearTxt.setOutlineColor(sf::Color::White);
 	clearTxt.setOutlineThickness(2.f);
 
-	background = new BackGround("Background");	
-	AddGameObject(background);
+	/*background = new BackGround("Background");	
+	AddGameObject(background);*/
 
-	pause =  new PauseUI("Pause");
-	AddGameObject(pause);
+	/*pause =  new PauseUI("Pause");
+	AddGameObject(pause);*/
 
 	Scene::Init();
 }
@@ -421,14 +425,13 @@ void SceneGame::StartStageClear()
 
 void SceneGame::PauseMenu()
 {
-	background->whiteOverlay.setFillColor(sf::Color(255, 255, 255, 125));
+	background->puseonoff(true);
 	pause->SetActive(true);
-
-
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
-		pause->SetActive(false);
+		background->puseonoff(false);
+		pause->SetActive(false);		
 	}
 }
 
@@ -439,8 +442,8 @@ void SceneGame::Enter()
 	SOUND_MGR.PlayBgm("audio/03Doremi.mp3", true);
 	SOUND_MGR.SetBgmVolume(50);
 
-	background->Settext("graphics/Backgroundptr.png");
-	background->SetActive(true);
+	//background->Settext("graphics/Backgroundptr.png");
+	//background->SetActive(true);
 
 	enterdoor = false;
 	gameClearPlayed = false;
@@ -539,8 +542,18 @@ void SceneGame::Update(float dt)
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Escape)) {
-		PauseMenu();
+		pauseon = true;
+		FRAMEWORK.SetPause(pauseon);
 		/*SCENE_MGR.ChangeScene(SceneIds::Select);*/
+	}
+	if (pauseon)
+	{
+		PauseMenu();
+	}
+	if (!(pause->GetActive()))
+	{
+		background->puseonoff(false);
+		pauseon = false;
 	}
 
 	if (!Variables::players.empty())        // 플레이어가 하나라도 있으면
@@ -596,9 +609,9 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
-	window.setView(worldView);
-	Scene::Draw(window);
+	window.setView(worldView);	
 	tileMap->Draw(window);
+	Scene::Draw(window);	
 	/*Scene::Draw(window);*/
 	if (stageClear)
 	{
@@ -620,9 +633,13 @@ void SceneGame::Draw(sf::RenderWindow& window)
 
 		window.draw(clearTxt);
 	}
-	if (background && background->isFadingout)  // 또는 fade 중 조건
+	if ((background && background->isFadingout) || background->puseon)  // 또는 fade 중 조건
 	{
-		window.draw(background->whiteOverlay);
+ 		window.draw(background->whiteOverlay);
+		if (background->puseon)
+		{
+			pause->Draw(window);
+		}
 	}
 	//auto activeView = FRAMEWORK.GetWindow().getView();
 	//std::cout << "Active view size: "

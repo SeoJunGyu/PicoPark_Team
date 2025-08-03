@@ -66,3 +66,18 @@ bool BackGround::IsFadeOutComplete() const
 	return fadeComplete;
 }
 
+
+void BackGround::puseonoff(bool puse)
+{
+	if (puse)
+	{
+		puseon = true;
+		whiteOverlay.setFillColor(sf::Color(255, 255, 255,50));
+   }
+	else
+	{
+		whiteOverlay.setFillColor(sf::Color(255, 255, 255, 0));
+		puseon = false;
+	}
+}
+

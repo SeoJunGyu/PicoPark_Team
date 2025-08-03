@@ -165,7 +165,7 @@ void PopupWindowUI::Reset()
 	Local->SetCallBack([this]()
 		{
 
-			yesno->SetText("START GAME", "fonts/Pixelownfont-Regular.ttf", 50);
+			yesno->SetText("START GAME", "fonts/BACKTO1982.TTF", 50);
 			yesno->Reset();
 			yesno->SetActive(true);
 			drawon = false;
@@ -184,7 +184,7 @@ void PopupWindowUI::Reset()
 		});
 	Editor->SetCallBack([this]()
 		{
-			yesno->SetText("EDTIOR MODE", "fonts/Pixelownfont-Regular.ttf", 50);
+			yesno->SetText("EDTIOR MODE", "fonts/BACKTO1982.TTF", 50);
 			yesno->Reset();
 			yesno->SetActive(true);
 			drawon = false;
@@ -203,7 +203,7 @@ void PopupWindowUI::Reset()
 
 		});
 	Exit->SetCallBack([this]() {
-		yesno->SetText("    EXIT GAME", "fonts/Pixelownfont-Regular.ttf", 50);
+		yesno->SetText(" EXIT GAME", "fonts/BACKTO1982.TTF", 50);
 		yesno->Reset();
 		yesno->SetActive(true);		
 		drawon = false;
