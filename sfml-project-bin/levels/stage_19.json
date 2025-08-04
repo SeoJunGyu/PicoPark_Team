@@ -3,7 +3,7 @@
   "description": "4P ShyGhost Map",
   "entities": [
     {
-      "id": 399,
+      "id": 0,
       "properties": {
         "locked": true
       },
@@ -16,7 +16,7 @@
       "y": 0
     },
     {
-      "id": 400,
+      "id": 1,
       "properties": {
         "detectSecondPhase": 0.3,
         "detectThreshold": 0.7,
@@ -33,7 +33,7 @@
       "y": 16
     },
     {
-      "id": 401,
+      "id": 2,
       "scale": [
         0.10000000149011612,
         0.10000000149011612
@@ -43,7 +43,7 @@
       "y": 16
     },
     {
-      "id": 402,
+      "id": 3,
       "properties": {
         "Bounce": 200.0
       },
@@ -56,7 +56,7 @@
       "y": 32
     },
     {
-      "id": 403,
+      "id": 4,
       "properties": {
         "Bounce": 200.0
       },
@@ -69,7 +69,7 @@
       "y": 64
     },
     {
-      "id": 404,
+      "id": 5,
       "properties": {
         "channel": 0,
         "dontPush": true,
@@ -86,7 +86,7 @@
       "y": 80
     },
     {
-      "id": 405,
+      "id": 6,
       "properties": {
         "Bounce": 200.0
       },
@@ -99,7 +99,7 @@
       "y": 80
     },
     {
-      "id": 406,
+      "id": 7,
       "properties": {
         "Bounce": 200.0
       },
@@ -112,7 +112,7 @@
       "y": 96
     },
     {
-      "id": 407,
+      "id": 8,
       "properties": {
         "Bounce": 200.0
       },
@@ -125,7 +125,7 @@
       "y": 96
     },
     {
-      "id": 408,
+      "id": 9,
       "properties": {
         "RandFall": 50.0,
         "channel": 0,
@@ -141,7 +141,7 @@
       "y": 96
     },
     {
-      "id": 409,
+      "id": 10,
       "properties": {
         "RandFall": 50.0,
         "channel": 0,
@@ -157,7 +157,7 @@
       "y": 96
     },
     {
-      "id": 410,
+      "id": 11,
       "properties": {
         "RandFall": 50.0,
         "channel": 0,
@@ -173,7 +173,7 @@
       "y": 96
     },
     {
-      "id": 411,
+      "id": 12,
       "properties": {
         "RandFall": 50.0,
         "channel": 0,
@@ -189,7 +189,7 @@
       "y": 96
     },
     {
-      "id": 412,
+      "id": 13,
       "properties": {
         "RandFall": 50.0,
         "channel": 0,
@@ -205,7 +205,25 @@
       "y": 96
     },
     {
-      "id": 413,
+      "id": 14,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 32,
+      "y": 112
+    },
+    {
+      "id": 15,
+      "properties": {
+        "playerIndex": 0
+      },
+      "type": "PlayerSpawn",
+      "x": 48,
+      "y": 112
+    },
+    {
+      "id": 16,
       "properties": {
         "playerIndex": 0
       },
@@ -214,7 +232,7 @@
       "y": 128
     },
     {
-      "id": 414,
+      "id": 17,
       "properties": {
         "playerIndex": 0
       },
@@ -223,25 +241,7 @@
       "y": 128
     },
     {
-      "id": 415,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 64,
-      "y": 128
-    },
-    {
-      "id": 416,
-      "properties": {
-        "playerIndex": 0
-      },
-      "type": "PlayerSpawn",
-      "x": 80,
-      "y": 128
-    },
-    {
-      "id": 417,
+      "id": 18,
       "properties": {
         "channel": 0,
         "loop": false,
@@ -267,7 +267,7 @@
       "y": 128
     },
     {
-      "id": 418,
+      "id": 19,
       "properties": {
         "Bounce": 200.0
       },
@@ -280,7 +280,7 @@
       "y": 128
     },
     {
-      "id": 419,
+      "id": 20,
       "properties": {
         "Bounce": 200.0
       },
@@ -293,7 +293,7 @@
       "y": 128
     },
     {
-      "id": 420,
+      "id": 21,
       "properties": {
         "channel": 0,
         "loop": false,
@@ -319,7 +319,7 @@
       "y": 128
     },
     {
-      "id": 421,
+      "id": 22,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -335,7 +335,7 @@
       "y": 144
     },
     {
-      "id": 422,
+      "id": 23,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -351,7 +351,7 @@
       "y": 144
     },
     {
-      "id": 423,
+      "id": 24,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -367,7 +367,7 @@
       "y": 144
     },
     {
-      "id": 424,
+      "id": 25,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -383,7 +383,7 @@
       "y": 144
     },
     {
-      "id": 425,
+      "id": 26,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -399,7 +399,7 @@
       "y": 144
     },
     {
-      "id": 426,
+      "id": 27,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -415,7 +415,7 @@
       "y": 144
     },
     {
-      "id": 427,
+      "id": 28,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -431,7 +431,7 @@
       "y": 144
     },
     {
-      "id": 428,
+      "id": 29,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -447,7 +447,7 @@
       "y": 144
     },
     {
-      "id": 429,
+      "id": 30,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -463,7 +463,7 @@
       "y": 144
     },
     {
-      "id": 430,
+      "id": 31,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -479,7 +479,7 @@
       "y": 144
     },
     {
-      "id": 431,
+      "id": 32,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -495,7 +495,7 @@
       "y": 144
     },
     {
-      "id": 432,
+      "id": 33,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -511,7 +511,7 @@
       "y": 144
     },
     {
-      "id": 433,
+      "id": 34,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -527,7 +527,7 @@
       "y": 144
     },
     {
-      "id": 434,
+      "id": 35,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -543,7 +543,7 @@
       "y": 144
     },
     {
-      "id": 435,
+      "id": 36,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -559,7 +559,7 @@
       "y": 144
     },
     {
-      "id": 436,
+      "id": 37,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -575,7 +575,7 @@
       "y": 144
     },
     {
-      "id": 437,
+      "id": 38,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -591,7 +591,7 @@
       "y": 144
     },
     {
-      "id": 438,
+      "id": 39,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -607,7 +607,7 @@
       "y": 144
     },
     {
-      "id": 439,
+      "id": 40,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -623,7 +623,7 @@
       "y": 144
     },
     {
-      "id": 440,
+      "id": 41,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -639,7 +639,7 @@
       "y": 144
     },
     {
-      "id": 441,
+      "id": 42,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -655,7 +655,7 @@
       "y": 144
     },
     {
-      "id": 442,
+      "id": 43,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -671,7 +671,7 @@
       "y": 144
     },
     {
-      "id": 443,
+      "id": 44,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -687,7 +687,7 @@
       "y": 144
     },
     {
-      "id": 444,
+      "id": 45,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
@@ -703,7 +703,7 @@
       "y": 144
     },
     {
-      "id": 445,
+      "id": 46,
       "properties": {
         "RandFall": 0.0,
         "channel": 0,
